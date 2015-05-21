@@ -18,6 +18,7 @@ type SonarResoureMetrics(path : string) =
     member val FileComplexityDist : string = "" with get, set
     member val FunctionComplexityDist : string = "" with get, set
     member val Issues : SonarIssue List = List.empty with get, set
+    member val CopyPastTokens : UntypedAstUtils.TokenData List = List.empty with get, set
 
 type SQAnalyser() =
             
@@ -54,6 +55,11 @@ type SQAnalyser() =
 
         // generate lines
         resourceMetric.Lines <- FsSonarRunnerCore.UntypedAstUtils.GetLines(parseTree)
+
+        // generate  copy past tokes
+        let array = [|"\r\n"; "\n"|]
+        let lines = input.Split(array, System.StringSplitOptions.None)
+        resourceMetric.CopyPastTokens <- FsSonarRunnerCore.UntypedAstUtils.getDumpToken(lines)
 
 
     member this.GatherMetricsForResource(path : string, input : string) =
@@ -116,7 +122,17 @@ type SQAnalyser() =
                 xmlOut.WriteEndElement()
                 )
                 
-            xmlOut.WriteEndElement()    // 6           
+            xmlOut.WriteEndElement()    // 6
+            
+            xmlOut.WriteStartElement("CopyPasteTokens");
+            for token in resource.CopyPastTokens do
+                xmlOut.WriteStartElement("Token");
+                xmlOut.WriteElementString("Value", System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(token.Content)))
+                xmlOut.WriteElementString("Line", token.Line.ToString())
+                xmlOut.WriteEndElement();
+
+            xmlOut.WriteEndElement()
+                                             
             xmlOut.WriteEndElement() // 3
 
         xmlOut.WriteEndElement() // 2

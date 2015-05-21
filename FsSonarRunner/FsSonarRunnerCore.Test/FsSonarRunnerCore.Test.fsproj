@@ -56,6 +56,7 @@
     <Compile Include="TestMetricWritter.fs" />
     <Compile Include="ComplexityTests.fs" />
     <Compile Include="TestLintRunner.fs" />
+    <Compile Include="DuplicationTokenTest.fs" />
     <Content Include="packages.config" />
     <Content Include="app.config" />
   </ItemGroup>

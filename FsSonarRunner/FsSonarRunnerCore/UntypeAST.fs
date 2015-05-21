@@ -4,15 +4,100 @@ namespace FsSonarRunnerCore
 module UntypedAstUtils =
     open System
 
-    open Microsoft.FSharp.Compiler.Ast
-    open System.Collections.Generic
+    open Microsoft.FSharp.Compiler.Ast   
     open Microsoft.FSharp.Compiler
+    open Microsoft.FSharp.Compiler.SourceCodeServices
+
+    type TokenData() =
+        member val Line : int = 0 with get, set
+        member val LeftColoumn : int = 0 with get, set
+        member val RightColoumn : int = 0 with get, set
+        member val Type : string = "" with get, set
+        member val Content : string = "" with get, set
 
     type internal ShortIdent = string
     type internal Idents = ShortIdent[]
 
     let internal longIdentToArray (longIdent: LongIdent): Idents =
         longIdent |> List.map string |> List.toArray
+
+    let getDumpToken (content : string [])  = 
+        let sourceTok = FSharpSourceTokenizer([], "C:\\test.fsx")
+        let mutable tokens = List.empty
+
+        let chop (input : string) len = 
+            Array.init (input.Length / len) (fun index ->
+            let start = index * len
+            input.[start..start + len - 1])
+
+        let createTokenData(line : int, tok : FSharpTokenInfo, extractStr : bool) =
+            let data = new TokenData(Line = line, LeftColoumn = tok.LeftColumn, RightColoumn = tok.RightColumn, Type = tok.TokenName)
+            if extractStr then
+                data.Content <- content.[line - 1].Substring(tok.LeftColumn, tok.RightColumn - tok.LeftColumn + 1)
+            else
+                data.Content <- "\"\""
+            data
+
+        let rec tokenizeLine (tokenizer:FSharpLineTokenizer) state count =
+            match tokenizer.ScanToken(state) with
+            | Some tok, state ->
+                // Print token name
+                match tok.TokenName with
+                | "LINE_COMMENT"
+                | "WHITESPACE" -> ()
+                | "STRING"
+                | "STRING_TEXT" ->
+                    if not(tok.LeftColumn.Equals(tok.RightColumn)) then
+                        
+                        tokens <- tokens @ [(tok, count)]
+                | str -> tokens <- tokens @ [(tok, count)]
+
+                // Tokenize the rest, in the new state
+                tokenizeLine tokenizer state count
+            | None, state -> state
+
+
+        let rec tokenizeLines state count lines = 
+            match lines with
+            | line::lines ->
+                // Create tokenizer & tokenize single line
+                let tokenizer = sourceTok.CreateLineTokenizer(line)
+                let state = tokenizeLine tokenizer state count
+                // Tokenize the rest using new state
+                tokenizeLines state (count+1) lines
+            | [] -> ()
+
+        content
+        |> List.ofSeq
+        |> tokenizeLines 0L 1 
+
+        let mutable tokensSimple : TokenData List = List.empty
+        
+        // remove duplicated string text
+        let mutable dontAddNext = false
+        tokens |> Seq.iteri (fun i (tok, count) ->
+            match tok.TokenName with
+                | "STRING"
+                | "STRING_TEXT" ->
+                    if dontAddNext = false then
+                        tokensSimple <- tokensSimple @ [createTokenData(count, tok, false)]
+
+                    try
+                        let nexttoken, cnt = tokens.[i+1]                    
+                        match nexttoken.TokenName with
+                        | "STRING"
+                        | "STRING_TEXT" -> 
+                            tokensSimple.[tokensSimple.Length-1].RightColoumn <- nexttoken.RightColumn
+                            dontAddNext <- true
+                        | _ ->  dontAddNext <- false
+                    with
+                    | _ -> ()
+                | _ -> 
+                    tokensSimple <- tokensSimple @ [createTokenData(count, tok, true)]
+                    dontAddNext <- false
+                    )
+                                    
+        tokensSimple
 
     /// Returns ranges of all code lines in AST
     let getCodeMetrics ast =
