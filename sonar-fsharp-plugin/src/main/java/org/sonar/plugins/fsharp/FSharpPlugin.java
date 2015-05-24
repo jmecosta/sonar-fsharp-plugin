@@ -66,6 +66,7 @@ public class FSharpPlugin extends SonarPlugin {
 
     builder.addAll(FSharpCodeCoverageProvider.extensions());
     builder.addAll(FSharpUnitTestResultsProvider.extensions());
+    builder.addAll(FSharpFxCopProvider.extensions());
 
     return builder.build();
   }
