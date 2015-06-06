@@ -8,12 +8,11 @@ The plugin enables analysis of F# within SonarQube.
  - FxCop Support
  - Unit test metrics and Coverage
  
- # Configuration
- 
- ## General Configuration
+# Configuration
+## General Configuration
   sonar.fs.file.suffixes - files extensions to import
- 
- ## Coverage
+
+## Coverage
  Generate reports and feed using the following properties
    sonar.fs.ncover3.reportsPaths 
    sonar.fs.opencover.reportsPaths
