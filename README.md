@@ -14,13 +14,13 @@ The plugin enables analysis of F# within SonarQube.
 
 ## Coverage
  Generate reports and feed using the following properties
-   sonar.fs.ncover3.reportsPaths 
-   sonar.fs.opencover.reportsPaths
-   sonar.fs.dotcover.reportsPaths
-   sonar.fs.vscoveragexml.reportsPaths
+   - sonar.fs.ncover3.reportsPaths 
+   - sonar.fs.opencover.reportsPaths
+   - sonar.fs.dotcover.reportsPaths
+   - sonar.fs.vscoveragexml.reportsPaths
 
 ## Test Reports
 Generate reports and feed using the following properties
-  sonar.fs.vstest.reportsPaths
-  sonar.fs.nunit.reportsPaths
+  - sonar.fs.vstest.reportsPaths
+  - sonar.fs.nunit.reportsPaths
 
