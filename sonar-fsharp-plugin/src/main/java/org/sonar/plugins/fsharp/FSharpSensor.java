@@ -153,10 +153,19 @@ public class FSharpSensor implements Sensor {
 
     File executableFile = extractor.executableFile();
 
-    Command command = Command.create(executableFile.getAbsolutePath())
-      .addArgument("/i:" + analysisInput.getAbsolutePath())
-      .addArgument("/o:" + analysisOutput.getAbsolutePath());
+    Command command;
+    if (OsUtils.isWindows()) {
+      command = Command.create(executableFile.getAbsolutePath())
+              .addArgument("/i:" + analysisInput.getAbsolutePath())
+              .addArgument("/o:" + analysisOutput.getAbsolutePath());      
+    } else {
+      command = Command.create("mono")
+              .addArgument(executableFile.getAbsolutePath())
+              .addArgument("/i:" + analysisInput.getAbsolutePath())
+              .addArgument("/o:" + analysisOutput.getAbsolutePath());  
+    }
 
+    LOG.debug(command.toCommandLine());
     CommandExecutor.create().execute(command, new LogInfoStreamConsumer(), new LogErrorStreamConsumer(), Integer.MAX_VALUE);
   }
 
@@ -542,5 +551,6 @@ public class FSharpSensor implements Sensor {
   public static File toolOutput(FileSystem fileSystem) {
     return new File(fileSystem.workDir(), "analysis-output.xml");
   }
+
 
 }
