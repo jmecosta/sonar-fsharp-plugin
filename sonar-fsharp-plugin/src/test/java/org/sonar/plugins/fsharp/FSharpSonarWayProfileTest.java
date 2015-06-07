@@ -1,6 +1,6 @@
 /*
  * Sonar F# Plugin :: Core
- * Copyright (C) 2015 Jose Chillan, Alexandre Victoor and SonarSource
+ * Copyright (C) 2015 Jorge Costa and SonarSource
  * dev@sonar.codehaus.org
  *
  * This program is free software; you can redistribute it and/or
@@ -31,7 +31,7 @@ public class FSharpSonarWayProfileTest {
   @Test
   public void test() {
     RulesProfile profile = new FSharpSonarWayProfile().createProfile(ValidationMessages.create());
-    assertThat(profile.getActiveRules()).hasSize(25);
+    assertThat(profile.getActiveRules()).hasSize(30);
   }
 
 }

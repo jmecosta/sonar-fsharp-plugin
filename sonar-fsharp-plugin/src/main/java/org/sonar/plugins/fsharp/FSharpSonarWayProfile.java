@@ -1,6 +1,6 @@
 /*
  * Sonar F# Plugin :: Core
- * Copyright (C) 2015 Jose Chillan, Alexandre Victoor and SonarSource
+ * Copyright (C) 2015 Jorge Costa and SonarSource
  * dev@sonar.codehaus.org
  *
  * This program is free software; you can redistribute it and/or
@@ -30,31 +30,37 @@ public class FSharpSonarWayProfile extends ProfileDefinition {
   public RulesProfile createProfile(ValidationMessages validation) {
     RulesProfile profile = RulesProfile.create(FSharpPlugin.CSHARP_WAY_PROFILE, FSharpPlugin.LANGUAGE_KEY);
 
-    activateRule(profile, "AssignmentInsideSubExpression");
-    activateRule(profile, "AsyncAwaitIdentifier");
-    activateRule(profile, "BreakOutsideSwitch");
-    activateRule(profile, "CommentedCode");
-    activateRule(profile, "ParameterAssignedTo");
-    activateRule(profile, "SwitchWithoutDefault");
-    activateRule(profile, "TabCharacter");
-    activateRule(profile, "S127");
-    activateRule(profile, "S1301");
-    activateRule(profile, "S1116");
-    activateRule(profile, "S1145");
-    activateRule(profile, "S1125");
-    activateRule(profile, "S1109");
-    activateRule(profile, "S121");
-    activateRule(profile, "S108");
-    activateRule(profile, "S1186");
-    activateRule(profile, "S1481");
-    activateRule(profile, "S101");
-    activateRule(profile, "S100");
-    activateRule(profile, "FileLoc");
-    activateRule(profile, "FunctionComplexity");
-    activateRule(profile, "LineLength");
-    activateRule(profile, "S1479");
-    activateRule(profile, "S1067");
-    activateRule(profile, "S107");
+    activateRule(profile, "RulesTypographyTrailingLineError");
+    activateRule(profile, "RulesTypographyTabCharacterError");
+    activateRule(profile, "RulesTypographyFileLengthError");
+    activateRule(profile, "RulesTypographyLineLengthError");
+    activateRule(profile, "RulesTypographyTrailingWhitespaceError");
+    activateRule(profile, "RulesNestedStatementsError");
+    activateRule(profile, "RulesHintRefactor");
+    activateRule(profile, "RulesXmlDocumentationExceptionError");
+    activateRule(profile, "RulesNamingConventionsExceptionError");
+    activateRule(profile, "RulesNamingConventionsCamelCaseError");
+    activateRule(profile, "RulesNamingConventionsPascalCaseError");
+    activateRule(profile, "RulesNamingConventionsInterfaceError");
+    activateRule(profile, "RulesRaiseWithSingleArgument");
+    activateRule(profile, "RulesFailwithWithSingleArgument");
+    activateRule(profile, "RulesNullArgWithSingleArgument");
+    activateRule(profile, "RulesInvalidOpWithSingleArgument");
+    activateRule(profile, "RulesInvalidArgWithTwoArguments");
+    activateRule(profile, "RulesFailwithfWithArgumentsMatchingFormatString");
+    activateRule(profile, "RulesTupleOfWildcardsError");
+    activateRule(profile, "RulesWildcardNamedWithAsPattern");
+    activateRule(profile, "RulesUselessBindingError");
+    activateRule(profile, "RulesFavourIgnoreOverLetWildError");
+    activateRule(profile, "RulesCanBeReplacedWithComposition");
+    activateRule(profile, "RulesReimplementsFunction");
+    activateRule(profile, "RulesCyclomaticComplexityError");
+    
+    activateRule(profile, "RulesSourceLengthError");
+    activateRule(profile, "RulesNumberOfItemsTupleError");
+    activateRule(profile, "RulesNumberOfItemsClassMembersError");
+    activateRule(profile, "RulesNumberOfItemsFunctionError");
+    activateRule(profile, "RulesNumberOfItemsBooleanConditionsError");
 
     return profile;
   }
