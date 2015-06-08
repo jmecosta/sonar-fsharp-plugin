@@ -37,12 +37,12 @@ public class FSharpCPDMappingTest {
 
   @Test
   public void test() throws Exception {
-    FSharp csharp = mock(FSharp.class);
+    FSharp fsharp = mock(FSharp.class);
     FileSystem fs = mock(FileSystem.class);
-    when(fs.workDir()).thenReturn(new File("src/test/resources/CSharpCPDMappingTest"));
-    FSharpCPDMapping cpd = new FSharpCPDMapping(csharp, fs);
+    when(fs.workDir()).thenReturn(new File("src/test/resources/FSharpCPDMappingTest"));
+    FSharpCPDMapping cpd = new FSharpCPDMapping(fsharp, fs);
 
-    assertThat(cpd.getLanguage()).isSameAs(csharp);
+    assertThat(cpd.getLanguage()).isSameAs(fsharp);
 
     SourceCode source = mock(SourceCode.class);
     when(source.getFileName()).thenReturn("C:\\File2.cs");

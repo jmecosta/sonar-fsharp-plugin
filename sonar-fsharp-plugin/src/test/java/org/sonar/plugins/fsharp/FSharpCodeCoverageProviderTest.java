@@ -20,8 +20,8 @@
 package org.sonar.plugins.fsharp;
 
 import org.sonar.plugins.fsharp.FSharpCodeCoverageProvider;
-import org.sonar.plugins.fsharp.FSharpCodeCoverageProvider.CSharpCoverageAggregator;
-import org.sonar.plugins.fsharp.FSharpCodeCoverageProvider.CSharpCoverageReportImportSensor;
+import org.sonar.plugins.fsharp.FSharpCodeCoverageProvider.FSharpCoverageAggregator;
+import org.sonar.plugins.fsharp.FSharpCodeCoverageProvider.FSharpCoverageReportImportSensor;
 
 import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
@@ -36,9 +36,8 @@ public class FSharpCodeCoverageProviderTest {
 
   @Test
   public void test() {
-    assertThat(nonProperties(FSharpCodeCoverageProvider.extensions())).containsOnly(
-      CSharpCoverageAggregator.class,
-      CSharpCoverageReportImportSensor.class);
+    assertThat(nonProperties(FSharpCodeCoverageProvider.extensions())).containsOnly(FSharpCoverageAggregator.class,
+      FSharpCoverageReportImportSensor.class);
     assertThat(propertyKeys(FSharpCodeCoverageProvider.extensions())).containsOnly(
       "sonar.fs.ncover3.reportsPaths",
       "sonar.fs.opencover.reportsPaths",

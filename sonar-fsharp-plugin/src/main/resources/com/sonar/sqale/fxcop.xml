@@ -262,150 +262,6 @@
       <key>READABILITY</key>
       <name>Readability</name>
       <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>S1145</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>2.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>S1301</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>5.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>S1109</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>1.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>S121</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>2.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>FileLoc</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>1.0</val>
-          <txt>h</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>LineLength</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>1.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>S1125</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>2.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>TabCharacter</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>2.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
         <rule-repo>fxcop</rule-repo>
         <rule-key>CompoundWordsShouldBeCasedCorrectly</rule-key>
         <prop>
@@ -550,96 +406,6 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>AsyncAwaitIdentifier</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>20.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>AssignmentInsideSubExpression</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>20.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>ClassName2</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>20.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>MagicNumber</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>10.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>MethodName2</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>10.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
         <rule-repo>fxcop</rule-repo>
         <rule-key>ReviewMisleadingFieldNames</rule-key>
         <prop>
@@ -661,24 +427,6 @@
     <chc>
       <key>UNDERSTANDABILITY</key>
       <name>Understandability</name>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>S1481</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>5.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
       <chc>
         <rule-repo>fxcop</rule-repo>
         <rule-key>AvoidExcessiveLocals</rule-key>
@@ -1634,60 +1382,6 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>BreakOutsideSwitch</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>40.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>CommentedCode</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>30.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>ParameterAssignedTo</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>30.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
         <rule-repo>fxcop</rule-repo>
         <rule-key>AvoidExcessiveInheritance</rule-key>
         <prop>
@@ -1760,7 +1454,7 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>common-cs</rule-repo>
+        <rule-repo>common-fs</rule-repo>
         <rule-key>InsufficientCommentDensity</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3118,24 +2812,6 @@
       <key>DATA_CHANGEABILITY</key>
       <name>Data</name>
       <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>S1479</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>30.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
         <rule-repo>fxcop</rule-repo>
         <rule-key>AvoidEmptyInterfaces</rule-key>
         <prop>
@@ -3165,24 +2841,6 @@
     <chc>
       <key>ARCHITECTURE_RELIABILITY</key>
       <name>Architecture</name>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>S1186</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>5.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
       <chc>
         <rule-repo>fxcop</rule-repo>
         <rule-key>DoNotCallOverridableMethodsInConstructors</rule-key>
@@ -4190,24 +3848,6 @@
       <key>INSTRUCTION_RELIABILITY</key>
       <name>Instruction</name>
       <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>S1116</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>2.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
         <rule-repo>fxcop</rule-repo>
         <rule-key>InitializeValueTypeStaticFieldsInline</rule-key>
         <prop>
@@ -4608,79 +4248,7 @@
       <key>LOGIC_RELIABILITY</key>
       <name>Logic</name>
       <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>S126</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>5.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>S127</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>10.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>S108</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>5.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>SwitchWithoutDefault</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>1.0</val>
-          <txt>h</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>common-cs</rule-repo>
+        <rule-repo>common-fs</rule-repo>
         <rule-key>InsufficientLineCoverage</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -4740,42 +4308,6 @@
       <key>UNIT_TESTABILITY</key>
       <name>Unit level</name>
       <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>S1067</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>10.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>S107</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>20.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
         <rule-repo>fxcop</rule-repo>
         <rule-key>ReplaceRepetitiveArgumentsWithParamsArray</rule-key>
         <prop>
@@ -4794,25 +4326,7 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>csharpsquid</rule-repo>
-        <rule-key>FunctionComplexity</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>1.0</val>
-          <txt>h</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>common-cs</rule-repo>
+        <rule-repo>common-fs</rule-repo>
         <rule-key>DuplicatedBlocks</rule-key>
         <prop>
           <key>remediationFunction</key>

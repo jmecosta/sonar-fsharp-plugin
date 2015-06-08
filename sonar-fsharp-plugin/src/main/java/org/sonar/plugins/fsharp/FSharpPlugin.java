@@ -44,7 +44,7 @@ public class FSharpPlugin extends SonarPlugin {
   public static final String FILE_SUFFIXES_KEY = "sonar.fs.file.suffixes";
   public static final String FILE_SUFFIXES_DEFVALUE = ".fs,.fsx,.fsi";
 
-  public static final String CSHARP_WAY_PROFILE = "Sonar way";
+  public static final String FSHARP_WAY_PROFILE = "Sonar way";
 
   public static final String REPOSITORY_KEY = "fsharplint";
   public static final String REPOSITORY_NAME = "SonarQube";

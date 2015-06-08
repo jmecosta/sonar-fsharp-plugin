@@ -145,7 +145,7 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
     repository.createRule("LintSourceError").setName("Parsing errors").setSeverity(Severity.INFO);
     repository.createRule("LintError").setName("Lint errors").setSeverity(Severity.INFO);
     
-    ExternalDescriptionLoader.loadHtmlDescriptions(repository, "/org/sonar/l10n/csharp/rules/fsharplint");
+    ExternalDescriptionLoader.loadHtmlDescriptions(repository, "/org/sonar/l10n/fsharp/rules/fsharplint");
     SqaleXmlLoader.load(repository, "/com/sonar/sqale/fsharp-fslint-model.xml");
     repository.done();
   }

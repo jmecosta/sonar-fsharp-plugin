@@ -63,8 +63,8 @@ public class FSharpFxCopProvider {
 
   public static List extensions() {
     return ImmutableList.of(
-      CSharpFxCopRulesDefinition.class,
-      CSharpFxCopSensor.class,
+      FSharpFxCopRulesDefinition.class,
+      FSharpFxCopSensor.class,
       PropertyDefinition.builder(FXCOP_TIMEOUT_PROPERTY_KEY)
         .name("FxCop execution timeout")
         .description("Time in minutes after which FxCop's execution should be interrupted if not finished")
@@ -113,9 +113,9 @@ public class FSharpFxCopProvider {
         .build());
   }
 
-  public static class CSharpFxCopRulesDefinition extends FxCopRulesDefinition {
+  public static class FSharpFxCopRulesDefinition extends FxCopRulesDefinition {
 
-    public CSharpFxCopRulesDefinition() {
+    public FSharpFxCopRulesDefinition() {
       super(
         FXCOP_CONF,
         new FxCopRulesDefinitionSqaleLoader() {
@@ -128,9 +128,9 @@ public class FSharpFxCopProvider {
 
   }
 
-  public static class CSharpFxCopSensor extends FxCopSensor {
+  public static class FSharpFxCopSensor extends FxCopSensor {
 
-    public CSharpFxCopSensor(Settings settings, RulesProfile profile, FileSystem fs, ResourcePerspectives perspectives) {
+    public FSharpFxCopSensor(Settings settings, RulesProfile profile, FileSystem fs, ResourcePerspectives perspectives) {
       super(FXCOP_CONF, settings, profile, fs, perspectives);
     }
 

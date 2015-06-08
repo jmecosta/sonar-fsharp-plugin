@@ -51,8 +51,8 @@ public class FSharpCodeCoverageProvider {
 
   public static List extensions() {
     return ImmutableList.of(
-      CSharpCoverageAggregator.class,
-      CSharpCoverageReportImportSensor.class,
+      FSharpCoverageAggregator.class,
+      FSharpCoverageReportImportSensor.class,
       PropertyDefinition.builder(NCOVER3_PROPERTY_KEY)
         .name("NCover3 Reports Paths")
         .description("Example: \"report.nccov\", \"report1.nccov,report2.nccov\" or \"C:/report.nccov\"")
@@ -83,17 +83,17 @@ public class FSharpCodeCoverageProvider {
         .build());
   }
 
-  public static class CSharpCoverageAggregator extends CoverageAggregator {
+  public static class FSharpCoverageAggregator extends CoverageAggregator {
 
-    public CSharpCoverageAggregator(Settings settings) {
+    public FSharpCoverageAggregator(Settings settings) {
       super(COVERAGE_CONF, settings);
     }
 
   }
 
-  public static class CSharpCoverageReportImportSensor extends CoverageReportImportSensor {
+  public static class FSharpCoverageReportImportSensor extends CoverageReportImportSensor {
 
-    public CSharpCoverageReportImportSensor(CSharpCoverageAggregator coverageAggregator) {
+    public FSharpCoverageReportImportSensor(FSharpCoverageAggregator coverageAggregator) {
       super(COVERAGE_CONF, coverageAggregator);
     }
 

@@ -88,7 +88,7 @@ public class FSharpSensorTest {
   @Before
   public void init() {
     fs = new DefaultFileSystem();
-    fs.setWorkDir(new File("src/test/resources/CSharpSensorTest"));
+    fs.setWorkDir(new File("src/test/resources/FSharpSensorTest"));
 
     inputFile = new DefaultInputFile("MyClass.cs").setAbsolutePath("MyClass.cs");
     fs.add(inputFile);
@@ -98,7 +98,7 @@ public class FSharpSensorTest {
     when(fileLinesContextFactory.createFor(inputFile)).thenReturn(fileLinesContext);
 
     extractor = mock(FsSonarRunnerExtractor.class);
-    when(extractor.executableFile()).thenReturn(new File("src/test/resources/CSharpSensorTest/fake.bat"));
+    when(extractor.executableFile()).thenReturn(new File("src/test/resources/FSharpSensorTest/fake.bat"));
 
     noSonarFilter = mock(NoSonarFilter.class);
     perspectives = mock(ResourcePerspectives.class);

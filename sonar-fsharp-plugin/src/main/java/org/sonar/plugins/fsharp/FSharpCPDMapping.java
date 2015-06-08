@@ -46,17 +46,17 @@ import java.io.InputStreamReader;
 @DependsUpon("NSonarQubeAnalysis")
 public class FSharpCPDMapping extends AbstractCpdMapping {
 
-  private final FSharp csharp;
+  private final FSharp fsharp;
   private final FileSystem fs;
 
-  public FSharpCPDMapping(FSharp csharp, FileSystem fs) {
-    this.csharp = csharp;
+  public FSharpCPDMapping(FSharp fsharp, FileSystem fs) {
+    this.fsharp = fsharp;
     this.fs = fs;
   }
 
   @Override
   public Language getLanguage() {
-    return csharp;
+    return fsharp;
   }
 
   @Override

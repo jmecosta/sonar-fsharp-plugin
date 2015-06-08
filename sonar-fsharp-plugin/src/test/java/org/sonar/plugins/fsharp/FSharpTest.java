@@ -30,23 +30,23 @@ import static org.fest.assertions.Assertions.assertThat;
 public class FSharpTest {
 
   private Settings settings;
-  private FSharp csharp;
+  private FSharp fsharp;
 
   @Before
   public void init() {
     settings = Settings.createForComponent(new FSharpPlugin());
-    csharp = new FSharp(settings);
+    fsharp = new FSharp(settings);
   }
 
   @Test
   public void shouldGetDefaultFileSuffixes() {
-    assertThat(csharp.getFileSuffixes()).containsOnly(".fs", ".fsx", ".fsi");
+    assertThat(fsharp.getFileSuffixes()).containsOnly(".fs", ".fsx", ".fsi");
   }
 
   @Test
   public void shouldGetCustomFileSuffixes() {
-    settings.setProperty(FSharpPlugin.FILE_SUFFIXES_KEY, ".cs,.csharp");
-    assertThat(csharp.getFileSuffixes()).containsOnly(".cs", ".csharp");
+    settings.setProperty(FSharpPlugin.FILE_SUFFIXES_KEY, ".fs,.fsharp");
+    assertThat(fsharp.getFileSuffixes()).containsOnly(".fs", ".fsharp");
   }
 
 }

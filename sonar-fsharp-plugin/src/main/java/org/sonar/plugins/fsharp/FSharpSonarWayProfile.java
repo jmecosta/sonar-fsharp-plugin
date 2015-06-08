@@ -28,7 +28,7 @@ public class FSharpSonarWayProfile extends ProfileDefinition {
 
   @Override
   public RulesProfile createProfile(ValidationMessages validation) {
-    RulesProfile profile = RulesProfile.create(FSharpPlugin.CSHARP_WAY_PROFILE, FSharpPlugin.LANGUAGE_KEY);
+    RulesProfile profile = RulesProfile.create(FSharpPlugin.FSHARP_WAY_PROFILE, FSharpPlugin.LANGUAGE_KEY);
 
     activateRule(profile, "RulesTypographyTrailingLineError");
     activateRule(profile, "RulesTypographyTabCharacterError");

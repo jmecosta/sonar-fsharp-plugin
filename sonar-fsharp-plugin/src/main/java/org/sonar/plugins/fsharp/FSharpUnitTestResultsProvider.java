@@ -45,7 +45,7 @@ public class FSharpUnitTestResultsProvider {
   public static List extensions() {
     return ImmutableList.of(
       FSharpUnitTestResultsAggregator.class,
-      CSharpUnitTestResultsImportSensor.class,
+      FSharpUnitTestResultsImportSensor.class,
       PropertyDefinition.builder(VISUAL_STUDIO_TEST_RESULTS_PROPERTY_KEY)
         .name("Visual Studio Test Reports Paths")
         .description("Example: \"report.trx\", \"report1.trx,report2.trx\" or \"C:/report.trx\"")
@@ -70,9 +70,9 @@ public class FSharpUnitTestResultsProvider {
 
   }
 
-  public static class CSharpUnitTestResultsImportSensor extends UnitTestResultsImportSensor {
+  public static class FSharpUnitTestResultsImportSensor extends UnitTestResultsImportSensor {
 
-    public CSharpUnitTestResultsImportSensor(FSharpUnitTestResultsAggregator unitTestResultsAggregator) {
+    public FSharpUnitTestResultsImportSensor(FSharpUnitTestResultsAggregator unitTestResultsAggregator) {
       super(unitTestResultsAggregator);
     }
 

@@ -21,7 +21,7 @@ package org.sonar.plugins.fsharp;
 
 import org.sonar.plugins.fsharp.FSharpUnitTestResultsProvider;
 import org.sonar.plugins.fsharp.FSharpUnitTestResultsProvider.FSharpUnitTestResultsAggregator;
-import org.sonar.plugins.fsharp.FSharpUnitTestResultsProvider.CSharpUnitTestResultsImportSensor;
+import org.sonar.plugins.fsharp.FSharpUnitTestResultsProvider.FSharpUnitTestResultsImportSensor;
 
 import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
@@ -37,7 +37,7 @@ public class FSharpUnitTestResultsProviderTest {
   @Test
   public void test() {
     assertThat(nonProperties(FSharpUnitTestResultsProvider.extensions())).containsOnly(FSharpUnitTestResultsAggregator.class,
-      CSharpUnitTestResultsImportSensor.class);
+      FSharpUnitTestResultsImportSensor.class);
     assertThat(propertyKeys(FSharpUnitTestResultsProvider.extensions())).containsOnly(
       "sonar.fs.vstest.reportsPaths",
       "sonar.fs.nunit.reportsPaths");

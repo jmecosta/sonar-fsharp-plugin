@@ -35,5 +35,4 @@ public class FSharpCommonRulesEngine extends CommonRulesEngine {
       .enableDuplicatedBlocksRule()
       .enableInsufficientLineCoverageRule(null);
   }
-
 }

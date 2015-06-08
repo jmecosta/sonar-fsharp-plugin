@@ -34,10 +34,10 @@ public class FSharpSourceCodeColorizerTest {
   private final FSharpSourceCodeColorizer cobolColorizerFormat = new FSharpSourceCodeColorizer();
 
   @Test
-  public void cSharpToHtml() throws Exception {
-    Reader cSharpFile = new FileReader(new File("src/test/resources/CSharpSourceCodeColorizerTest/NUnitFramework.cs"));
+  public void FSharpToHtml() throws Exception {
+    Reader FSharpFile = new FileReader(new File("src/test/resources/FSharpSourceCodeColorizerTest/NUnitFramework.cs"));
 
-    String html = new CodeColorizer(cobolColorizerFormat.getTokenizers()).toHtml(cSharpFile);
+    String html = new CodeColorizer(cobolColorizerFormat.getTokenizers()).toHtml(FSharpFile);
 
     assertThat(html).contains("<style");
     assertThat(html).contains("<table class=\"code\"");
