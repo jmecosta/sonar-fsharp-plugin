@@ -7,6 +7,7 @@ The plugin enables analysis of F# within SonarQube.
  - FSharpLint Support
  - FxCop Support
  - Unit test metrics and Coverage
+ - Runs under windows and Linux (mono)
  
 # Configuration
 ## General Configuration
