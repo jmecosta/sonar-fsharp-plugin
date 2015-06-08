@@ -28,5 +28,5 @@ let x () =
 """
         File.WriteAllText(fileToAnalyse, content)
 
-        let lintRunner = new FsLintRunner(fileToAnalyse, new SonarRules(), FSharpLint.Framework.Configuration.loadDefaultConfiguration())
+        let lintRunner = new FsLintRunner(fileToAnalyse, new SonarRules(), FSharpLint.Framework.Configuration.defaultConfiguration)
         Assert.That(lintRunner.ExecuteAnalysis().Length, Is.EqualTo(1))

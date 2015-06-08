@@ -77,19 +77,25 @@ type FsLintRunner(filePath : string, rules : SonarRules, configuration : FSharpL
     let mutable notsupportedlines = List.Empty
     let mutable issues = List.empty
 
-    let reportError = System.Action<ErrorHandling.Error>(fun error -> 
-        let output = error.Info + System.Environment.NewLine + ErrorHandling.getCompleteErrorText error.Range error.Input
-        let rule = rules.GetRule(error.Info)
+    let reportLintWarning (warning:LintWarning.Warning) =
+        let output = warning.Info + System.Environment.NewLine + LintWarning.getWarningWithLocation warning.Range warning.Input
+        let rule = rules.GetRule(warning.Info)
         if rule <> null then
-            let issue = new SonarIssue(Rule = rule.Rule, Line = error.Range.StartLine, Component = filePath, Message = error.Info)
+            let issue = new SonarIssue(Rule = rule.Rule, Line = warning.Range.StartLine, Component = filePath, Message = warning.Info)
             issues  <- issues @ [issue]  
         else
             notsupportedlines <- notsupportedlines @ [output]
-        )
             
     let runLintOnFile pathToFile =
         if File.Exists(pathToFile) then
-            RunLint.parseFileWithConfig pathToFile configuration reportError 
+            let parseInfo =
+                {
+                    FinishEarly = None
+                    ReceivedWarning = Some reportLintWarning
+                    Configuration = Some configuration
+                }
+
+            lintFile parseInfo pathToFile |> ignore
         
     member this.ExecuteAnalysis() =
         issues <- List.Empty

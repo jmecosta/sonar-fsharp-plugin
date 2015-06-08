@@ -28,9 +28,9 @@ type DuptokenTest() =
 
         let duptokens = FsSonarRunnerCore.UntypedAstUtils.getDumpToken(lines)
         Assert.That(duptokens.Length, Is.EqualTo(7))
-        Assert.That(duptokens.[0].Line, Is.EqualTo(1))
+        Assert.That(duptokens.[0].Line, Is.EqualTo(3))
         Assert.That(duptokens.[0].Content, Is.EqualTo("let"))
-        Assert.That(duptokens.[1].Line, Is.EqualTo(1))
+        Assert.That(duptokens.[1].Line, Is.EqualTo(3))
         Assert.That(duptokens.[1].Content, Is.EqualTo("hello"))
-        Assert.That(duptokens.[6].Line, Is.EqualTo(2))
+        Assert.That(duptokens.[6].Line, Is.EqualTo(4))
         Assert.That(duptokens.[6].Content, Is.EqualTo("\"\""))

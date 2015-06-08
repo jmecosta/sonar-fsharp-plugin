@@ -59,20 +59,20 @@
     <Compile Include="UntypeAST.fs" />
     <Compile Include="FsLintRunner.fs" />
     <Compile Include="SQAnalyser.fs" />
-    <Content Include="packages.config" />
     <Content Include="app.config" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FParsec">
-      <HintPath>..\packages\FSharpLintApi.0.2.0\lib\FParsec.dll</HintPath>
+      <HintPath>..\packages\FSharpLint.Core.0.0.1\lib\FParsec.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FParsecCS">
-      <HintPath>..\packages\FSharpLintApi.0.2.0\lib\FParsecCS.dll</HintPath>
+      <HintPath>..\packages\FSharpLint.Core.0.0.1\lib\FParsecCS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharp.Compiler.Service">
-      <HintPath>..\packages\FSharpLintApi.0.2.0\lib\FSharp.Compiler.Service.dll</HintPath>
+      <HintPath>..\packages\FSharpLint.Core.0.0.1\lib\FSharp.Compiler.Service.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharp.Data">
@@ -82,15 +82,15 @@
       <HintPath>..\refs\FSharp.Data.DesignTime.dll</HintPath>
     </Reference>
     <Reference Include="FSharpLint.Application">
-      <HintPath>..\packages\FSharpLintApi.0.2.0\lib\FSharpLint.Application.dll</HintPath>
+      <HintPath>..\packages\FSharpLint.Core.0.0.1\lib\FSharpLint.Application.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharpLint.Framework">
-      <HintPath>..\packages\FSharpLintApi.0.2.0\lib\FSharpLint.Framework.dll</HintPath>
+      <HintPath>..\packages\FSharpLint.Core.0.0.1\lib\FSharpLint.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharpLint.Rules">
-      <HintPath>..\packages\FSharpLintApi.0.2.0\lib\FSharpLint.Rules.dll</HintPath>
+      <HintPath>..\packages\FSharpLint.Core.0.0.1\lib\FSharpLint.Rules.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
