@@ -541,7 +541,7 @@ public class FSharpSensor implements Sensor {
   }
 
   private File toolInput() {
-    return new File(fs.workDir(), "analysis-input.xml");
+    return new File(fs.workDir(), "fs-analysis-input.xml");
   }
 
   private File toolOutput() {
@@ -549,7 +549,7 @@ public class FSharpSensor implements Sensor {
   }
 
   public static File toolOutput(FileSystem fileSystem) {
-    return new File(fileSystem.workDir(), "analysis-output.xml");
+    return new File(fileSystem.workDir(), "fs-analysis-output.xml");
   }
 
 
