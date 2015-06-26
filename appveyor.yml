@@ -26,7 +26,7 @@ install:
   - cmd: SET MAVEN_OPTS=-XX:MaxPermSize=2g -Xmx4g
   - cmd: SET JAVA_OPTS=-XX:MaxPermSize=2g -Xmx4g
 build_script:
-  - mvn clean install -DvsBin="C:/Program Files/MSBuild/14.0/Bin/msbuild.exe"
+  - mvn clean install
 cache:
   - C:\maven\
   - C:\Users\appveyor\.m2
