@@ -27,7 +27,7 @@
               <goal>exec</goal>
             </goals>
             <configuration>
-              <executable>C:/Program Files (x86)/MSBuild/14.0/Bin/msbuild.exe</executable>
+              <executable>C:/Program Files/MSBuild/14.0/Bin/msbuild.exe</executable>
               <workingDirectory>.</workingDirectory>
               <arguments>
                 <argument>/property:Configuration=Release</argument>
@@ -42,7 +42,7 @@
               <goal>exec</goal>
             </goals>
             <configuration>
-              <executable>c:/tekla/BuildTools/Nuget/Nuget.exe</executable>
+              <executable>../Nuget/Nuget.exe</executable>
               <workingDirectory>.</workingDirectory>
               <arguments>
                 <argument>restore</argument>
@@ -56,7 +56,7 @@
               <goal>exec</goal>
             </goals>
             <configuration>
-              <executable>C:/Program Files (x86)/MSBuild/14.0/Bin/msbuild.exe</executable>
+              <executable>C:/Program Files/MSBuild/14.0/Bin/msbuild.exe</executable>
               <workingDirectory>.</workingDirectory>
               <arguments>
                 <argument>/property:Configuration=Release</argument>
