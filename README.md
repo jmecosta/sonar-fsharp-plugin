@@ -1,5 +1,7 @@
 The plugin enables analysis of F# within SonarQube. 
 
+[![Build status](https://ci.appveyor.com/api/projects/status/osw71fasx87k64au/branch/master?svg=true)](https://ci.appveyor.com/project/jorgecosta/sonar-fsharp-plugin/branch/master)
+
 # Description / Features
 
  - Metrics: LOC, number of classes, number of methics, complexity 
