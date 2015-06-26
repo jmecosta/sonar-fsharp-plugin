@@ -10,6 +10,18 @@ install:
         )
         [System.IO.Compression.ZipFile]::ExtractToDirectory("C:\maven-bin.zip", "C:\maven")
       }
+  - ps: |
+      If ($env:Platform -Match "x86") {
+        $env:PCRE_PLATFORM="Win32"
+        $env:JAVA_HOME="c:/Program Files (x86)/Java/jdk1.8.0"
+        $env:VCVARS_PLATFORM="x86"
+        $env:LANG_PLATFORM=""
+      } Else {
+        $env:PCRE_PLATFORM="x64"
+        $env:JAVA_HOME="c:/Program Files/Java/jdk1.8.0"
+        $env:VCVARS_PLATFORM="amd64"
+        $env:LANG_PLATFORM="-x64"
+      }	  
   - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;%PATH%
   - cmd: SET MAVEN_OPTS=-XX:MaxPermSize=2g -Xmx4g
   - cmd: SET JAVA_OPTS=-XX:MaxPermSize=2g -Xmx4g
