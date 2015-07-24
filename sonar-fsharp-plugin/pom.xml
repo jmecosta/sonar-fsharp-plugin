@@ -26,14 +26,7 @@
     <sonar.pluginName>F#</sonar.pluginName>
     <sonar.pluginClass>org.sonar.plugins.fsharp.FSharpPlugin</sonar.pluginClass>
   </properties>
-    
-  <repositories>
-    <repository>
-        <id>my-local-repo</id>
-        <url>file://${basedir}/dependencies</url>
-      </repository>
-    </repositories>
-        
+            
   <dependencies>         
     <dependency>
       <groupId>org.codehaus.sonar.dotnet.fxcop</groupId>
