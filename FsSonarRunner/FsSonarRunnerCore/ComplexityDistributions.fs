@@ -1,13 +1,5 @@
 ﻿module ComplexityDistributions
 
-let mutable range0 = 0
-let mutable range1 = 0
-let mutable range2 = 0
-let mutable range3 = 0
-let mutable range4 = 0
-let mutable range5 = 0
-let mutable range6 = 0
-
 let GetFileComplexityDist(complexity : int) = 
     if complexity >= 0 && complexity <  5 then
         "0=1;5=0;10=0;20=0;30=0;60=0;90=0"
@@ -25,6 +17,13 @@ let GetFileComplexityDist(complexity : int) =
         "0=0;5=0;10=0;20=0;30=0;60=0;90=1"
 
 let GetFunctionComplexityDist(complexities : int List) =
+    let mutable range0 = 0
+    let mutable range1 = 0
+    let mutable range2 = 0
+    let mutable range3 = 0
+    let mutable range4 = 0
+    let mutable range5 = 0
+    let mutable range6 = 0
 
     let increaseRanges(complexity : int) =
         if complexity >= 1 && complexity < 2 then

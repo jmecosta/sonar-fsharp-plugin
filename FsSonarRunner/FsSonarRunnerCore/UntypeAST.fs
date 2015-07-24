@@ -8,7 +8,6 @@ module UntypedAstUtils =
     open Microsoft.FSharp.Compiler
     open Microsoft.FSharp.Compiler.SourceCodeServices
 
-
     type TokenData() =
         member val Line : int = 0 with get, set
         member val LeftColoumn : int = 0 with get, set
@@ -19,26 +18,12 @@ module UntypedAstUtils =
     type internal ShortIdent = string
     type internal Idents = ShortIdent[]
 
-    let mutable tokens = List.empty
-    let mutable tokensSimple : TokenData List = List.empty
-    let mutable uniqueLines = Set.empty
-    let mutable nmbClass = 0
-    let mutable autoProperties = 0
-    let mutable functions = 0
-    let mutable complexity = 0
-    let mutable functionComplexityDist = ""
-
-    let mutable functionNodesRanges = Set.empty
-    let mutable functionNodes = List.Empty
-
-    // remove duplicated string text
-    let mutable dontAddNext = false
-
     let internal longIdentToArray (longIdent: LongIdent): Idents =
         longIdent |> List.map string |> List.toArray
 
     let getDumpToken (content : string [])  = 
         let sourceTok = FSharpSourceTokenizer([], "C:\\test.fsx")
+        let mutable tokens = List.empty
 
         let chop (input : string) len = 
             Array.init (input.Length / len) (fun index ->
@@ -86,6 +71,10 @@ module UntypedAstUtils =
         |> List.ofSeq
         |> tokenizeLines 0L 1 
 
+        let mutable tokensSimple : TokenData List = List.empty
+        
+        // remove duplicated string text
+        let mutable dontAddNext = false
         tokens |> Seq.iteri (fun i (tok, count) ->
             match tok.TokenName with
                 | "STRING"
@@ -112,6 +101,15 @@ module UntypedAstUtils =
 
     /// Returns ranges of all code lines in AST
     let getCodeMetrics ast =
+        let mutable uniqueLines = Set.empty
+        let mutable nmbClass = 0
+        let mutable autoProperties = 0
+        let mutable functions = 0
+        let mutable complexity = 0
+        let mutable functionComplexityDist = ""
+
+        let mutable functionNodesRanges = Set.empty
+        let mutable functionNodes = List.Empty
 
         let addToUniqueRange(range : Range.range) =
             if not(uniqueLines.Contains(range.StartLine)) then
