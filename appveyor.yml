@@ -23,8 +23,6 @@ install:
         $env:LANG_PLATFORM="-x64"
       }	  
   - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
-  - cmd: SET MAVEN_OPTS=-XX:MaxPermSize=2g -Xmx4g
-  - cmd: SET JAVA_OPTS=-XX:MaxPermSize=2g -Xmx4g
 build_script:
   - mvn clean install -DvsBin=msbuild.exe
 cache:
