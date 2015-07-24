@@ -5,17 +5,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>6024766e-75e2-4cff-91af-5020491d5296</ProjectGuid>
+    <ProjectGuid>97e76ae8-d602-400e-8f4b-0f82204c6a84</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>FsSonarRunnerCore.Test</RootNamespace>
-    <AssemblyName>FsSonarRunnerCore.Test</AssemblyName>
+    <RootNamespace>FsSonarRunner.Test</RootNamespace>
+    <AssemblyName>FsSonarRunner.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Name>FsSonarRunnerCore.Test</Name>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <Name>FsSonarRunner.Test</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,7 +22,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Debug\FsSonarRunnerCore.Test.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\FsSonarRunner.Test.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,7 +31,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Release\FsSonarRunnerCore.Test.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\FsSonarRunner.Test.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
@@ -53,16 +50,16 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Content Include="packages.config" />
+    <Content Include="app.config" />
     <Compile Include="Helper.fs" />
     <Compile Include="TestTypes.fs" />
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="TestLineOfCode.fs" />
     <Compile Include="TestMetricWritter.fs" />
     <Compile Include="ComplexityTests.fs" />
     <Compile Include="TestLintRunner.fs" />
     <Compile Include="DuplicationTokenTest.fs" />
-    <Content Include="packages.config" />
-    <Content Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FParsec">
@@ -77,17 +74,10 @@
       <HintPath>..\packages\FSharpLint.Core.0.0.1\lib\FSharp.Compiler.Service.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FSharp.Core">
-      <Private>True</Private>
-    </Reference>
     <Reference Include="FSharp.Data">
       <HintPath>..\packages\FSharp.Data.2.2.5\lib\net40\FSharp.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FSharp.Data.DesignTime">
-      <HintPath>..\packages\FSharp.Data.2.2.5\lib\net40\FSharp.Data.DesignTime.dll</HintPath>
-      <Private>True</Private>
-    </Reference>    
     <Reference Include="FSharpLint.Application">
       <HintPath>..\packages\FSharpLint.Core.0.0.1\lib\FSharpLint.Application.dll</HintPath>
       <Private>True</Private>
@@ -101,6 +91,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.3.0.0-beta-3\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -115,6 +108,11 @@
     <ProjectReference Include="..\FsSonarRunnerCore\FsSonarRunnerCore.fsproj">
       <Name>FsSonarRunnerCore</Name>
       <Project>{584f069c-db4c-4561-9402-5b9b703f15a8}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\FsSonarRunner\FsSonarRunner.fsproj">
+      <Name>FsSonarRunner</Name>
+      <Project>{504f4169-b41d-431f-b31e-e72e0fe2495c}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>

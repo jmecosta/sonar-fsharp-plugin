@@ -1,4 +1,4 @@
-﻿namespace FsSonarRunnerCore.Test.AssemblyInfo
+﻿namespace FsSonarRunner.Test.AssemblyInfo
 
 open System.Reflection
 open System.Runtime.CompilerServices
@@ -7,11 +7,11 @@ open System.Runtime.InteropServices
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[<assembly: AssemblyTitle("FsSonarRunnerCore.Test")>]
+[<assembly: AssemblyTitle("FsSonarRunner.Test")>]
 [<assembly: AssemblyDescription("")>]
 [<assembly: AssemblyConfiguration("")>]
 [<assembly: AssemblyCompany("")>]
-[<assembly: AssemblyProduct("FsSonarRunnerCore.Test")>]
+[<assembly: AssemblyProduct("FsSonarRunner.Test")>]
 [<assembly: AssemblyCopyright("Copyright ©  2015")>]
 [<assembly: AssemblyTrademark("")>]
 [<assembly: AssemblyCulture("")>]
@@ -22,7 +22,7 @@ open System.Runtime.InteropServices
 [<assembly: ComVisible(false)>]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[<assembly: Guid("6024766e-75e2-4cff-91af-5020491d5296")>]
+[<assembly: Guid("97e76ae8-d602-400e-8f4b-0f82204c6a84")>]
 
 // Version information for an assembly consists of the following four values:
 // 
