@@ -3,6 +3,7 @@
 open System.IO
 open NUnit.Framework
 open FsSonarRunnerCore
+open System.Xml
 
 [<TestFixture>]
 type CreatesCorrectXml() =
@@ -21,17 +22,17 @@ type CreatesCorrectXml() =
 
         let metrics = new SQAnalyser()
         metrics.RunAnalyses("/file.fs", content, "")
+        let tmpFile = Path.GetTempFileName()
+        metrics.WriteXmlToDisk(tmpFile)
 
-        metrics.WriteXmlToDisk("file.xml")
-
-        let results = Helper.ResXml.Parse(File.ReadAllText("file.xml"))
+        let results = Helper.ResXml.Parse(File.ReadAllText(tmpFile))
         Assert.That(results.Files.[0].Path, Is.EqualTo("/file.fs"))
-        Assert.That(results.Files.[0].Metrics.LinesOfCode.Lines.Length, Is.EqualTo(7))
+        Assert.That(results.Files.[0].Metrics.LinesOfCodes.Length, Is.EqualTo(7))
         Assert.That(results.Files.[0].Metrics.Classes, Is.EqualTo(1))
         Assert.That(results.Files.[0].Metrics.Accessors, Is.EqualTo(5))
         Assert.That(results.Files.[0].Metrics.Functions, Is.EqualTo(1))
         Assert.That(results.Files.[0].Metrics.Complexity, Is.EqualTo(0))
         Assert.That(results.Files.[0].Metrics.FileComplexityDistribution, Is.EqualTo("0=1;5=0;10=0;20=0;30=0;60=0;90=0"))
-
+        File.Delete(tmpFile)
 
         ()
