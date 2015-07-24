@@ -25,7 +25,7 @@ install:
         $env:LANG_PLATFORM="-x64"
       }	  
   - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;%VsMSBuildDir%;%PATH%
-  - cmd: dir \"C:\Program Files\\"  
+  - cmd: SET
   - cmd: dir \"C:\Program Files (x86)\\"
   - cmd: VsMSBuildCmd.bat
   - cmd: mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=sonar-fsharp-plugin/dependencies/sonar-dotnet-tests-library-1.3.1-SNAPSHOT.jar
