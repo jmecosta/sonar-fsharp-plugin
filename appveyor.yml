@@ -14,23 +14,22 @@ install:
       If ($env:Platform -Match "x86") {
         $env:PCRE_PLATFORM="Win32"
         $env:JAVA_HOME="c:/Program Files (x86)/Java/jdk1.8.0"
-        $env:VsMSBuildDir="C:/Program Files (x86)/Microsoft Visual Studio 14.0/Common7/Tools/VsMSBuildCmd.bat"
+        $env:MSBuildDir="C:/Program Files (x86)/MSBuild/14.0/Bin/msbuild.exe"
         $env:VCVARS_PLATFORM="x86"
         $env:LANG_PLATFORM=""
       } Else {
         $env:PCRE_PLATFORM="x64"
         $env:JAVA_HOME="c:/Program Files/Java/jdk1.8.0"
-        $env:VsMSBuildDir="C:/Program Files/Microsoft Visual Studio 14.0/Common7/Tools/VsMSBuildCmd.bat"
+        $env:MSBuildDir="C:/Program Files/MSBuild/14.0/Bin/msbuild.exe"
         $env:VCVARS_PLATFORM="amd64"
         $env:LANG_PLATFORM="-x64"
       }	  
   - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;%PATH%
   - cmd: SET
-  - cmd: $env:VsMSBuildDir
   - cmd: mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=sonar-fsharp-plugin/dependencies/sonar-dotnet-tests-library-1.3.1-SNAPSHOT.jar
   - cmd: mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=sonar-fsharp-plugin/dependencies/sonar-fxcop-library-1.4-SNAPSHOT.jar
 build_script:
-  - mvn clean install -DvsBin=msbuild.exe
+  - mvn clean install -DvsBin=%MSBuildDir%
 cache:
   - C:\maven\
   - C:\Users\appveyor\.m2
