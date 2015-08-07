@@ -35,3 +35,6 @@ cache:
   - C:\Users\appveyor\.m2
 test:
   assemblies:
+artifacts:
+  - path: 'sonar-fsharp-plugin/target/*.jar'
+    name: sonar-fsharp-plugin
