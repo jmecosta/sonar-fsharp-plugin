@@ -29,7 +29,7 @@ install:
   - cmd: mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=sonar-fsharp-plugin/dependencies/sonar-dotnet-tests-library-1.3.1-SNAPSHOT.jar
   - cmd: mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=sonar-fsharp-plugin/dependencies/sonar-fxcop-library-1.4-SNAPSHOT.jar
 build_script:
-  - mvn clean install -DvsBin=%MSBuildDir%
+  - mvn clean install -DvsBin="C:/Program Files (x86)/MSBuild/14.0/Bin/msbuild.exe"
 cache:
   - C:\maven\
   - C:\Users\appveyor\.m2
