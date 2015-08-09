@@ -24,7 +24,9 @@ install:
         $env:VCVARS_PLATFORM="amd64"
         $env:LANG_PLATFORM="-x64"
       }	  
-  - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;%PATH%
+  - cmd: appveyor DownloadFile https://github.com/nunit/nunit/releases/download/3.0.0-beta-3/nunit-3.0.0-beta-3.zip
+  - cmd: 7z x -oC:\Tools\NUnit3 nunit-3.0.0-beta-3.zip > NUL
+  - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;C:\Tools\NUnit3\bin;%PATH%
   - cmd: SET
   - cmd: mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=sonar-fsharp-plugin/dependencies/sonar-dotnet-tests-library-1.3.1-SNAPSHOT.jar
   - cmd: mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=sonar-fsharp-plugin/dependencies/sonar-fxcop-library-1.4-SNAPSHOT.jar
@@ -33,8 +35,6 @@ build_script:
 cache:
   - C:\maven\
   - C:\Users\appveyor\.m2
-test:
-  assemblies:
 artifacts:
   - path: 'sonar-fsharp-plugin/target/*.jar'
     name: sonar-fsharp-plugin
