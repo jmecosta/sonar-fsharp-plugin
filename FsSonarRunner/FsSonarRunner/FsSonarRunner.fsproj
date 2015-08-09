@@ -68,15 +68,15 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FParsec">
-      <HintPath>..\packages\FSharpLint.Core.0.0.1\lib\FParsec.dll</HintPath>
+      <HintPath>..\packages\FSharpLint.Core.0.0.6-beta\lib\FParsec.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FParsecCS">
-      <HintPath>..\packages\FSharpLint.Core.0.0.1\lib\FParsecCS.dll</HintPath>
+      <HintPath>..\packages\FSharpLint.Core.0.0.6-beta\lib\FParsecCS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharp.Compiler.Service">
-      <HintPath>..\packages\FSharpLint.Core.0.0.1\lib\FSharp.Compiler.Service.dll</HintPath>
+      <HintPath>..\packages\FSharp.Compiler.Service.1.4.0.0-beta\lib\net45\FSharp.Compiler.Service.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharp.Data">
@@ -84,15 +84,15 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharpLint.Application">
-      <HintPath>..\packages\FSharpLint.Core.0.0.1\lib\FSharpLint.Application.dll</HintPath>
+      <HintPath>..\packages\FSharpLint.Core.0.0.6-beta\lib\FSharpLint.Application.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharpLint.Framework">
-      <HintPath>..\packages\FSharpLint.Core.0.0.1\lib\FSharpLint.Framework.dll</HintPath>
+      <HintPath>..\packages\FSharpLint.Core.0.0.6-beta\lib\FSharpLint.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharpLint.Rules">
-      <HintPath>..\packages\FSharpLint.Core.0.0.1\lib\FSharpLint.Rules.dll</HintPath>
+      <HintPath>..\packages\FSharpLint.Core.0.0.6-beta\lib\FSharpLint.Rules.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
