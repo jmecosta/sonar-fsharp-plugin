@@ -61,8 +61,35 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
       .setType(RuleParamType.STRING).setDefaultValue("");    
    
     // XmlDocumentation
-    repository.createRule("RulesXmlDocumentationExceptionError").setName("Expected exception type to have xml documentation").setSeverity(Severity.MINOR);
-    
+    repository
+            .createRule("RulesXmlDocumentationExceptionError")
+            .setName("Expected exception type to have xml documentation").setSeverity(Severity.MINOR);
+    repository
+            .createRule("RulesXmlDocumentationUnionError")
+            .setName("Expected union case {0} to have xml documentation.").setSeverity(Severity.MINOR);
+    repository
+            .createRule("RulesXmlDocumentationRecordError")
+            .setName("Expected record case {0} to have xml documentation.").setSeverity(Severity.MINOR);    
+    repository
+            .createRule("RulesXmlDocumentationMemberError")
+            .setName("Expected member {0} to have xml documentation.").setSeverity(Severity.MINOR);    
+    repository
+            .createRule("RulesXmlDocumentationTypeError")
+            .setName("Expected type {0} to have xml documentation.").setSeverity(Severity.MINOR);    
+    repository
+            .createRule("RulesXmlDocumentationAutoPropertyError")
+            .setName("Expected auto property {0} to have xml documentation.").setSeverity(Severity.MINOR);    
+    repository
+            .createRule("RulesXmlDocumentationEnumError")
+            .setName("Expected enum {0} to have xml documentation.").setSeverity(Severity.MINOR);    
+    repository
+            .createRule("RulesXmlDocumentationModuleError")
+            .setName("Expected module {0} to have xml documentation.").setSeverity(Severity.MINOR);    
+    repository
+            .createRule("RulesXmlDocumentationLetError")
+            .setName("Expected let to have xml documentation.").setSeverity(Severity.MINOR);    
+
+        
     // name convention
     repository.createRule("RulesNamingConventionsExceptionError").setName("Exception naming convention").setSeverity(Severity.MINOR);
     repository.createRule("RulesNamingConventionsUnderscoreError").setName("Identifiers naming convention").setSeverity(Severity.MINOR);
