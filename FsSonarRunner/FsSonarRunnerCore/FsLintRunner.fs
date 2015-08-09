@@ -59,7 +59,7 @@ type SonarRules() =
 
     member this.ShowRules() =
         fsLintProfile |> Seq.iter (fun c -> printf "%s  = %s\r\n" c.Rule c.Text)
-
+        printf "\r\n Total Rules: %i\r\n" fsLintProfile.Length
 
 type SonarIssue() =
     member val Rule : string = "" with get, set

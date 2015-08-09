@@ -1,0 +1,44 @@
+[|"/displayrules"|]
+RulesXmlDocumentationUnionError  = Expected union case {0} to have xml documentation.
+RulesXmlDocumentationRecordError  = Expected record case {0} to have xml documentation.
+RulesRaiseWithSingleArgument  = Expected raise to have a single argument.
+RulesXmlDocumentationMemberError  = Expected member to have xml documentation.
+RulesNumberOfItemsClassMembersError  = Class must have a maximum of {0} members
+RulesTypographyTrailingLineError  = File should not have a trailing new line.
+RulesNamingConventionsCamelCaseError  = Expected camel case identifier but was {0}
+RulesNumberOfItemsBooleanConditionsError  = Conditions should contain at most {0} boolean operators
+RulesNestedStatementsError  = Code should not be nested more deeply than a depth of {0}
+RulesTypographyTabCharacterError  = File should not contain tab characters.
+RulesHintRefactor  = {0} can be refactored into {1}
+RulesCanBeReplacedWithComposition  = Pointless function can be replaced with function composition.
+RulesXmlDocumentationTypeError  = Expected type to have xml documentation.
+RulesReimplementsFunction  = Pointless function redefines {0}
+RulesXmlDocumentationExceptionError  = Expected exception type to have xml documentation.
+RulesNamingConventionsExceptionError  = Exception identifier should end with 'Exception', but was {0}
+RulesNumberOfItemsTupleError  = Tuple should have a maximum of {0} items
+RulesFailwithWithSingleArgument  = Expected failwith to have a single argument.
+RulesNamingConventionsUnderscoreError  = Identifiers should not contain underscores, but one was found in: {0}
+RulesXmlDocumentationAutoPropertyError  = Expected auto property {0} to have xml documentation.
+RulesNullArgWithSingleArgument  = Expected nullArg to have a single argument.
+LintSourceError  = Error on line {0} starting at column {1}
+RulesXmlDocumentationEnumError  = Expected enum {0} to have xml documentation.
+RulesInvalidOpWithSingleArgument  = Expected invalidOp to have a single argument.
+RulesCyclomaticComplexityError  = Binding with cyclomatic complexity of {0} found, expecting bindings to have a cyclomatic complexity of less than {1}.
+RulesTypographyFileLengthError  = Files should be less than {0} lines long.
+RulesUselessBindingError  = Useless binding.
+RulesFavourIgnoreOverLetWildError  = Favour using the ignore function rather than let _ = ...
+RulesInvalidArgWithTwoArguments  = Expected invalidArg to have two arguments.
+RulesTypographyLineLengthError  = Lines should be less than {0} characters long.
+RulesNumberOfItemsFunctionError  = Functions should have a maximum of {0} parameters
+RulesNamingConventionsPascalCaseError  = Expected pascal case identifier but was {0}
+RulesTupleOfWildcardsError  = A constructor argument in a pattern that is a tuple consisting of entirely wildcards can be replaced with a single wildcard. {0} can be replaced with {1}
+RulesWildcardNamedWithAsPattern  = Unnecessary wildcard named using the as pattern, the wildcard can be removed e.g. `_ as x` can simply be `x`
+RulesTypographyTrailingWhitespaceError  = Lines should not have trailing whitespace.
+LintError  = Error in file {0} on line {1} starting at column {2}
+RulesXmlDocumentationModuleError  = Expected module to have xml documentation.
+RulesSourceLengthError  = {0}s should be less than {1} lines long, was {2} lines long.
+RulesXmlDocumentationLetError  = Expected let to have xml documentation.
+RulesNamingConventionsInterfaceError  = Interface identifiers should begin with the letter I found interface {0}
+RulesFailwithfWithArgumentsMatchingFormatString  = Expected failwithf's arguments to match the format string (there were too many arguments).
+
+ Total Rules: 41
