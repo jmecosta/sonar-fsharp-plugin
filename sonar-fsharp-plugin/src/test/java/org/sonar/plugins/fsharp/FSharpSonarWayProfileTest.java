@@ -31,7 +31,7 @@ public class FSharpSonarWayProfileTest {
   @Test
   public void test() {
     RulesProfile profile = new FSharpSonarWayProfile().createProfile(ValidationMessages.create());
-    assertThat(profile.getActiveRules()).hasSize(30);
+    assertThat(profile.getActiveRules()).hasSize(38);
   }
 
 }
