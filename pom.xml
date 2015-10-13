@@ -10,7 +10,7 @@
   <groupId>org.codehaus.sonar-plugins.dotnet.fsharp</groupId>
   <artifactId>sonar-fsharp-squid</artifactId>
   <packaging>pom</packaging>
-  <version>0.9-SNAPSHOT</version>
+  <version>0.9.1-SNAPSHOT</version>
 
   <name>SonarQube F# Plugin</name>
   <inceptionYear>2015</inceptionYear>
@@ -23,7 +23,7 @@
     <connection>scm:git:git@github.com:jmecosta/sonar-fsharp-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:jmecosta/sonar-fsharp-plugin.git</developerConnection>
     <url>https://github.com/jmecosta/sonar-fsharp-plugin</url>
-    <tag>0.9-SNAPSHOT</tag>
+    <tag>0.9.1-SNAPSHOT</tag>
   </scm>
   <issueManagement>
     <system>GitHub</system>
@@ -36,7 +36,7 @@
   </modules>
 
   <properties>
-    <sonar.version>4.5.1</sonar.version>
+    <sonar.version>4.5.2</sonar.version>
     <license.owner>Jorge Costa and SonarSource</license.owner>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
   </properties>
