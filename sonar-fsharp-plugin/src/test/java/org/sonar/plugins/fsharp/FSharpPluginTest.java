@@ -62,7 +62,7 @@ public class FSharpPluginTest {
     assertThat(extensions).hasSize(expectedExtensions.length
         + FSharpCodeCoverageProvider.extensions().size()
         + FSharpUnitTestResultsProvider.extensions().size()
-        + 3);
+        + 1);
   }
 
   private static List nonProperties(List extensions) {

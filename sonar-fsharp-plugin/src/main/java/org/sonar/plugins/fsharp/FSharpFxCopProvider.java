@@ -31,33 +31,20 @@ import org.sonar.squidbridge.rules.SqaleXmlLoader;
 import java.util.List;
 import org.sonar.plugins.fsharp.fxcop.FxCopConfiguration;
 import org.sonar.plugins.fsharp.fxcop.FxCopRulesDefinition;
-import org.sonar.plugins.fsharp.fxcop.FxCopSensor;
 
 public class FSharpFxCopProvider {
 
   private static final String CATEGORY = "F#";
   private static final String SUBCATEGORY = "Code Analysis / FxCop";
-  private static final String FXCOP_REPORT_PATH_PROPERTY_KEY = "sonar.fs.fxcop.reportPath";
-
-  private static final FxCopConfiguration FXCOP_CONF = new FxCopConfiguration(
-    FSharpPlugin.LANGUAGE_KEY,
-    "fxcop-fs",
-    FXCOP_REPORT_PATH_PROPERTY_KEY);
+  
+  private static final FxCopConfiguration FXCOP_CONF = new FxCopConfiguration(FSharpPlugin.LANGUAGE_KEY, "fxcop-fs");
 
   private FSharpFxCopProvider() {
   }
 
   public static List extensions() {
     return ImmutableList.of(
-      FSharpFxCopRulesDefinition.class,
-      FSharpFxCopSensor.class,
-      PropertyDefinition.builder(FXCOP_REPORT_PATH_PROPERTY_KEY)
-        .name("Report path")
-        .description("FxCop analysis reports to be imported")
-        .category(CATEGORY)
-        .subCategory(SUBCATEGORY)
-        .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
-        .build());
+      FSharpFxCopRulesDefinition.class);
   }
 
   public static class FSharpFxCopRulesDefinition extends FxCopRulesDefinition {
@@ -74,12 +61,4 @@ public class FSharpFxCopProvider {
     }
 
   }
-
-  public static class FSharpFxCopSensor extends FxCopSensor {
-
-    public FSharpFxCopSensor(Settings settings, RulesProfile profile, FileSystem fs, ResourcePerspectives perspectives) {
-      super(FXCOP_CONF, settings, profile, fs, perspectives);
-    }
-  }
-  
 }

@@ -19,22 +19,14 @@
  */
 package org.sonar.plugins.fsharp.fxcop;
 
-import com.google.common.base.Preconditions;
-import org.sonar.api.config.Settings;
-
-import java.io.File;
-
 public class FxCopConfiguration {
 
   private final String languageKey;
   private final String repositoryKey;
-  private final String reportPathPropertyKey;
 
-  public FxCopConfiguration(String languageKey, String repositoryKey,
-    String reportPathPropertyKey) {
+  public FxCopConfiguration(String languageKey, String repositoryKey) {
     this.languageKey = languageKey;
     this.repositoryKey = repositoryKey;
-    this.reportPathPropertyKey = reportPathPropertyKey;
   }
 
   public String languageKey() {
@@ -43,20 +35,5 @@ public class FxCopConfiguration {
 
   public String repositoryKey() {
     return repositoryKey;
-  }
-
-  public String reportPathPropertyKey() {
-    return reportPathPropertyKey;
-  }
-
-  public void checkProperties(Settings settings) {
-      checkReportPathProperty(settings);
-  }
-
-  private void checkReportPathProperty(Settings settings) {
-    File file = new File(settings.getString(reportPathPropertyKey));
-    Preconditions.checkArgument(
-      file.isFile(),
-      "Cannot find the FxCop report \"" + file.getAbsolutePath() + "\" provided by the property \"" + reportPathPropertyKey + "\".");
-  }
+  } 
 }
