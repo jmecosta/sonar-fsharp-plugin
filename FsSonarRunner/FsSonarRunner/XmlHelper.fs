@@ -44,9 +44,9 @@ type InputXml = XmlProvider<"""
     </Rule>
   </Rules>
   <Files>
-    <File>E:\prod\trimble-connect-desktop\Source\TrimbleConnect\Workspace\WorkspaceFeature.cs</File>
-    <File>E:\prod\trimble-connect-desktop\Source\TrimbleConnect\Workspace\WorkspaceView.xaml.cs</File>
-    <File>E:\prod\trimble-connect-desktop\Source\TrimbleConnect\Workspace\WorkspaceViewModel.cs</File>
+    <File>asdfsad\WorkspaceFeature.cs</File>
+    <File>afdasfas\WorkspaceView.xaml.cs</File>
+    <File>asfdsa\WorkspaceViewModel.cs</File>
   </Files>
 </AnalysisInput>
 """>
