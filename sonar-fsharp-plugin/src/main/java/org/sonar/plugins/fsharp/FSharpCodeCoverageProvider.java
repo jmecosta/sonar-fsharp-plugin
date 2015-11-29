@@ -28,6 +28,7 @@ import org.sonar.plugins.dotnet.tests.CoverageConfiguration;
 import org.sonar.plugins.dotnet.tests.CoverageReportImportSensor;
 
 import java.util.List;
+import org.sonar.api.batch.fs.FileSystem;
 
 public class FSharpCodeCoverageProvider {
 
@@ -92,11 +93,11 @@ public class FSharpCodeCoverageProvider {
   }
 
   public static class FSharpCoverageReportImportSensor extends CoverageReportImportSensor {
-
-    public FSharpCoverageReportImportSensor(FSharpCoverageAggregator coverageAggregator) {
-      super(COVERAGE_CONF, coverageAggregator);
-    }
-
+    
+    public FSharpCoverageReportImportSensor(FSharpCoverageAggregator coverageAggregator, FileSystem fs) {
+      super(COVERAGE_CONF, coverageAggregator, fs);
+    }    
+    
   }
 
 }
