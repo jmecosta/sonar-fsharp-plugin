@@ -58,3 +58,5 @@ packages/
 # Visual Studio profiler files
 *.psess
 *.vsp
+
+*.unittest.report.xml
