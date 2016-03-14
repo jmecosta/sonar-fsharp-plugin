@@ -7,8 +7,11 @@ open System.Text.RegularExpressions
 open FsSonarRunnerCore
 open System.Xml.Linq
 open FSharp.Data
+open FParsec
 
 open FSharpLint.Rules.Binding
+open FSharpLint.Framework.HintMatcher
+open FSharpLint.Framework.HintParser
 open FSharpLint.Framework.Configuration
 
 type InputConfigution = XmlProvider<""" 
@@ -88,6 +91,14 @@ let GetValueForStringList(config : InputConfigution.AnalysisInput, ruleId : stri
         enabledis.Value.String.Value.Split(';') |> Array.toList
     with
     | ex -> defaultValue
+
+let parseHints hints =
+    let parseHint hint =
+        match CharParsers.run phint hint with
+        | FParsec.CharParsers.Success(hint, _, _) -> hint
+        | FParsec.CharParsers.Failure(error, _, _) -> failwithf "Invalid hint %s" error
+
+    List.map (fun x -> { Hint = x; ParsedHint = parseHint x }) hints
 
 let GetValueForBool(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : bool) =
     try
@@ -338,7 +349,7 @@ let sonarConfiguration(config : InputConfigution.AnalysisInput) =
                                     Settings = Map.ofList 
                                         [ 
                                             ("Enabled", GetEnaFlagForRule(config, "RulesNumberOfItemsBooleanConditionsError")) 
-                                            ("MaxItems", MaxItems(GetValueForInt(config, "RulesNumberOfItemsClassMembersError", "MaxItems", 4)))
+                                            ("MaxItems", MaxItems(GetValueForInt(config, "RulesNumberOfItemsBooleanConditionsError", "MaxItems", 4)))
                                         ] 
                                 }) 
                         ]
@@ -364,7 +375,7 @@ let sonarConfiguration(config : InputConfigution.AnalysisInput) =
                     Settings = Map.ofList 
                         [ 
                             ("Enabled", GetEnaFlagForRule(config, "RulesNestedStatementsError"))
-                            ("Depth", Depth(GetValueForInt(config, "RulesNumberOfItemsClassMembersError", "Depth", 5)))
+                            ("Depth", Depth(GetValueForInt(config, "RulesNestedStatementsError", "Depth", 5)))
                         ]
                 });
             ("Typography", 
@@ -453,7 +464,7 @@ let sonarConfiguration(config : InputConfigution.AnalysisInput) =
                     Rules = Map.ofList [] 
                     Settings = Map.ofList
                         [
-                            ("Hints", Hints(GetValueForStringList(config, "RulesHintRefactor", "Hints", List.Empty)))
+                            ("Hints", Hints((parseHints (GetValueForStringList(config, "RulesHintRefactor", "Hints", List.Empty)))))
                         ]
                 });
             ("RaiseWithTooManyArguments", 
@@ -502,17 +513,14 @@ let sonarConfiguration(config : InputConfigution.AnalysisInput) =
 
 
 let CreateALintConfiguration(path : string) =
-    let sonarConfig = InputConfigution.Parse(File.ReadAllText(path))
-
-    
-
-    let configdata = ()
-
-    {
-        Configuration.UseTypeChecker = true
-
-        Configuration.IgnoreFiles = { Update = IgnoreFiles.Add; Files = [] }
-
-        Analysers = sonarConfiguration(sonarConfig)
-    }
-
+    if not(String.IsNullOrEmpty(path)) && File.Exists(path) then
+        let sonarConfig = InputConfigution.Parse(File.ReadAllText(path))
+   
+        let configdata = ()
+        {
+            Configuration.UseTypeChecker = Some(true)
+            Configuration.IgnoreFiles = None
+            Analysers = sonarConfiguration(sonarConfig)
+        }
+    else
+        FSharpLint.Framework.Configuration.defaultConfiguration

@@ -30,6 +30,7 @@ let main argv =
         let metrics = new SQAnalyser()
         try
             metrics.RunAnalyses(input, File.ReadAllText(input), "")
+            metrics.PrintIssues()
         with
         | ex -> printf "    Failed: %A" ex
 

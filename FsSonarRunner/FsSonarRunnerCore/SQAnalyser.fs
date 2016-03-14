@@ -77,15 +77,21 @@ type SQAnalyser() =
 
     member this.RunLint(path : string, input : string, inputXmlConfig : string) = 
         // run lint
-        try
-            
+        try            
             let lintRunner = new FsLintRunner(path, new SonarRules(), InputConfigHandler.CreateALintConfiguration(inputXmlConfig))
             lintRunner.ExecuteAnalysis()
         with
         | ex -> printf "Lint Execution Failed %A" ex
                 List.Empty
 
+    member this.PrintIssues() = 
+        for resource in resources do
+            resource.Issues |> Seq.iter (fun diagnostic -> 
+                    printf "%s : %s : %i : %s" resource.ResourcePath  diagnostic.Rule diagnostic.Line diagnostic.Message
+                            )
+
     member this.WriteXmlToDisk(xmlOutPath : string) = 
+        printf "Write ouput xml to file %s\r\n" xmlOutPath
         let xmlOutSettings = new XmlWriterSettings(Encoding = Encoding.UTF8, Indent = true, IndentChars = "  ")
         use xmlOut = XmlWriter.Create(xmlOutPath, xmlOutSettings)
         xmlOut.WriteStartElement("AnalysisOutput") // 1

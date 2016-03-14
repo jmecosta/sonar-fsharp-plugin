@@ -1,5 +1,6 @@
 ﻿namespace FsSonarRunnerCore
 
+open System
 open FSharpLint.Framework
 open FSharpLint.Framework.Ast
 open FSharpLint.Framework.Configuration
@@ -31,7 +32,7 @@ type SonarRules() =
                     let rule = new FsLintRule(lem.Key :?> string, lem.Value :?> string)
                     rules <- rules @ [rule]
             with
-            | _ -> ()       
+            | _ -> ()
         rules
 
     member this.GetRule(txt : string) =
@@ -77,7 +78,7 @@ type FsLintRunner(filePath : string, rules : SonarRules, configuration : FSharpL
     let mutable notsupportedlines = List.Empty
     let mutable issues = List.empty
 
-    let reportLintWarning (warning:LintWarning.Warning) =
+    let reportLintWarning (warning:LintWarning.Warning) = 
         let output = warning.Info + System.Environment.NewLine + LintWarning.getWarningWithLocation warning.Range warning.Input
         let rule = rules.GetRule(warning.Info)
         if rule <> null then
@@ -85,19 +86,24 @@ type FsLintRunner(filePath : string, rules : SonarRules, configuration : FSharpL
             issues  <- issues @ [issue]  
         else
             notsupportedlines <- notsupportedlines @ [output]
-            
-    let runLintOnFile pathToFile =
-        if File.Exists(pathToFile) then
-            let parseInfo =
-                {
-                    FinishEarly = None
-                    ReceivedWarning = Some reportLintWarning
-                    Configuration = Some configuration
-                }
 
-            lintFile parseInfo pathToFile |> ignore
+    let runLintOnFile pathToFile =
+        let parseInfo =
+            {
+                FinishEarly = None
+                ReceivedWarning = Some reportLintWarning
+                Configuration = Some configuration
+            }
+
+        lintFile parseInfo pathToFile
+                    
+    let outputLintResult = function
+        | LintResult.Success(_) -> Console.WriteLine("Lint Ok")
+        | LintResult.Failure(error) -> Console.WriteLine("Lint Nok" + error.ToString())
         
     member this.ExecuteAnalysis() =
         issues <- List.Empty
-        runLintOnFile filePath
+        if File.Exists(filePath) then
+            runLintOnFile filePath (Version(4, 0)) |> outputLintResult
+
         issues
