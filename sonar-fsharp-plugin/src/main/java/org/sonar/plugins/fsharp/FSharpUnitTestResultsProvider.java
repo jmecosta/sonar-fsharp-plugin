@@ -36,8 +36,10 @@ public class FSharpUnitTestResultsProvider {
 
   private static final String VISUAL_STUDIO_TEST_RESULTS_PROPERTY_KEY = "sonar.fs.vstest.reportsPaths";
   private static final String NUNIT_TEST_RESULTS_PROPERTY_KEY = "sonar.fs.nunit.reportsPaths";
+  private static final String XUNIT_TEST_RESULTS_PROPERTY_KEY = "sonar.fs.xunit.reportsPaths";
 
-  private static final UnitTestConfiguration UNIT_TEST_CONF = new UnitTestConfiguration(VISUAL_STUDIO_TEST_RESULTS_PROPERTY_KEY, NUNIT_TEST_RESULTS_PROPERTY_KEY);
+  private static final UnitTestConfiguration UNIT_TEST_CONF =
+          new UnitTestConfiguration(VISUAL_STUDIO_TEST_RESULTS_PROPERTY_KEY, NUNIT_TEST_RESULTS_PROPERTY_KEY, XUNIT_TEST_RESULTS_PROPERTY_KEY);
 
   private FSharpUnitTestResultsProvider() {
   }
