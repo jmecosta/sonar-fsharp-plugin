@@ -104,6 +104,7 @@
       <HintPath>..\packages\NUnit.3.0.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nunit.framework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
