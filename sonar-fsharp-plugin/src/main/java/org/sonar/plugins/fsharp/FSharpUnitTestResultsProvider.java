@@ -61,7 +61,15 @@ public class FSharpUnitTestResultsProvider {
         .category(CATEGORY)
         .subCategory(SUBCATEGORY)
         .onlyOnQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
-        .build());
+        .build(),
+      PropertyDefinition.builder(XUNIT_TEST_RESULTS_PROPERTY_KEY)
+        .name("XUnit Test Reports Paths")
+        .description("Example: \"TestResult.xml\", \"TestResult1.xml,TestResult2.xml\" or \"C:/TestResult.xml\"")
+        .category(CATEGORY)
+        .subCategory(SUBCATEGORY)
+        .onlyOnQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
+        .build())    
+    ;
   }
 
   public static class FSharpUnitTestResultsAggregator extends UnitTestResultsAggregator {
