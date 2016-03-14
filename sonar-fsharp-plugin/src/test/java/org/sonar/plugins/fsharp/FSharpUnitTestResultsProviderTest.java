@@ -40,7 +40,8 @@ public class FSharpUnitTestResultsProviderTest {
       FSharpUnitTestResultsImportSensor.class);
     assertThat(propertyKeys(FSharpUnitTestResultsProvider.extensions())).containsOnly(
       "sonar.fs.vstest.reportsPaths",
-      "sonar.fs.nunit.reportsPaths");
+      "sonar.fs.nunit.reportsPaths",
+      "sonar.fs.xunit.reportsPaths");
   }
 
   private static Set<String> nonProperties(List extensions) {
