@@ -34,17 +34,6 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class FSharpCodeCoverageProviderTest {
 
-  @Test
-  public void test() {
-    assertThat(nonProperties(FSharpCodeCoverageProvider.extensions())).containsOnly(FSharpCoverageAggregator.class,
-      FSharpCoverageReportImportSensor.class);
-    assertThat(propertyKeys(FSharpCodeCoverageProvider.extensions())).containsOnly(
-      "sonar.fs.ncover3.reportsPaths",
-      "sonar.fs.opencover.reportsPaths",
-      "sonar.fs.dotcover.reportsPaths",
-      "sonar.fs.vscoveragexml.reportsPaths");
-  }
-
   private static Set<String> nonProperties(List extensions) {
     ImmutableSet.Builder builder = ImmutableSet.builder();
     for (Object extension : extensions) {

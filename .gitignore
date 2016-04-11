@@ -60,3 +60,4 @@ packages/
 *.vsp
 
 *.unittest.report.xml
+.sonarqube/
