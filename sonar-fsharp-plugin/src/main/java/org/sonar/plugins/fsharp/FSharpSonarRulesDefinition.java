@@ -56,10 +56,13 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
       .setType(RuleParamType.INTEGER).setDefaultValue("5");       
     
     // hint matcher - todo Map of list
-    NewRule hint = repository.createRule("RulesHintRefactor").setName("Hint Refactor").setSeverity(Severity.MAJOR);
-    hint.createParam("Hints").setDescription("Hints to use")
+    NewRule hintRefactor = repository.createRule("RulesHintRefactor").setName("Hint Refactor").setSeverity(Severity.MAJOR);
+    hintRefactor.createParam("Hints").setDescription("Hints to use")
       .setType(RuleParamType.STRING).setDefaultValue("");    
-   
+    NewRule hintSuggestions = repository.createRule("RulesHintSuggestion").setName("Hint Suggestion").setSeverity(Severity.MAJOR);
+    hintSuggestions.createParam("Hints").setDescription("Hints to use")
+      .setType(RuleParamType.STRING).setDefaultValue("");    
+    
     // XmlDocumentation
     repository
             .createRule("RulesXmlDocumentationExceptionError")
@@ -115,16 +118,7 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
     // function reinplementation
     repository.createRule("RulesCanBeReplacedWithComposition").setName("Function composition should be used instead of current function").setSeverity(Severity.MAJOR);
     repository.createRule("RulesReimplementsFunction").setName("Pointless function redefines").setSeverity(Severity.MAJOR);    
-
-    
-    // complexity
-    NewRule methodComplexity = repository.createRule("RulesCyclomaticComplexityError").setName("Expression Complexity should not be too high").setSeverity(Severity.MAJOR);
-    methodComplexity.createParam("MaxCyclomaticComplexity").setDescription("The maximum authorized complexity in function")
-      .setType(RuleParamType.INTEGER).setDefaultValue("10");    
-    methodComplexity.createParam("IncludeMatchStatements").setDescription("The maximum authorized complexity in function")
-      .setType(RuleParamType.BOOLEAN).setDefaultValue("true");    
-    
-    
+            
     // source length
     NewRule fileLines2 = repository.createRule("RulesSourceLengthError").setName("Source length check").setSeverity(Severity.MAJOR);
     fileLines2.createParam("MaxLinesInFunction").setDescription("The maximum lines in function - 0 means disable")

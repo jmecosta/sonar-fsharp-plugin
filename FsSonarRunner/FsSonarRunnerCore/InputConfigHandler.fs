@@ -10,7 +10,7 @@ open FSharp.Data
 open FParsec
 
 open FSharpLint.Rules.Binding
-open FSharpLint.Framework.HintMatcher
+open FSharpLint.Rules.HintMatcher
 open FSharpLint.Framework.HintParser
 open FSharpLint.Framework.Configuration
 
@@ -449,22 +449,12 @@ let sonarConfiguration(config : InputConfigution.AnalysisInput) =
                             ("Enabled", Enabled(true))
                         ]
                 });
-            ("CyclomaticComplexity", 
-                { 
-                    Rules = Map.ofList []
-                    Settings = Map.ofList 
-                        [ 
-                            ("Enabled", GetEnaFlagForRule(config, "RulesCyclomaticComplexityError"))
-                            ("MaxCyclomaticComplexity", MaxCyclomaticComplexity(GetValueForInt(config, "RulesCyclomaticComplexityError", "MaxCyclomaticComplexity", 10)))
-                            ("IncludeMatchStatements", IncludeMatchStatements(GetValueForBool(config, "RulesCyclomaticComplexityError", "IncludeMatchStatements", true)))
-                        ]
-                });
             ("Hints", 
                 { 
                     Rules = Map.ofList [] 
                     Settings = Map.ofList
                         [
-                            ("Hints", Hints((parseHints (GetValueForStringList(config, "RulesHintRefactor", "Hints", List.Empty)))))
+                            ("Hints", Hints((parseHints (GetValueForStringList(config, "RulesHintRefactor", "Hints", List.Empty)) @ parseHints (GetValueForStringList(config, "RulesHintSuggestion", "Hints", List.Empty)))))
                         ]
                 });
             ("RaiseWithTooManyArguments", 

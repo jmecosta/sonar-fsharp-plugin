@@ -87,7 +87,7 @@ type SQAnalyser() =
     member this.PrintIssues() = 
         for resource in resources do
             resource.Issues |> Seq.iter (fun diagnostic -> 
-                    printf "%s : %s : %i : %s" resource.ResourcePath  diagnostic.Rule diagnostic.Line diagnostic.Message
+                    printf "%s : %s : %i : %s\r\n" resource.ResourcePath  diagnostic.Rule diagnostic.Line diagnostic.Message
                             )
 
     member this.WriteXmlToDisk(xmlOutPath : string) = 
