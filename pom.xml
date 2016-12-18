@@ -31,8 +31,8 @@
   </issueManagement>
 
   <modules>
+    <module>FsSonarRunner</module>  
     <module>sonar-fsharp-plugin</module>
-    <module>FsSonarRunner</module>
   </modules>
 
   <properties>
