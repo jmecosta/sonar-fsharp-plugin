@@ -1,32 +1,24 @@
 /*
- * Sonar F# Plugin :: Core
- * Copyright (C) 2015 Jorge Costa and SonarSource
- * dev@sonar.codehaus.org
+ * Sonar FSharp Plugin, open source software quality management tool.
  *
- * This program is free software; you can redistribute it and/or
+ * Sonar FSharp Plugin is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * Sonar FSharp Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
 package org.sonar.plugins.fsharp;
 
-import com.google.common.collect.ImmutableList;
 import org.sonar.api.Properties;
 import org.sonar.api.Property;
-import org.sonar.api.PropertyType;
-import org.sonar.api.SonarPlugin;
 
-import java.util.List;
+import org.sonar.api.Plugin;
 
+// adapted from https://github.com/SonarSource/sonar-csharp
 @Properties({
   @Property(
     key = FSharpPlugin.FILE_SUFFIXES_KEY,
@@ -36,7 +28,7 @@ import java.util.List;
     project = true, global = true
   )
 })
-public class FSharpPlugin extends SonarPlugin {
+public class FSharpPlugin implements Plugin {
 
   public static final String LANGUAGE_KEY = "fs";
   public static final String LANGUAGE_NAME = "F#";
@@ -50,24 +42,14 @@ public class FSharpPlugin extends SonarPlugin {
   public static final String REPOSITORY_NAME = "SonarQube";
 
   @Override
-  public List getExtensions() {
-    ImmutableList.Builder builder = ImmutableList.builder();
+  public void define(Context context) {
+    context.addExtension(FSharp.class);    
+    context.addExtension(FSharpSonarRulesDefinition.class);
+    context.addExtension(FSharpSonarWayProfile.class);
+    context.addExtension(FsSonarRunnerExtractor.class);
+    context.addExtension(FSharpSensor.class);
 
-    builder.add(
-      FSharp.class,
-      FSharpSonarRulesDefinition.class,
-      FSharpSonarWayProfile.class,
-      FSharpCommonRulesEngine.class,
-      FSharpCommonRulesDecorator.class,
-      FSharpSourceCodeColorizer.class,
-      FsSonarRunnerExtractor.class,
-      FSharpSensor.class,
-      FSharpCPDMapping.class);
-
-    builder.addAll(FSharpCodeCoverageProvider.extensions());
-    builder.addAll(FSharpUnitTestResultsProvider.extensions());
-
-    return builder.build();
+    context.addExtensions(FSharpCodeCoverageProvider.extensions());
+    context.addExtensions(FSharpUnitTestResultsProvider.extensions());    
   }
-
 }

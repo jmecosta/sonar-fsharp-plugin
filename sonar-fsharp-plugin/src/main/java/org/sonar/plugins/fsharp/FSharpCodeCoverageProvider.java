@@ -1,25 +1,20 @@
 /*
- * Sonar F# Plugin :: Core
- * Copyright (C) 2015 Jorge Costa and SonarSource
- * dev@sonar.codehaus.org
+ * Sonar FSharp Plugin, open source software quality management tool.
  *
- * This program is free software; you can redistribute it and/or
+ * Sonar FSharp Plugin is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * Sonar FSharp Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
 package org.sonar.plugins.fsharp;
 
-import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.sonar.api.config.PropertyDefinition;
 import org.sonar.api.config.Settings;
 import org.sonar.api.resources.Qualifiers;
@@ -30,11 +25,15 @@ import org.sonar.plugins.dotnet.tests.CoverageReportImportSensor;
 import java.util.List;
 import org.sonar.api.batch.fs.FileSystem;
 
+// addapted from https://github.com/SonarSource/sonar-csharp/blob/master/src/main/java/org/sonar/plugins/csharp/CSharpCodeCoverageProvider.java
 public class FSharpCodeCoverageProvider {
 
   private static final String CATEGORY = "F#";
   private static final String SUBCATEGORY = "Code Coverage";
 
+  public static final String COVERAGE_PROPERTY_KEY = "sonar.fs.coverage.reportsPaths";
+  public static final String UNIT_PROPERTY_KEY = "sonar.fs.test.reportsPaths";
+  
   private static final String NCOVER3_PROPERTY_KEY = "sonar.fs.ncover3.reportsPaths";
   private static final String OPENCOVER_PROPERTY_KEY = "sonar.fs.opencover.reportsPaths";
   private static final String DOTCOVER_PROPERTY_KEY = "sonar.fs.dotcover.reportsPaths";
@@ -63,7 +62,7 @@ public class FSharpCodeCoverageProvider {
   }
 
   public static List extensions() {
-    return ImmutableList.of(
+    return new ArrayList<>(Arrays.asList(
       FSharpCoverageAggregator.class, FSharpIntegrationCoverageAggregator.class,
       FSharpCoverageReportImportSensor.class, FSharpIntegrationCoverageReportImportSensor.class,
       PropertyDefinition.builder(NCOVER3_PROPERTY_KEY)
@@ -121,7 +120,7 @@ public class FSharpCodeCoverageProvider {
         .category(CATEGORY)
         .subCategory(SUBCATEGORY)
         .onlyOnQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
-        .build());
+        .build()));
   }
 
   public static class FSharpCoverageAggregator extends CoverageAggregator {
@@ -135,7 +134,7 @@ public class FSharpCodeCoverageProvider {
   public static class FSharpCoverageReportImportSensor extends CoverageReportImportSensor {
     
     public FSharpCoverageReportImportSensor(FSharpCoverageAggregator coverageAggregator, FileSystem fs) {
-      super(COVERAGE_CONF, coverageAggregator, fs, false);
+      super(COVERAGE_CONF, coverageAggregator, false);
     }        
   }
 
@@ -150,7 +149,7 @@ public class FSharpCodeCoverageProvider {
   public static class FSharpIntegrationCoverageReportImportSensor extends CoverageReportImportSensor {
 
     public FSharpIntegrationCoverageReportImportSensor(FSharpIntegrationCoverageAggregator coverageAggregator, FileSystem fs) {
-      super(IT_COVERAGE_CONF, coverageAggregator, fs, true);
+      super(IT_COVERAGE_CONF, coverageAggregator, true);
     }
 
   }  

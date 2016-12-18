@@ -1,25 +1,20 @@
 /*
- * Sonar F# Plugin :: Core
- * Copyright (C) 2015 Jorge Costa and SonarSource
- * dev@sonar.codehaus.org
+ * Sonar FSharp Plugin, open source software quality management tool.
  *
- * This program is free software; you can redistribute it and/or
+ * Sonar FSharp Plugin is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * Sonar FSharp Plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
 package org.sonar.plugins.fsharp;
 
-import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.sonar.api.config.PropertyDefinition;
 import org.sonar.api.config.Settings;
 import org.sonar.api.resources.Qualifiers;
@@ -28,7 +23,9 @@ import org.sonar.plugins.dotnet.tests.UnitTestResultsAggregator;
 import org.sonar.plugins.dotnet.tests.UnitTestResultsImportSensor;
 
 import java.util.List;
+import org.sonar.api.batch.bootstrap.ProjectDefinition;
 
+// addapted from https://github.com/SonarSource/sonar-csharp
 public class FSharpUnitTestResultsProvider {
 
   private static final String CATEGORY = "F#";
@@ -45,7 +42,7 @@ public class FSharpUnitTestResultsProvider {
   }
 
   public static List extensions() {
-    return ImmutableList.of(
+    return new ArrayList<>(Arrays.asList(
       FSharpUnitTestResultsAggregator.class,
       FSharpUnitTestResultsImportSensor.class,
       PropertyDefinition.builder(VISUAL_STUDIO_TEST_RESULTS_PROPERTY_KEY)
@@ -68,8 +65,7 @@ public class FSharpUnitTestResultsProvider {
         .category(CATEGORY)
         .subCategory(SUBCATEGORY)
         .onlyOnQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
-        .build())    
-    ;
+        .build()));
   }
 
   public static class FSharpUnitTestResultsAggregator extends UnitTestResultsAggregator {
@@ -82,10 +78,9 @@ public class FSharpUnitTestResultsProvider {
 
   public static class FSharpUnitTestResultsImportSensor extends UnitTestResultsImportSensor {
 
-    public FSharpUnitTestResultsImportSensor(FSharpUnitTestResultsAggregator unitTestResultsAggregator) {
-      super(unitTestResultsAggregator);
+    public FSharpUnitTestResultsImportSensor(FSharpUnitTestResultsAggregator unitTestResultsAggregator, ProjectDefinition projectDef) {
+      super(unitTestResultsAggregator, projectDef);
     }
-
-  }
-
+    
+  }  
 }

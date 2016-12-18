@@ -16,7 +16,7 @@ type DuptokenTest() =
         let lines = """       type data = "akjdkas" """.Split('\r','\n')
 
         let duptokens = FsSonarRunnerCore.UntypedAstUtils.getDumpToken(lines)
-        Assert.That(duptokens.Length, Is.EqualTo(4))
+        Assert.That(duptokens.Length, Is.EqualTo(6))
 
 
     [<Test>]
@@ -27,7 +27,12 @@ type DuptokenTest() =
              printfn "Hello world!" """.Split('\n')
 
         let duptokens = FsSonarRunnerCore.UntypedAstUtils.getDumpToken(lines)
-        Assert.That(duptokens.Length, Is.EqualTo(7))
+
+        for token in duptokens do
+            let data = sprintf "==== %s %i %i %i %s ====" token.Content token.Line token.LeftColoumn token.RightColoumn token.Type
+            System.Diagnostics.Debug.WriteLine(data);
+
+        Assert.That(duptokens.Length, Is.EqualTo(12))
         Assert.That(duptokens.[0].Line, Is.EqualTo(3))
         Assert.That(duptokens.[0].Content, Is.EqualTo("let"))
         Assert.That(duptokens.[1].Line, Is.EqualTo(3))

@@ -23,8 +23,7 @@ type SonarRules() =
         let set = resourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true)
         let mutable rules = List.Empty
         
-        for resoure in set do
-            let lem = resoure :?> DictionaryEntry
+        let CreateProfileRule(lem:DictionaryEntry) =
             try
                 if (lem.Key :?> string).StartsWith("Rules") ||
                    (lem.Key :?> string).Equals("LintError")  ||
@@ -33,6 +32,12 @@ type SonarRules() =
                     rules <- rules @ [rule]
             with
             | _ -> ()
+
+        let ddd = set |> Seq.cast<ResourceSet>
+
+        for setentry in set do
+            CreateProfileRule(setentry :?> DictionaryEntry)
+
         rules
 
     member this.GetRule(txt : string) =
