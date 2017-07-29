@@ -59,43 +59,68 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
     NewRule hint = repository.createRule("RulesHintRefactor").setName("Hint Refactor").setSeverity(Severity.MAJOR);
     hint.createParam("Hints").setDescription("Hints to use")
       .setType(RuleParamType.STRING).setDefaultValue("");    
-   
-    // XmlDocumentation
-    repository
-            .createRule("RulesXmlDocumentationExceptionError")
-            .setName("Expected exception type to have xml documentation").setSeverity(Severity.MINOR);
-    repository
-            .createRule("RulesXmlDocumentationUnionError")
-            .setName("Expected union case {0} to have xml documentation.").setSeverity(Severity.MINOR);
-    repository
-            .createRule("RulesXmlDocumentationRecordError")
-            .setName("Expected record case {0} to have xml documentation.").setSeverity(Severity.MINOR);    
-    repository
-            .createRule("RulesXmlDocumentationMemberError")
-            .setName("Expected member {0} to have xml documentation.").setSeverity(Severity.MINOR);    
-    repository
-            .createRule("RulesXmlDocumentationTypeError")
-            .setName("Expected type {0} to have xml documentation.").setSeverity(Severity.MINOR);    
-    repository
-            .createRule("RulesXmlDocumentationAutoPropertyError")
-            .setName("Expected auto property {0} to have xml documentation.").setSeverity(Severity.MINOR);    
-    repository
-            .createRule("RulesXmlDocumentationEnumError")
-            .setName("Expected enum {0} to have xml documentation.").setSeverity(Severity.MINOR);    
-    repository
-            .createRule("RulesXmlDocumentationModuleError")
-            .setName("Expected module {0} to have xml documentation.").setSeverity(Severity.MINOR);    
-    repository
-            .createRule("RulesXmlDocumentationLetError")
-            .setName("Expected let to have xml documentation.").setSeverity(Severity.MINOR);    
-
-        
+           
     // name convention
-    repository.createRule("RulesNamingConventionsExceptionError").setName("Exception naming convention").setSeverity(Severity.MINOR);
-    repository.createRule("RulesNamingConventionsUnderscoreError").setName("Identifiers naming convention").setSeverity(Severity.MINOR);
-    repository.createRule("RulesNamingConventionsCamelCaseError").setName("Expected camel case in types").setSeverity(Severity.MINOR);
-    repository.createRule("RulesNamingConventionsPascalCaseError").setName("Pascal case for parameters").setSeverity(Severity.MINOR);
-    repository.createRule("RulesNamingConventionsInterfaceError").setName("Interfaces naming convention").setSeverity(Severity.MINOR);
+    NewRule interfaceNaming = repository.createRule("RulesNamingConventionsInterfaceError").setName("Interface naming convention").setSeverity(Severity.MAJOR);
+    NewRule exceptionNaming = repository.createRule("RulesNamingConventionsExceptionError").setName("Exception naming convention").setSeverity(Severity.MAJOR);
+    NewRule typeNaming = repository.createRule("RulesNamingConventionsTypesError").setName("Type naming convention").setSeverity(Severity.MAJOR);
+    NewRule recordsNaming = repository.createRule("RulesNamingConventionsRecordsError").setName("Record naming convention").setSeverity(Severity.MAJOR);
+    NewRule enumNaming = repository.createRule("RulesNamingConventionsEnumError").setName("Enum naming convention").setSeverity(Severity.MAJOR);
+    NewRule unionNaming = repository.createRule("RulesNamingConventionsUnionError").setName("Union naming convention").setSeverity(Severity.MAJOR);
+    NewRule moduleNaming = repository.createRule("RulesNamingConventionsModuleError").setName("Module naming convention").setSeverity(Severity.MAJOR);
+    NewRule literalNaming = repository.createRule("RulesNamingConventionsLiteralError").setName("Literal naming convention").setSeverity(Severity.MAJOR);
+    NewRule nameSpaceNaming = repository.createRule("RulesNamingConventionsNamespaceError").setName("Namespace naming convention").setSeverity(Severity.MAJOR);    
+    NewRule memberNaming = repository.createRule("RulesNamingConventionsMemberError").setName("Member naming convention").setSeverity(Severity.MAJOR);    
+    NewRule paramsNaming = repository.createRule("RulesNamingConventionsParamsError").setName("Params naming convention").setSeverity(Severity.MAJOR);    
+    NewRule measureNaming = repository.createRule("RulesNamingConventionsMeasureError").setName("Measure naming convention").setSeverity(Severity.MAJOR);    
+    NewRule activePatternNaming = repository.createRule("RulesNamingConventionsActivePatternError").setName("Active pattern naming convention").setSeverity(Severity.MAJOR);    
+    NewRule publicValuesNaming = repository.createRule("RulesNamingConventionsPublicValuesError").setName("Public values naming convention").setSeverity(Severity.MAJOR);    
+    NewRule nonPublicNaming = repository.createRule("RulesNamingConventionsNonPublicError").setName("Non Public naming convention").setSeverity(Severity.MAJOR);
+    
+    interfaceNaming.createParam("Naming").setDescription("Naming Convention: PascalCase(0), CamelCase(1)").setType(RuleParamType.multipleListOfValues("0", "1")).setDefaultValue("0");
+    interfaceNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0"); 
+    interfaceNaming.createParam("Prefix").setDescription("Prefix to use Convention: empty or any prefix").setType(RuleParamType.STRING).setDefaultValue("I"); 
+
+    exceptionNaming.createParam("Naming").setDescription("Naming Convention: PascalCase(0), CamelCase(1)").setType(RuleParamType.multipleListOfValues("0", "1")).setDefaultValue("0");
+    exceptionNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0"); 
+    exceptionNaming.createParam("Suffix").setDescription("Suffix to use Convention: empty or any suffix").setType(RuleParamType.STRING).setDefaultValue("Exception");    
+        
+    typeNaming.createParam("Naming").setDescription("Naming Convention: PascalCase(0), CamelCase(1)").setType(RuleParamType.multipleListOfValues("0", "1")).setDefaultValue("0");
+    typeNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0");    
+    
+    recordsNaming.createParam("Naming").setDescription("Naming Convention: PascalCase(0), CamelCase(1)").setType(RuleParamType.multipleListOfValues("0", "1")).setDefaultValue("0");
+    recordsNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0");    
+        
+    enumNaming.createParam("Naming").setDescription("Naming Convention: PascalCase(0), CamelCase(1)").setType(RuleParamType.multipleListOfValues("0", "1")).setDefaultValue("0");
+    enumNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0");  
+
+    unionNaming.createParam("Naming").setDescription("Naming Convention: PascalCase(0), CamelCase(1)").setType(RuleParamType.multipleListOfValues("0", "1")).setDefaultValue("0");
+    unionNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0"); 
+    
+    moduleNaming.createParam("Naming").setDescription("Naming Convention: PascalCase(0), CamelCase(1)").setType(RuleParamType.multipleListOfValues("0", "1")).setDefaultValue("0");
+    moduleNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0"); 
+    
+    literalNaming.createParam("Naming").setDescription("Naming Convention: PascalCase(0), CamelCase(1)").setType(RuleParamType.multipleListOfValues("0", "1")).setDefaultValue("0");
+    literalNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0"); 
+       
+    nameSpaceNaming.createParam("Naming").setDescription("Naming Convention: PascalCase(0), CamelCase(1)").setType(RuleParamType.multipleListOfValues("0", "1")).setDefaultValue("0");
+    nameSpaceNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0");
+    
+    memberNaming.createParam("Naming").setDescription("Naming Convention: PascalCase(0), CamelCase(1)").setType(RuleParamType.multipleListOfValues("0", "1")).setDefaultValue("0");
+    memberNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0");   
+
+    paramsNaming.createParam("Naming").setDescription("Naming Convention: PascalCase(0), CamelCase(1)").setType(RuleParamType.multipleListOfValues("0", "1")).setDefaultValue("1");
+    paramsNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0");    
+
+    measureNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0");
+
+    activePatternNaming.createParam("Naming").setDescription("Naming Convention: PascalCase(0), CamelCase(1)").setType(RuleParamType.multipleListOfValues("0", "1")).setDefaultValue("0");
+    activePatternNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0");
+
+    publicValuesNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0");     
+
+    nonPublicNaming.createParam("Naming").setDescription("Naming Convention: PascalCase(0), CamelCase(1)").setType(RuleParamType.multipleListOfValues("0", "1")).setDefaultValue("1");
+    nonPublicNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0");   
     
     // RaiseWithTooManyArguments
     repository.createRule("RulesRaiseWithSingleArgument").setName("Expected raise to have a single argument").setSeverity(Severity.MAJOR);
@@ -167,7 +192,9 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
     booleanOperators.createParam("MaxItems").setDescription("Maximum allowed values")
       .setType(RuleParamType.INTEGER).setDefaultValue("4");    
     
-
+    // RulesRedundantNewKeywordError
+    repository.createRule("RulesRedundantNewKeywordError").setName("Redudant usage of new Keywork").setSeverity(Severity.MAJOR);
+        
     // lint errors
     repository.createRule("LintSourceError").setName("Parsing errors").setSeverity(Severity.INFO);
     repository.createRule("LintError").setName("Lint errors").setSeverity(Severity.INFO);

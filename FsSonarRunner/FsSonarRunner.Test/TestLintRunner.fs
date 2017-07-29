@@ -9,9 +9,9 @@ open System.Reflection
 type TestLintRunner() =
     
     let runningPath = Directory.GetParent(Directory.GetParent(Directory.GetParent(Assembly.GetExecutingAssembly().CodeBase.Replace("file:///", "")).ToString()).ToString()).ToString()
-    let fileToAnalyse = Path.Combine(runningPath, "TestLineOfCode.fs")
+    let fileToAnalyse = @"E:\Development\SonarQube\dotnet\sonar-fsharp\FsSonarRunner\FsSonarRunnerCore\SQAnalyser.fs"
 
     [<Test>]
     member this.RunLintInSource() = 
         let lintRunner = new FsLintRunner(fileToAnalyse, new SonarRules(), FSharpLint.Framework.Configuration.defaultConfiguration)
-        Assert.That(lintRunner.ExecuteAnalysis().Length, Is.EqualTo(1))
+        Assert.That(lintRunner.ExecuteAnalysis().Length, Is.EqualTo(4))

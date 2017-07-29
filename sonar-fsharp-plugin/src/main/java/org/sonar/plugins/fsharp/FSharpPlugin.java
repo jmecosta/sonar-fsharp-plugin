@@ -63,10 +63,7 @@ public class FSharpPlugin extends SonarPlugin {
       FsSonarRunnerExtractor.class,
       FSharpSensor.class,
       FSharpCPDMapping.class);
-
-    builder.addAll(FSharpCodeCoverageProvider.extensions());
-    builder.addAll(FSharpUnitTestResultsProvider.extensions());
-
+    
     return builder.build();
   }
 

@@ -12,7 +12,7 @@ let getAstByContent(file : string, input : string) =
     let checker = FSharpChecker.Create()
 
     // Get compiler options for the 'project' implied by a single script file
-    let projOptions = 
+    let (projOptions, _diagnostics) = 
         checker.GetProjectOptionsFromScript(file, input)
         |> Async.RunSynchronously
 
@@ -29,7 +29,7 @@ let getAstByFile(file : string) =
     let checker = FSharpChecker.Create()
 
     // Get compiler options for the 'project' implied by a single script file
-    let projOptions = 
+    let (projOptions, _diagnostics) = 
         checker.GetProjectOptionsFromScript(file, input)
         |> Async.RunSynchronously
 

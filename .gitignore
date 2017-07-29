@@ -61,3 +61,5 @@ packages/
 
 *.unittest.report.xml
 .sonarqube/
+/FsSonarRunner/.clang-tidy
+/FsSonarRunner/compile_commands.json

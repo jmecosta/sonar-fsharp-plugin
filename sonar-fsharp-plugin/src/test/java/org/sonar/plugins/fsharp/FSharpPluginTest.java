@@ -19,18 +19,6 @@
  */
 package org.sonar.plugins.fsharp;
 
-import org.sonar.plugins.fsharp.FSharpCPDMapping;
-import org.sonar.plugins.fsharp.FSharpSonarRulesDefinition;
-import org.sonar.plugins.fsharp.FSharp;
-import org.sonar.plugins.fsharp.FSharpCodeCoverageProvider;
-import org.sonar.plugins.fsharp.FSharpCommonRulesEngine;
-import org.sonar.plugins.fsharp.FSharpSensor;
-import org.sonar.plugins.fsharp.FSharpUnitTestResultsProvider;
-import org.sonar.plugins.fsharp.FSharpCommonRulesDecorator;
-import org.sonar.plugins.fsharp.FSharpPlugin;
-import org.sonar.plugins.fsharp.FsSonarRunnerExtractor;
-import org.sonar.plugins.fsharp.FSharpSonarWayProfile;
-import org.sonar.plugins.fsharp.FSharpSourceCodeColorizer;
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import org.sonar.api.config.PropertyDefinition;
@@ -58,10 +46,6 @@ public class FSharpPluginTest {
     };
 
     assertThat(nonProperties(extensions)).contains(expectedExtensions);
-
-    assertThat(extensions).hasSize(expectedExtensions.length
-        + FSharpCodeCoverageProvider.extensions().size()
-        + FSharpUnitTestResultsProvider.extensions().size());
   }
 
   private static List nonProperties(List extensions) {
