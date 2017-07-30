@@ -14,4 +14,4 @@ type TestLintRunner() =
     [<Test>]
     member this.RunLintInSource() = 
         let lintRunner = new FsLintRunner(fileToAnalyse, new SonarRules(), FSharpLint.Framework.Configuration.defaultConfiguration)
-        Assert.That(lintRunner.ExecuteAnalysis().Length, Is.EqualTo(5))
+        Assert.That(lintRunner.ExecuteAnalysis().Length, Is.EqualTo(8))
