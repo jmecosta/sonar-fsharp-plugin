@@ -6,10 +6,9 @@ Download latest snapshot from : https://ci.appveyor.com/project/jorgecosta/sonar
 
 # Description / Features
 
- - Metrics: LOC, number of classes, number of methics, complexity 
+ - Metrics: LOC, number of classes, number of methods 
  - Code duplication detection
  - FSharpLint Support
- - FxCop Support
  - Unit test metrics and Coverage
  - Runs under windows and Linux (mono)
  

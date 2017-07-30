@@ -43,13 +43,12 @@ let main argv =
             try
                 let input = arguments.["i"] |> Seq.head
                 let output = arguments.["o"] |> Seq.head
+                let options = XmlHelper.InputXml.Parse(File.ReadAllText(input))
 
                 let metrics = new SQAnalyser()
-                let options = XmlHelper.InputXml.Parse(File.ReadAllText(input))
-            
                 options.Files |> Seq.iter  (fun c -> if File.Exists(c) then metrics.RunAnalyses(c, File.ReadAllText(c), input))
 
-                metrics.WriteXmlToDisk(output)
+                metrics.WriteXmlToDisk(output, false)
             with
             | ex -> printf "    Failed: %A" ex
         ()
@@ -65,7 +64,7 @@ let main argv =
             fsfiles |> Seq.iter (fun c -> metrics.RunAnalyses(c, File.ReadAllText(c), ""))
             fsxfiles |> Seq.iter (fun c -> metrics.RunAnalyses(c, File.ReadAllText(c), ""))
 
-            metrics.WriteXmlToDisk(argv.[1])
+            metrics.WriteXmlToDisk(argv.[2], true)
         with
         | ex -> printf "    Failed: %A" ex
     else

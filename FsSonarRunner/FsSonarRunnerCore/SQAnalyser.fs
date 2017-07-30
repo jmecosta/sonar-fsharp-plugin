@@ -7,7 +7,7 @@ open System.IO
 open System.Xml
 open System.Xml.Linq
 
-type SonarResoureMetrics(path : string) = 
+type SonarResoureMetrics(path : string) =  
     member val ResourcePath : string = path with get
     member val Lines : int = -1 with get, set
     member val Classes : int = -1 with get, set
@@ -21,7 +21,7 @@ type SonarResoureMetrics(path : string) =
     member val CopyPastTokens : UntypedAstUtils.TokenData List = List.empty with get, set
 
 type SQAnalyser() =
-            
+
     let mutable resources : SonarResoureMetrics List = List.Empty
     let resourcesLocker = new System.Object()
 
@@ -61,7 +61,6 @@ type SQAnalyser() =
         let lines = input.Split(array, System.StringSplitOptions.None)
         resourceMetric.CopyPastTokens <- FsSonarRunnerCore.UntypedAstUtils.getDumpToken(lines)
 
-
     member this.GatherMetricsForResource(path : string, input : string) =
         let resourceMetric = new SonarResoureMetrics(path)
         GatherMetrics(path, input, resourceMetric)
@@ -90,7 +89,7 @@ type SQAnalyser() =
                     printf "%s : %s : %i : %s\r\n" resource.ResourcePath  diagnostic.Rule diagnostic.Line diagnostic.Message
                             )
 
-    member this.WriteXmlToDisk(xmlOutPath : string) = 
+    member this.WriteXmlToDisk(xmlOutPath : string, printtoconsole : bool) = 
         printf "Write ouput xml to file %s\r\n" xmlOutPath
         let xmlOutSettings = new XmlWriterSettings(Encoding = Encoding.UTF8, Indent = true, IndentChars = "  ")
         use xmlOut = XmlWriter.Create(xmlOutPath, xmlOutSettings)
@@ -121,6 +120,8 @@ type SQAnalyser() =
             xmlOut.WriteStartElement("Issues") // 6 
 
             resource.Issues |> Seq.iter (fun diagnostic -> 
+                if printtoconsole then
+                    printf "%s : %i => %s : %s\r\n" resource.ResourcePath diagnostic.Line diagnostic.Rule diagnostic.Message
                 xmlOut.WriteStartElement("Issue")
                 xmlOut.WriteElementString("Id", sprintf "%s" diagnostic.Rule)
                 xmlOut.WriteElementString("Line", sprintf "%i" diagnostic.Line)
@@ -130,15 +131,18 @@ type SQAnalyser() =
                 
             xmlOut.WriteEndElement()    // 6
             
-            xmlOut.WriteStartElement("CopyPasteTokens");
+            xmlOut.WriteStartElement("CopyPasteTokens"); // 7
             for token in resource.CopyPastTokens do
-                xmlOut.WriteStartElement("Token");
-                xmlOut.WriteElementString("Value", System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(token.Content)))
-                xmlOut.WriteElementString("Line", token.Line.ToString())
-                xmlOut.WriteEndElement();
+                if token.LeftColoumn < token.RightColoumn then
+                    xmlOut.WriteStartElement("Token");
+                    xmlOut.WriteElementString("Value", System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(token.Content)))
+                    xmlOut.WriteElementString("Line", token.Line.ToString())
+                    xmlOut.WriteElementString("LeftColoumn", token.LeftColoumn.ToString())
+                    xmlOut.WriteElementString("RightColoumn", (token.RightColoumn + 1).ToString())
+                    xmlOut.WriteEndElement();
 
-            xmlOut.WriteEndElement()
-                                             
+            xmlOut.WriteEndElement() // 7
+
             xmlOut.WriteEndElement() // 3
 
         xmlOut.WriteEndElement() // 2

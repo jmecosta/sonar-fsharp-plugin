@@ -2,28 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.codehaus.sonar-plugins</groupId>
+    <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
-    <version>19</version>
+    <version>34</version>
   </parent>
 
-  <groupId>org.codehaus.sonar-plugins.dotnet.fsharp</groupId>
-  <artifactId>sonar-fsharp-squid</artifactId>
+  <groupId>jmecsoftware.sonarqube.fsharp</groupId>
+  <artifactId>sonarqube-fsharp</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.RC5</version>
+  <version>1.0.0</version>
 
   <name>SonarQube F# Plugin</name>
   <inceptionYear>2015</inceptionYear>
   <organization>
-    <name>Jorge Costa and SonarSource</name>
-    <url>http://www.sonarsource.com</url>
+    <name>jmecsoftware.com/</name>
+    <url>http://jmecsoftware.com/</url>
   </organization>
 
   <scm>
-    <connection>scm:git:git@github.com:jmecosta/sonar-fsharp-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:jmecosta/sonar-fsharp-plugin.git</developerConnection>
-    <url>https://github.com/jmecosta/sonar-fsharp-plugin</url>
-    <tag>1.0.RC1</tag>
+    <connection>scm:git:git@github.com:jmecsoftware/sonar-fsharp-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:jmecsoftware/sonar-fsharp-plugin.git</developerConnection>
+    <url>https://github.com/jmecsoftware/sonar-fsharp-plugin</url>
+    <tag>1.0.0</tag>
   </scm>
   <issueManagement>
     <system>GitHub</system>
@@ -31,14 +31,13 @@
   </issueManagement>
 
   <modules>
+    <module>FsSonarRunner</module>  
     <module>sonar-fsharp-plugin</module>
-    <module>FsSonarRunner</module>
   </modules>
 
   <properties>
-    <sonar.version>4.5.2</sonar.version>
-    <license.owner>Jorge Costa and SonarSource</license.owner>
+    <sonar.version>5.6.2</sonar.version>
+    <license.owner>Jorge Costa</license.owner>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
   </properties>
-
 </project>

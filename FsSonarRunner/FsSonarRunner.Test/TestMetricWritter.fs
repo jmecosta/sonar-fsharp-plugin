@@ -23,7 +23,7 @@ type CreatesCorrectXml() =
         let metrics = new SQAnalyser()
         metrics.RunAnalyses("/file.fs", content, "")
         let tmpFile = Path.GetTempFileName()
-        metrics.WriteXmlToDisk(tmpFile)
+        metrics.WriteXmlToDisk(tmpFile, false)
 
         let results = Helper.ResXml.Parse(File.ReadAllText(tmpFile))
         Assert.That(results.Files.[0].Path, Is.EqualTo("/file.fs"))

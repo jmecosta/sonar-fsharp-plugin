@@ -13,7 +13,11 @@ type InputXml = XmlProvider<"""
   <Settings>
     <Setting>
       <Key>sonar.cs.ignoreHeaderComments</Key>
-      <Value>true</Value>
+      <Value>sasdas</Value>
+    </Setting>
+    <Setting>
+      <Key>sonar.cs.ignoreHeaderComments</Key>
+      <Value>dsfsd</Value>
     </Setting>
   </Settings>
   <Rules>

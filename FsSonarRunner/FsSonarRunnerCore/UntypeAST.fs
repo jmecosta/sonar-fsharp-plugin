@@ -31,11 +31,13 @@ module UntypedAstUtils =
             input.[start..start + len - 1])
 
         let createTokenData(line : int, tok : FSharpTokenInfo, extractStr : bool) =
+
             let data = new TokenData(Line = line, LeftColoumn = tok.LeftColumn, RightColoumn = tok.RightColumn, Type = tok.TokenName)
             if extractStr then
                 data.Content <- content.[line - 1].Substring(tok.LeftColumn, tok.RightColumn - tok.LeftColumn + 1)
             else
                 data.Content <- "\"\""
+
             data
 
         let rec tokenizeLine (tokenizer:FSharpLineTokenizer) state count =
@@ -47,10 +49,9 @@ module UntypedAstUtils =
                 | "WHITESPACE" -> ()
                 | "STRING"
                 | "STRING_TEXT" ->
-                    if not(tok.LeftColumn.Equals(tok.RightColumn)) then
-                        
-                        tokens <- tokens @ [(tok, count)]
-                | str -> tokens <- tokens @ [(tok, count)]
+                    tokens <- tokens @ [(tok, count)]
+                | str -> 
+                    tokens <- tokens @ [(tok, count)]
 
                 // Tokenize the rest, in the new state
                 tokenizeLine tokenizer state count
@@ -80,20 +81,24 @@ module UntypedAstUtils =
                 | "STRING"
                 | "STRING_TEXT" ->
                     if dontAddNext = false then
-                        tokensSimple <- tokensSimple @ [createTokenData(count, tok, false)]
+                        let tok = createTokenData(count, tok, false)
+                        let lenght = content.[tok.Line - 1].Length
+                        if tok.RightColoumn < lenght then
+                            System.Diagnostics.Debug.WriteLine("Line : " + tok.Line.ToString() + " ---- " + lenght.ToString());
 
-                    try
-                        let nexttoken, cnt = tokens.[i+1]                    
-                        match nexttoken.TokenName with
-                        | "STRING"
-                        | "STRING_TEXT" -> 
-                            tokensSimple.[tokensSimple.Length-1].RightColoumn <- nexttoken.RightColumn
-                            dontAddNext <- true
-                        | _ ->  dontAddNext <- false
-                    with
-                    | _ -> ()
+                        if tok.LeftColoumn <= tok.RightColoumn && content.[tok.Line - 1].Length > tok.RightColoumn then
+                            System.Diagnostics.Debug.WriteLine("Added : " + tok.Line.ToString() + " ---- " + tok.RightColoumn.ToString() + " ::: " + lenght.ToString()) ;
+                            tokensSimple <- tokensSimple @ [tok]
+
                 | _ -> 
-                    tokensSimple <- tokensSimple @ [createTokenData(count, tok, true)]
+                    let tok = createTokenData(count, tok, true)
+                    let lenght = content.[tok.Line - 1].Length
+                    if tok.RightColoumn < lenght then
+                        System.Diagnostics.Debug.WriteLine("Line : " + tok.Line.ToString() + " ---- " + lenght.ToString());
+
+                    if tok.LeftColoumn <= tok.RightColoumn && content.[tok.Line - 1].Length > tok.RightColoumn then
+                        System.Diagnostics.Debug.WriteLine("Added : " + tok.Line.ToString() + " ---- " + tok.RightColoumn.ToString() + " ::: " + lenght.ToString()) ;
+                        tokensSimple <- tokensSimple @ [tok]
                     dontAddNext <- false
                     )
                                     
