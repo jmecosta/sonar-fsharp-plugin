@@ -27,7 +27,6 @@ public class FSharpSonarRulesDefinitionTest {
 
     new FSharpSonarRulesDefinition().define(context);
     assertEquals(1, context.repositories().size());    
-    assertEquals(41, context.repository("fsharplint").rules().size());
-    assertThat(context.repository("fsharplint").rules()).hasSize(43);
+    assertEquals(43, context.repository("fsharplint").rules().size());
   }
 }

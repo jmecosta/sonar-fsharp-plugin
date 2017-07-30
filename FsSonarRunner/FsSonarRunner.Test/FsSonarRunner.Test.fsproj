@@ -85,7 +85,6 @@
       <HintPath>..\packages\FSharp.Compiler.Service.ProjectCracker.13.0.0\lib\net45\FSharp.Compiler.Service.ProjectCracker.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    </Reference>
     <Reference Include="FSharp.Data">
       <HintPath>..\packages\FSharp.Data.2.3.3\lib\net40\FSharp.Data.dll</HintPath>
       <Private>True</Private>

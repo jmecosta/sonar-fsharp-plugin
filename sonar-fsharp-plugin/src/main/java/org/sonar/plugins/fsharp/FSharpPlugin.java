@@ -47,9 +47,6 @@ public class FSharpPlugin implements Plugin {
     context.addExtension(FSharpSonarRulesDefinition.class);
     context.addExtension(FSharpSonarWayProfile.class);
     context.addExtension(FsSonarRunnerExtractor.class);
-    context.addExtension(FSharpSensor.class);
-    
-    context.addExtensions(FSharpCodeCoverageProvider.extensions());
-    context.addExtensions(FSharpUnitTestResultsProvider.extensions());    
+    context.addExtension(FSharpSensor.class);       
   }
 }

@@ -57,21 +57,21 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
       .setType(RuleParamType.STRING).setDefaultValue("");    
            
     // name convention
-    NewRule interfaceNaming = repository.createRule("RulesNamingConventionsInterfaceError").setName("Interface naming convention").setSeverity(Severity.MAJOR);
-    NewRule exceptionNaming = repository.createRule("RulesNamingConventionsExceptionError").setName("Exception naming convention").setSeverity(Severity.MAJOR);
-    NewRule typeNaming = repository.createRule("RulesNamingConventionsTypesError").setName("Type naming convention").setSeverity(Severity.MAJOR);
-    NewRule recordsNaming = repository.createRule("RulesNamingConventionsRecordsError").setName("Record naming convention").setSeverity(Severity.MAJOR);
-    NewRule enumNaming = repository.createRule("RulesNamingConventionsEnumError").setName("Enum naming convention").setSeverity(Severity.MAJOR);
-    NewRule unionNaming = repository.createRule("RulesNamingConventionsUnionError").setName("Union naming convention").setSeverity(Severity.MAJOR);
-    NewRule moduleNaming = repository.createRule("RulesNamingConventionsModuleError").setName("Module naming convention").setSeverity(Severity.MAJOR);
-    NewRule literalNaming = repository.createRule("RulesNamingConventionsLiteralError").setName("Literal naming convention").setSeverity(Severity.MAJOR);
-    NewRule nameSpaceNaming = repository.createRule("RulesNamingConventionsNamespaceError").setName("Namespace naming convention").setSeverity(Severity.MAJOR);    
-    NewRule memberNaming = repository.createRule("RulesNamingConventionsMemberError").setName("Member naming convention").setSeverity(Severity.MAJOR);    
-    NewRule paramsNaming = repository.createRule("RulesNamingConventionsParamsError").setName("Params naming convention").setSeverity(Severity.MAJOR);    
-    NewRule measureNaming = repository.createRule("RulesNamingConventionsMeasureError").setName("Measure naming convention").setSeverity(Severity.MAJOR);    
-    NewRule activePatternNaming = repository.createRule("RulesNamingConventionsActivePatternError").setName("Active pattern naming convention").setSeverity(Severity.MAJOR);    
-    NewRule publicValuesNaming = repository.createRule("RulesNamingConventionsPublicValuesError").setName("Public values naming convention").setSeverity(Severity.MAJOR);    
-    NewRule nonPublicNaming = repository.createRule("RulesNamingConventionsNonPublicError").setName("Non Public naming convention").setSeverity(Severity.MAJOR);
+    NewRule interfaceNaming = repository.createRule("RulesNamingConventionsInterfaceError").setName("Interface naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule exceptionNaming = repository.createRule("RulesNamingConventionsExceptionError").setName("Exception naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule typeNaming = repository.createRule("RulesNamingConventionsTypesError").setName("Type naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule recordsNaming = repository.createRule("RulesNamingConventionsRecordsError").setName("Record naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule enumNaming = repository.createRule("RulesNamingConventionsEnumError").setName("Enum naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule unionNaming = repository.createRule("RulesNamingConventionsUnionError").setName("Union naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule moduleNaming = repository.createRule("RulesNamingConventionsModuleError").setName("Module naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule literalNaming = repository.createRule("RulesNamingConventionsLiteralError").setName("Literal naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule nameSpaceNaming = repository.createRule("RulesNamingConventionsNamespaceError").setName("Namespace naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");    
+    NewRule memberNaming = repository.createRule("RulesNamingConventionsMemberError").setName("Member naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");    
+    NewRule paramsNaming = repository.createRule("RulesNamingConventionsParamsError").setName("Params naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");    
+    NewRule measureNaming = repository.createRule("RulesNamingConventionsMeasureError").setName("Measure naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");    
+    NewRule activePatternNaming = repository.createRule("RulesNamingConventionsActivePatternError").setName("Active pattern naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");    
+    NewRule publicValuesNaming = repository.createRule("RulesNamingConventionsPublicValuesError").setName("Public values naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");    
+    NewRule nonPublicNaming = repository.createRule("RulesNamingConventionsNonPublicError").setName("Non Public naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
     
     interfaceNaming.createParam("Naming").setDescription("Naming Convention: PascalCase(0), CamelCase(1)").setType(RuleParamType.multipleListOfValues("0", "1")).setDefaultValue("0");
     interfaceNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0"); 
@@ -180,7 +180,7 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
       .setType(RuleParamType.INTEGER).setDefaultValue("4");
       
     // RulesRedundantNewKeywordError
-    repository.createRule("RulesRedundantNewKeywordError").setName("Redudant usage of new Keywork").setSeverity(Severity.MAJOR);
+    repository.createRule("RulesRedundantNewKeywordError").setName("Redudant usage of new Keywork").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
         
 
     // lint errors

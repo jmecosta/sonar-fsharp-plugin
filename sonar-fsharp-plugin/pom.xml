@@ -32,8 +32,7 @@
       <type>zip</type>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-    </dependency>
+
         <dependency>
           <groupId>org.sonarsource.sonarqube</groupId>
           <artifactId>sonar-plugin-api</artifactId>
@@ -144,9 +143,6 @@
       <version>2.6</version>
       <type>jar</type>
     </dependency>
-    <dependency>
-      <groupId>org.sonarsource.dotnet</groupId>
-      <artifactId>sonar-dotnet-tests-library</artifactId>
-    </dependency>
+
 </dependencies>
 </project>

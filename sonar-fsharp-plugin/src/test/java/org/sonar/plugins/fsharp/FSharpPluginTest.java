@@ -24,6 +24,6 @@ public class FSharpPluginTest {
    Plugin.Context context = new Plugin.Context(SonarQubeVersion.V5_6);
    FSharpPlugin plugin = new FSharpPlugin();
    plugin.define(context);
-   assertEquals(22, context.getExtensions().size());
+   assertEquals(5, context.getExtensions().size());
   }
 }
