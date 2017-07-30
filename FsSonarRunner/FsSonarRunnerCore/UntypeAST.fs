@@ -337,11 +337,13 @@ module UntypedAstUtils =
             visitExpr expr
         and visitMatches = List.iter visitMatch
         
+        let dataRange range = 
+            printfn "Not Supported member Report"
+
         let visitMember = function
             | SynMemberDefn.LetBindings (bindings, _, _, range) ->
                 functions <- functions + 1
                 addToUniqueFunctions(range, bindings)
-
                 addToUniqueRange(range)
                 visitBindindgs bindings
             | SynMemberDefn.Member (binding, range) ->
@@ -355,7 +357,8 @@ module UntypedAstUtils =
             | SynMemberDefn.ImplicitCtor (_, _, _, _, range) ->
                 nmbClass <- nmbClass + 1
                 addToUniqueRange(range)
-            | _ -> printfn "Not Supported member Report" 
+            | range -> dataRange range
+
 
         let rec visitType ty =
             let (SynTypeDefn.TypeDefn (_, repr, _, _)) = ty

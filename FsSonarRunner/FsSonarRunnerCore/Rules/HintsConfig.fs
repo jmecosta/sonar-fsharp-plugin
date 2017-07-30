@@ -1,5 +1,7 @@
 ﻿module HintsConfig
 
+open System.Net
+
 open FParsec
 open FSharpLint.Framework.HintParser
 
@@ -19,7 +21,7 @@ let parseHints hints =
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
     
     let hints = 
-        let strintData = ConfHelper.GetValueForString(config, "RulesHintRefactor", "Hints", "")
+        let strintData = System.Net.WebUtility.HtmlDecode(ConfHelper.GetValueForString(config, "RulesHintRefactor", "Hints", ""))
         if strintData <> "" then
             ConfHelper.GetValueForStringList(config, "RulesHintRefactor", "Hints", List.Empty)
         else

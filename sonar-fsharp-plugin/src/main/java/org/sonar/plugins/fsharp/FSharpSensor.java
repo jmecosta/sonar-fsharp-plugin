@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.sonar.api.batch.rule.ActiveRule;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
@@ -107,7 +108,7 @@ public class FSharpSensor implements Sensor {
           
           appendLine(sb, "        <Parameter>");
           appendLine(sb, "          <Key>" + parameter.getKey() + "</Key>");
-          appendLine(sb, "          <Value>" + parameter.getValue() + "</Value>");
+          appendLine(sb, "          <Value>" + StringEscapeUtils.escapeXml(parameter.getValue()) + "</Value>");
           appendLine(sb, "        </Parameter>");
         }
         appendLine(sb, "      </Parameters>");
