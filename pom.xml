@@ -10,7 +10,7 @@
   <groupId>jmecsoftware.sonarqube.fsharp</groupId>
   <artifactId>sonarqube-fsharp</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 
   <name>SonarQube F# Plugin</name>
   <inceptionYear>2015</inceptionYear>

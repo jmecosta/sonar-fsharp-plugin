@@ -10,7 +10,7 @@
 
   <groupId>jmecsoftware.sonarqube.fsharp</groupId>
   <artifactId>sonarqube-fsharp-plugin</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <packaging>sonar-plugin</packaging>
   
   <name>Sonar F# Plugin :: Core</name>

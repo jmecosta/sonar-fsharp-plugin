@@ -179,8 +179,8 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
     booleanOperators.createParam("MaxItems").setDescription("Maximum allowed values")
       .setType(RuleParamType.INTEGER).setDefaultValue("4");
       
-    // RulesRedundantNewKeywordError
-    repository.createRule("RulesRedundantNewKeywordError").setName("Redudant usage of new Keywork").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    // RulesRedundantNewKeyword
+    repository.createRule("RulesRedundantNewKeyword").setName("Redudant usage of new Keywork").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
         
 
     // lint errors
