@@ -11,6 +11,8 @@ open System.Globalization
 open System.Collections
 open System.IO
 
+open System.Text.RegularExpressions
+
 [<AllowNullLiteralAttribute>]
 type FsLintRule(name : string, value : string) =
     member val Rule : string = name with get
@@ -43,20 +45,14 @@ type SonarRules() =
     member this.GetRule(txt : string) =
         
         let VerifyIfExists(rule : FsLintRule, txtdata : string) = 
-            if rule.Text.StartsWith("{") then
-                if rule.Text.Contains("can be refactored") && txt.Contains("can be refactored into") then
-                    true
-                elif rule.Text.Contains("s should be less than") && txt.Contains("s should be less than") then
-                    true
-                else
-                    false
-            else
-                let start = rule.Text.Split('{').[0]
-                if txt.StartsWith(start) then
-                    true
-                else
-                    false
+            let pattern = rule.Text
+                                .Replace("{0}", "[a-zA-Z0-9]{1,}")
+                                .Replace("{1}", "[a-zA-Z0-9]{1,}")
+                                .Replace("{2}", "[a-zA-Z0-9]{1,}")
+                                .Replace("{3}", "[a-zA-Z0-9]{1,}")
+                                .Replace("{4}", "[a-zA-Z0-9]{1,}")
 
+            Regex.Match(txtdata, pattern).Success
 
         let foundItem = fsLintProfile |> Seq.tryFind (fun c -> VerifyIfExists(c, txt))
         match foundItem with
