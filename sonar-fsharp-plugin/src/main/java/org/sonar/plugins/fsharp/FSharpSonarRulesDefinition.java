@@ -187,6 +187,21 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
     repository.createRule("LintSourceError").setName("Parsing errors").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");  
     repository.createRule("LintError").setName("Lint errors").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
     
+    
+    repository.createRule("RulesXmlDocumentationExceptionError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
+    repository.createRule("RulesXmlDocumentationUnionError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
+    repository.createRule("RulesXmlDocumentationRecordError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
+    repository.createRule("RulesXmlDocumentationMemberError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
+    repository.createRule("RulesXmlDocumentationTypeError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
+    repository.createRule("RulesXmlDocumentationAutoPropertyError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
+
+    repository.createRule("RulesXmlDocumentationEnumError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
+    repository.createRule("RulesXmlDocumentationModuleError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
+    repository.createRule("RulesXmlDocumentationLetError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
+
+    repository.createRule("RulesNamingConventionsCamelCaseError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
+    repository.createRule("RulesNamingConventionsPascalCaseError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
+
     repository.done();
   }
 
