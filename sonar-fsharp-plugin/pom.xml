@@ -5,12 +5,12 @@
 <parent>
     <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
-    <version>34</version>
+    <version>46</version>
   </parent>
 
   <groupId>jmecsoftware.sonarqube.fsharp</groupId>
   <artifactId>sonarqube-fsharp-plugin</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
   <packaging>sonar-plugin</packaging>
   
   <name>Sonar F# Plugin :: Core</name>
@@ -18,7 +18,7 @@
 
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
-    <sonar.version>5.6.2</sonar.version>    
+    <sonar.version>6.7</sonar.version>    
     <sonar.pluginName>F#</sonar.pluginName>
     <sonar.pluginClass>org.sonar.plugins.fsharp.FSharpPlugin</sonar.pluginClass>
   </properties>            
@@ -36,9 +36,8 @@
         <dependency>
           <groupId>org.sonarsource.sonarqube</groupId>
           <artifactId>sonar-plugin-api</artifactId>
-          <version>5.6</version>
-            <type>jar</type>
-            <scope>provided</scope>
+          <version>6.7</version>
+          <scope>provided</scope>
         </dependency>
       <dependency>
         <groupId>org.codehaus.sonar</groupId>
@@ -76,6 +75,7 @@
       <plugin>
         <groupId>com.mycila.maven-license-plugin</groupId>
         <artifactId>maven-license-plugin</artifactId>
+        <version>1.9.0</version>
         <configuration>
           <header>src/license-header.txt</header>
         </configuration>

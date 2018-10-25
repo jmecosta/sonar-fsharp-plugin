@@ -4,13 +4,13 @@
   <parent>
     <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
-    <version>34</version>
+    <version>46</version>
   </parent>
 
   <groupId>jmecsoftware.sonarqube.fsharp</groupId>
   <artifactId>sonarqube-fsharp</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
 
   <name>SonarQube F# Plugin</name>
   <inceptionYear>2015</inceptionYear>
@@ -36,7 +36,7 @@
   </modules>
 
   <properties>
-    <sonar.version>5.6.2</sonar.version>
+    <sonar.version>6.7</sonar.version>
     <license.owner>Jorge Costa</license.owner>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
   </properties>

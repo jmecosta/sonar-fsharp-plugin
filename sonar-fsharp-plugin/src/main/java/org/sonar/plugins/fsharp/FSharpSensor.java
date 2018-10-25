@@ -1,4 +1,23 @@
 /*
+ * Sonar F# Plugin :: Core
+ * Copyright (C) 2009-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+/*
  * Sonar FSharp Plugin, open source software quality management tool.
  *
  * Sonar FSharp Plugin is free software; you can redistribute it and/or
@@ -18,7 +37,6 @@ import java.io.BufferedWriter;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.config.Settings;
 import org.sonar.api.issue.NoSonarFilter;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.FileLinesContext;
@@ -55,6 +73,7 @@ import org.sonar.api.batch.sensor.highlighting.NewHighlighting;
 import org.sonar.api.batch.sensor.highlighting.TypeOfText;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
+import org.sonar.api.config.Configuration;
 import org.sonar.api.rule.RuleKey;
 
 @DependedUpon("NSonarQubeAnalysis")
@@ -62,13 +81,13 @@ public class FSharpSensor implements Sensor {
 
   private static final Logger LOG = Loggers.get(FSharpSensor.class);
 
-  private final Settings settings;
+  private final Configuration settings;
   private final FsSonarRunnerExtractor extractor;
   private final FileSystem fs;
   private final FileLinesContextFactory fileLinesContextFactory;
   private final NoSonarFilter noSonarFilter;
 
-  public FSharpSensor(Settings settings, FsSonarRunnerExtractor extractor, FileSystem fs, FileLinesContextFactory fileLinesContextFactory,
+  public FSharpSensor(Configuration settings, FsSonarRunnerExtractor extractor, FileSystem fs, FileLinesContextFactory fileLinesContextFactory,
     NoSonarFilter noSonarFilter) {
     this.settings = settings;
     this.extractor = extractor;
@@ -89,6 +108,42 @@ public class FSharpSensor implements Sensor {
   }
 
   private void analyze(SensorContext context) {
+    StringBuilder sb = CreateConfiguration(context);
+    File analysisInput = toolInput();
+    File analysisOutput = toolOutput();
+   
+    try {
+      String workdirRoot = context.fileSystem().workDir().getCanonicalPath();
+      FSharpSensor.writeStringToFile(analysisInput.getAbsolutePath(), sb.toString());
+
+      File executableFile = extractor.executableFile(workdirRoot);
+
+      Command command;
+      if (OsUtils.isWindows()) {
+        command = Command.create(executableFile.getAbsolutePath())
+                .addArgument("/i:" + analysisInput.getAbsolutePath())
+                .addArgument("/o:" + analysisOutput.getAbsolutePath());      
+      } else {
+        command = Command.create("mono")
+                .addArgument(executableFile.getAbsolutePath())
+                .addArgument("/i:" + analysisInput.getAbsolutePath())
+                .addArgument("/o:" + analysisOutput.getAbsolutePath());  
+      }
+      LOG.debug(command.toCommandLine());
+      CommandExecutor.create().execute(command, new LogInfoStreamConsumer(), new LogErrorStreamConsumer(), Integer.MAX_VALUE);
+    } catch (IOException e) {
+        
+        LOG.error("Could not write settings to file '{0}'", e.getMessage());
+        
+        String msg = new StringBuilder()
+          .append("Could not write settings to file: '")
+          .append(e)
+          .append("'")
+          .toString();
+    }    
+  }
+
+  private StringBuilder CreateConfiguration(SensorContext context) {
     StringBuilder sb = new StringBuilder();
     appendLine(sb, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
     appendLine(sb, "<AnalysisInput>");
@@ -98,12 +153,12 @@ public class FSharpSensor implements Sensor {
     for (ActiveRule activeRule : context.activeRules().findByRepository(FSharpPlugin.REPOSITORY_KEY)) {
       appendLine(sb, "    <Rule>");
       Map<String, String> parameters = effectiveParameters(activeRule);
-      appendLine(sb, "      <Key>" + parameters.get("RuleKey") + "</Key>");      
+      appendLine(sb, "      <Key>" + parameters.get("RuleKey") + "</Key>");
       if (!parameters.isEmpty()) {
         appendLine(sb, "      <Parameters>");
         for (Entry<String, String> parameter : parameters.entrySet()) {
           if ("RuleKey".equals(parameter.getKey())) {
-              continue;
+            continue;
           }
           
           appendLine(sb, "        <Parameter>");
@@ -122,40 +177,7 @@ public class FSharpSensor implements Sensor {
     }
     appendLine(sb, "  </Files>");
     appendLine(sb, "</AnalysisInput>");
-
-    File analysisInput = toolInput();
-    File analysisOutput = toolOutput();
-
-    
-    try {
-      FSharpSensor.writeStringToFile(analysisInput.getAbsolutePath(), sb.toString());
-
-    File executableFile = extractor.executableFile();
-
-    Command command;
-    if (OsUtils.isWindows()) {
-      command = Command.create(executableFile.getAbsolutePath())
-              .addArgument("/i:" + analysisInput.getAbsolutePath())
-              .addArgument("/o:" + analysisOutput.getAbsolutePath());      
-    } else {
-      command = Command.create("mono")
-              .addArgument(executableFile.getAbsolutePath())
-              .addArgument("/i:" + analysisInput.getAbsolutePath())
-              .addArgument("/o:" + analysisOutput.getAbsolutePath());  
-    }
-
-    LOG.debug(command.toCommandLine());
-    CommandExecutor.create().execute(command, new LogInfoStreamConsumer(), new LogErrorStreamConsumer(), Integer.MAX_VALUE);
-    } catch (IOException e) {
-        
-        LOG.error("Could not write settings to file '{0}'", e.getMessage());
-        
-        String msg = new StringBuilder()
-          .append("Could not write settings to file: '")
-          .append(e)
-          .append("'")
-          .toString();
-    }    
+    return sb;
   }
 
   private static Map<String, String> effectiveParameters(ActiveRule activeRule) {
