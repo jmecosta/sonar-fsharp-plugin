@@ -2,7 +2,7 @@ The plugin enables analysis of F# within SonarQube.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/jira637y22trnuc4?svg=true)](https://ci.appveyor.com/project/jorgecosta/sonar-fsharp-plugin-wxq94)
 
-Download latest snapshot from : https://ci.appveyor.com/project/jorgecosta/sonar-fsharp-plugin-wxq94/build/artifacts -> ex : sonar-fsharp-plugin-1.0.RC1.jar artifact
+Download latest snapshot from : https://ci.appveyor.com/project/jorgecosta/sonar-fsharp-plugin-wxq94/build/artifacts
 
 # Description / Features
 
