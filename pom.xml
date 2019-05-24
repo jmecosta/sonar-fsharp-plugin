@@ -13,6 +13,7 @@
   <version>1.0.3</version>
 
   <name>SonarQube F# Plugin</name>
+  <description>SonarQube F# Code Analyzer Plugin</description>
   <inceptionYear>2015</inceptionYear>
   <organization>
     <name>jmecsoftware.com/</name>
