@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -13,6 +13,7 @@
   <version>1.0.3</version>
 
   <name>SonarQube F# Plugin</name>
+  <description>SonarQube F# Code Analyzer Plugin</description>
   <inceptionYear>2015</inceptionYear>
   <organization>
     <name>jmecsoftware.com/</name>
@@ -23,15 +24,15 @@
     <connection>scm:git:git@github.com:jmecsoftware/sonar-fsharp-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:jmecsoftware/sonar-fsharp-plugin.git</developerConnection>
     <url>https://github.com/jmecsoftware/sonar-fsharp-plugin</url>
-    <tag>1.0.2</tag>
+    <tag>1.0.3</tag>
   </scm>
   <issueManagement>
     <system>GitHub</system>
-    <url>https://github.com/jmecosta/sonar-fsharp-plugin/issues</url>
+    <url>https://github.com/jmecsoftware/sonar-fsharp-plugin/issues</url>
   </issueManagement>
 
   <modules>
-    <module>FsSonarRunner</module>  
+    <module>FsSonarRunner</module>
     <module>sonar-fsharp-plugin</module>
   </modules>
 
