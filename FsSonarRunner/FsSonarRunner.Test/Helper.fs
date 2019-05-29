@@ -1,26 +1,22 @@
 ﻿module Helper
 
-open System
 open System.IO
-open Microsoft.FSharp.Compiler.Ast
 open Microsoft.FSharp.Compiler.SourceCodeServices
-open FsSonarRunnerCore
-open System.Xml.Linq
 open FSharp.Data
 
 let getAstByContent(file : string, input : string) =
     let checker = FSharpChecker.Create()
 
     // Get compiler options for the 'project' implied by a single script file
-    let (projOptions, _diagnostics) = 
+    let (projOptions, _diagnostics) =
         checker.GetProjectOptionsFromScript(file, input)
         |> Async.RunSynchronously
 
     // Run the first phase (untyped parsing) of the compiler
-    let parseFileResults = 
-        checker.ParseFileInProject(file, input, projOptions) 
+    let parseFileResults =
+        checker.ParseFileInProject(file, input, projOptions)
         |> Async.RunSynchronously
-            
+
     parseFileResults.ParseTree
 
 let getAstByFile(file : string) =
@@ -29,19 +25,18 @@ let getAstByFile(file : string) =
     let checker = FSharpChecker.Create()
 
     // Get compiler options for the 'project' implied by a single script file
-    let (projOptions, _diagnostics) = 
+    let (projOptions, _diagnostics) =
         checker.GetProjectOptionsFromScript(file, input)
         |> Async.RunSynchronously
 
     // Run the first phase (untyped parsing) of the compiler
-    let parseFileResults = 
-        checker.ParseFileInProject(file, input, projOptions) 
+    let parseFileResults =
+        checker.ParseFileInProject(file, input, projOptions)
         |> Async.RunSynchronously
-            
+
     parseFileResults.ParseTree
 
-
-type ResXml = XmlProvider<""" 
+type ResXml = XmlProvider<"""
 <!--This XML format is not an API-->
 <AnalysisOutput>
   <Files>

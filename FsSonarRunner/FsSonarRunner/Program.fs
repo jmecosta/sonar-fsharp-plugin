@@ -16,10 +16,10 @@ let ShowHelp () =
         Console.WriteLine ("    /displayrules")
 
 [<EntryPoint>]
-let main argv = 
+let main argv =
     printfn "%A" argv
     let arguments = XmlHelper.parseArgs(argv)
-    
+
     if arguments.ContainsKey("h") then
         ShowHelp()
     if arguments.ContainsKey("displayrules") then
@@ -52,7 +52,7 @@ let main argv =
             with
             | ex -> printf "    Failed: %A" ex
         ()
-    elif arguments.ContainsKey("d") then 
+    elif arguments.ContainsKey("d") then
         try
             let directory = arguments.["d"] |> Seq.head
 
@@ -71,4 +71,3 @@ let main argv =
         ShowHelp()
 
     0
-

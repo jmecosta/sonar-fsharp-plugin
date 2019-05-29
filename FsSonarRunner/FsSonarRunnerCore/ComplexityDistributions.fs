@@ -1,6 +1,6 @@
 ﻿module ComplexityDistributions
 
-let GetFileComplexityDist(complexity : int) = 
+let GetFileComplexityDist(complexity : int) =
     if complexity >= 0 && complexity <  5 then
         "0=1;5=0;10=0;20=0;30=0;60=0;90=0"
     elif complexity >= 5 && complexity <  10 then
@@ -13,7 +13,7 @@ let GetFileComplexityDist(complexity : int) =
         "0=0;5=0;10=0;20=0;30=1;60=0;90=0"
     elif complexity >= 60 && complexity <  90 then
         "0=0;5=0;10=0;20=0;30=0;60=1;90=0"
-    else 
+    else
         "0=0;5=0;10=0;20=0;30=0;60=0;90=1"
 
 let GetFunctionComplexityDist(complexities : int List) =
@@ -38,7 +38,7 @@ let GetFunctionComplexityDist(complexities : int List) =
             range4 <- range4 + 1
         elif complexity >= 10 && complexity <  12 then
             range5 <- range5 + 1
-        else 
+        else
             range6 <- range6 + 1
 
     for complexity in complexities do

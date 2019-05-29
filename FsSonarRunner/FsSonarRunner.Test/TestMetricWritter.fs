@@ -3,15 +3,14 @@
 open System.IO
 open NUnit.Framework
 open FsSonarRunnerCore
-open System.Xml
 
 [<TestFixture>]
 type CreatesCorrectXml() =
 
     [<Test>]
-    member this.ShouldCreateValidXml() = 
+    member this.ShouldCreateValidXml() =
         let content = """   [<AllowNullLiteral>] // does not count as source
-                            type SonarModule() = 
+                            type SonarModule() =
                                 // the name
                                 member this.Name(a)  = ""
                                 member val ProjectName : string = "" with get, set

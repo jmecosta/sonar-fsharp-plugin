@@ -2,9 +2,7 @@
 namespace FsSonarRunnerCore
 
 module UntypedAstUtils =
-    open System
-
-    open Microsoft.FSharp.Compiler.Ast   
+    open Microsoft.FSharp.Compiler.Ast
     open Microsoft.FSharp.Compiler
     open Microsoft.FSharp.Compiler.SourceCodeServices
 
@@ -21,11 +19,11 @@ module UntypedAstUtils =
     let internal longIdentToArray (longIdent: LongIdent): Idents =
         longIdent |> List.map string |> List.toArray
 
-    let getDumpToken (content : string [])  = 
+    let getDumpToken (content : string [])  =
         let sourceTok = FSharpSourceTokenizer([], None)
         let mutable tokens = List.empty
 
-        let chop (input : string) len = 
+        let chop (input : string) len =
             Array.init (input.Length / len) (fun index ->
             let start = index * len
             input.[start..start + len - 1])
@@ -50,15 +48,14 @@ module UntypedAstUtils =
                 | "STRING"
                 | "STRING_TEXT" ->
                     tokens <- tokens @ [(tok, count)]
-                | str -> 
+                | str ->
                     tokens <- tokens @ [(tok, count)]
 
                 // Tokenize the rest, in the new state
                 tokenizeLine tokenizer state count
             | None, state -> state
 
-
-        let rec tokenizeLines state count lines = 
+        let rec tokenizeLines state count lines =
             match lines with
             | line::lines ->
                 // Create tokenizer & tokenize single line
@@ -70,10 +67,10 @@ module UntypedAstUtils =
 
         content
         |> List.ofSeq
-        |> tokenizeLines 0L 1 
+        |> tokenizeLines 0L 1
 
         let mutable tokensSimple : TokenData List = List.empty
-        
+
         // remove duplicated string text
         let mutable dontAddNext = false
         tokens |> Seq.iteri (fun i (tok, count) ->
@@ -90,7 +87,7 @@ module UntypedAstUtils =
                             System.Diagnostics.Debug.WriteLine("Added : " + tok.Line.ToString() + " ---- " + tok.RightColoumn.ToString() + " ::: " + lenght.ToString()) ;
                             tokensSimple <- tokensSimple @ [tok]
 
-                | _ -> 
+                | _ ->
                     let tok = createTokenData(count, tok, true)
                     let lenght = content.[tok.Line - 1].Length
                     if tok.RightColoumn < lenght then
@@ -101,7 +98,7 @@ module UntypedAstUtils =
                         tokensSimple <- tokensSimple @ [tok]
                     dontAddNext <- false
                     )
-                                    
+
         tokensSimple
 
     /// Returns ranges of all code lines in AST
@@ -135,13 +132,13 @@ module UntypedAstUtils =
                 visitExpr trueBranch
                 falseBranchOpt |> Option.iter visitExpr
 
-            | SynExpr.LetOrUse (_, _, bindings, body, range) -> 
+            | SynExpr.LetOrUse (_, _, bindings, body, range) ->
                 functions <- functions + 1
                 addToUniqueRange(range)
                 visitBindindgs bindings
                 visitExpr body
 
-            | SynExpr.LetOrUseBang (_, _, _, _, rhsExpr, body, range) -> 
+            | SynExpr.LetOrUseBang (_, _, _, _, rhsExpr, body, range) ->
                 functions <- functions + 1
                 addToUniqueRange(range)
                 visitExpr rhsExpr
@@ -151,45 +148,45 @@ module UntypedAstUtils =
                 addToUniqueRange(range)
                 visitExpr argExpr
                 visitExpr funcExpr
-            
+
             | SynExpr.Lambda (_, _, _, expr, range) ->
                 addToUniqueRange(range)
                 visitExpr expr
-            
-            | SynExpr.Record (_, _, fields, range) -> 
+
+            | SynExpr.Record (_, _, fields, range) ->
                 addToUniqueRange(range)
                 fields |> List.choose (fun (_, expr, _) -> expr) |> List.iter visitExpr
-            
-            | SynExpr.ArrayOrListOfSeqExpr (_, expr, range) -> 
+
+            | SynExpr.ArrayOrListOfSeqExpr (_, expr, range) ->
                 addToUniqueRange(range)
                 visitExpr expr
-            
+
             | SynExpr.CompExpr (_, _, expr, range) ->
                 addToUniqueRange(range)
                 visitExpr expr
-            
+
             // complexity increase
             | SynExpr.ForEach (_, _, _, _, _, body, range) ->
                 complexity <- complexity + 1
                 addToUniqueRange(range)
                 visitExpr body
-            
+
             | SynExpr.YieldOrReturn (_, expr, range) ->
                 addToUniqueRange(range)
                 visitExpr expr
-            
+
             | SynExpr.YieldOrReturnFrom (_, expr, range) ->
                 addToUniqueRange(range)
                 visitExpr expr
-            
+
             | SynExpr.Do (expr, range) ->
                 addToUniqueRange(range)
                 visitExpr expr
-            
+
             | SynExpr.DoBang (expr, range) ->
                 addToUniqueRange(range)
                 visitExpr expr
-            
+
             | SynExpr.Downcast (expr, _, range) ->
                 addToUniqueRange(range)
                 visitExpr expr
@@ -199,33 +196,33 @@ module UntypedAstUtils =
                 complexity <- complexity + 1
                 addToUniqueRange(range)
                 visitExpr expr
-            
+
             | SynExpr.Lazy (expr, range) ->
                 addToUniqueRange(range)
                 visitExpr expr
-            
+
             // complexity increase
-            | SynExpr.Match (_, expr, clauses, _, range) -> 
+            | SynExpr.Match (_, expr, clauses, _, range) ->
                 complexity <- complexity + clauses.Length - 1
                 addToUniqueRange(range)
                 visitExpr expr
-                visitMatches clauses 
-            
+                visitMatches clauses
+
             // apparently this also increases complexity
             | SynExpr.Ident(ident)
-                    when 
-                        ident.idText = "op_BooleanAnd" || 
+                    when
+                        ident.idText = "op_BooleanAnd" ||
                         ident.idText = "op_BooleanOr" -> complexity <- complexity + 1
 
             | SynExpr.MatchLambda (_, _, clauses, _, range) ->
                 addToUniqueRange(range)
                 visitMatches clauses
-            
-            | SynExpr.ObjExpr (_, _, bindings, _, _ , range) -> 
+
+            | SynExpr.ObjExpr (_, _, bindings, _, _ , range) ->
                 addToUniqueRange(range)
                 visitBindindgs bindings
-            
-            | SynExpr.Typed (expr, _, range) -> 
+
+            | SynExpr.Typed (expr, _, range) ->
                 addToUniqueRange(range)
                 visitExpr expr
 
@@ -242,13 +239,13 @@ module UntypedAstUtils =
                 addToUniqueRange(range)
                 visitExpr expr
 
-            | SynExpr.Tuple (exprs, _, range) -> 
+            | SynExpr.Tuple (exprs, _, range) ->
                 addToUniqueRange(range)
-                for expr in exprs do 
+                for expr in exprs do
                     visitExpr expr
 
             | SynExpr.TryFinally (expr1, expr2, range, _, _) ->
-                addToUniqueRange(range)                
+                addToUniqueRange(range)
                 visitExpr expr1
                 visitExpr expr2
 
@@ -268,7 +265,7 @@ module UntypedAstUtils =
                 visitExpr expr
 
             // complexity increase
-            | SynExpr.While(_, expr1, expr2, range) -> 
+            | SynExpr.While(_, expr1, expr2, range) ->
                 addToUniqueRange(range)
                 visitExpr expr1
                 visitExpr expr2
@@ -336,8 +333,8 @@ module UntypedAstUtils =
             addToUniqueRange(range)
             visitExpr expr
         and visitMatches = List.iter visitMatch
-        
-        let dataRange range = 
+
+        let dataRange range =
             printfn "Not Supported member Report"
 
         let visitMember = function
@@ -359,14 +356,13 @@ module UntypedAstUtils =
                 addToUniqueRange(range)
             | range -> dataRange range
 
-
         let rec visitType ty =
             let (SynTypeDefn.TypeDefn (_, repr, _, _)) = ty
 
             match repr with
-            | SynTypeDefnRepr.Simple (defns, range) -> 
+            | SynTypeDefnRepr.Simple (defns, range) ->
                 match defns with
-                | SynTypeDefnSimpleRepr.Enum(defs, range) -> 
+                | SynTypeDefnSimpleRepr.Enum(defs, range) ->
                     for en in defs do
                         addToUniqueRange(en.Range)
 
@@ -377,8 +373,7 @@ module UntypedAstUtils =
                     addToUniqueRange(d.Range)
                     visitMember d
 
-
-        let rec visitDeclarations decls = 
+        let rec visitDeclarations decls =
             for declaration in decls do
                 match declaration with
                 | SynModuleDecl.Exception (arg1, range) -> addToUniqueRange(range)
@@ -388,21 +383,21 @@ module UntypedAstUtils =
                     addToUniqueFunctions(range, bindings)
                     addToUniqueRange(range)
                     visitBindindgs bindings
-                
+
                 | SynModuleDecl.DoExpr (_, expr, _) ->
                     addToUniqueRange(expr.Range)
                     visitExpr expr
-                
+
                 | SynModuleDecl.Types (types, range) ->
                     for ty in types do
                         addToUniqueRange(ty.Range)
                         visitType ty
 
                 | SynModuleDecl.Open (_, range) -> addToUniqueRange(range)
-                
-                | SynModuleDecl.NestedModule (_, _, decls, _, _) -> 
+
+                | SynModuleDecl.NestedModule (_, _, decls, _, _) ->
                     visitDeclarations decls
-                | SynModuleDecl.Attributes (_, range) -> 
+                | SynModuleDecl.Attributes (_, range) ->
                     addToUniqueRange(range)
                 | _ -> printfn "Not Supported Declaration: %A" declaration
 
@@ -410,19 +405,18 @@ module UntypedAstUtils =
             for moduleOrNs in modulesOrNss do
                 let (SynModuleOrNamespace(_, _, _, decls, _, _, _, _)) = moduleOrNs
                 visitDeclarations decls
-                
-        ast 
+
+        ast
         |> Option.iter (function
             | ParsedInput.ImplFile implFile ->
                 let (ParsedImplFileInput(_, _, _, _, _, modules, _)) = implFile
                 visitModulesAndNamespaces modules
             | _ -> ())
 
-
         let fileComplexity = complexity
         let mutable functionComplexities = List.Empty
         for bindings in functionNodes do
-            complexity <- 0 
+            complexity <- 0
             visitBindindgs bindings
             functionComplexities <- functionComplexities @ [complexity]
 
@@ -433,11 +427,9 @@ module UntypedAstUtils =
         fileComplexity,
         ComplexityDistributions.GetFileComplexityDist(fileComplexity),
         ComplexityDistributions.GetFunctionComplexityDist(functionComplexities)
-         
+
     // get number of lines in file
-    let GetLines(ast : ParsedInput option) = 
+    let GetLines(ast : ParsedInput option) =
         match ast with
         | Some data -> data.Range.EndLine - data.Range.StartLine + 1
         | _ -> -1
-
-
