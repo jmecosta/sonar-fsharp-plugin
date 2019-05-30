@@ -1,7 +1,7 @@
 ﻿module Helper
 
 open System.IO
-open Microsoft.FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.SourceCodeServices
 open FSharp.Data
 
 let getAstByContent(file : string, input : string) =

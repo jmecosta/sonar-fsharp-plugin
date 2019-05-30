@@ -1,6 +1,6 @@
 ﻿namespace FsSonarRunnerCore
 
-open Microsoft.FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.SourceCodeServices
 open System.Text
 open System.Xml
 

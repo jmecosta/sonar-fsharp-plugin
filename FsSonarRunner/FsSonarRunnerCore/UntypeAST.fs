@@ -2,9 +2,9 @@
 namespace FsSonarRunnerCore
 
 module UntypedAstUtils =
-    open Microsoft.FSharp.Compiler.Ast
-    open Microsoft.FSharp.Compiler
-    open Microsoft.FSharp.Compiler.SourceCodeServices
+    open FSharp.Compiler.Ast
+    open FSharp.Compiler
+    open FSharp.Compiler.SourceCodeServices
 
     type TokenData() =
         member val Line : int = 0 with get, set

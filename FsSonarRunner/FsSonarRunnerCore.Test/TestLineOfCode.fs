@@ -90,8 +90,8 @@ type CorrectlyExtracsLineInformation() =
     member this.ShouldCountAllLinesInBigFile() =
         let content = """ namespace FsSonarRunnerCore
 
-open Microsoft.FSharp.Compiler.Ast
-open Microsoft.FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.Ast
+open FSharp.Compiler.SourceCodeServices
 open System.Text
 open System.Xml
 open System.Xml.Linq
