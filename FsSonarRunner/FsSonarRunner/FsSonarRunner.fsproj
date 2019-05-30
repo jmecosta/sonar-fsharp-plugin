@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FParsec" Version="1.0.2" />
+    <PackageReference Include="FParsec" Version="1.0.3" />
     <PackageReference Include="FSharp.Compiler.Service" Version="13.0.0" />
     <PackageReference Include="FSharp.Compiler.Service.ProjectCracker" Version="13.0.0" />
     <PackageReference Include="FSharp.Data" Version="3.1.1" />
@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="4.6.2" />
+    <PackageReference Update="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
 </Project>
