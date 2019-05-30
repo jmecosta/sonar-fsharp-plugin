@@ -2,13 +2,12 @@
 
 open System
 open System.IO
-open FSharp.Data
 open FSharpLint.Framework.Configuration
 
 let CreateALintConfiguration(path : string) =
     if not(String.IsNullOrEmpty(path)) && File.Exists(path) then
         let sonarConfig = ConfHelper.InputConfigution.Parse(File.ReadAllText(path))
-   
+
         let configdata = ()
         {
             Configuration.IgnoreFiles = None

@@ -2,25 +2,23 @@
 
 open System.IO
 open NUnit.Framework
-open FsSonarRunnerCore
 open System.Reflection
 
 [<TestFixture>]
 type DuptokenTest() =
-    
+
     let runningPath = Directory.GetParent(Assembly.GetExecutingAssembly().CodeBase.Replace("file:///", "")).ToString()
     let fileToAnalyse = Path.Combine(runningPath, "file.fs")
 
     [<Test>]
-    member this.ShouldHandleTokens() = 
+    member this.ShouldHandleTokens() =
         let lines = """       type data = "akjdkas" """.Split('\r','\n')
 
         let duptokens = FsSonarRunnerCore.UntypedAstUtils.getDumpToken(lines)
         Assert.That(duptokens.Length, Is.EqualTo(6))
 
-
     [<Test>]
-    member this.ShouldHandleHelloWorldTokens() = 
+    member this.ShouldHandleHelloWorldTokens() =
         let lines = """
           // Hello world
           let hello() =

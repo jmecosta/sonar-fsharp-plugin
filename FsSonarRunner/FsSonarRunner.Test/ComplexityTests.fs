@@ -1,14 +1,12 @@
 ﻿namespace FsSonarRunnerCore.Test
 
-open System.IO
 open NUnit.Framework
-open FsSonarRunnerCore
 
 [<TestFixture>]
 type ComplexityTests() =
 
     [<Test>]
-    member this.ComplextiyTestIfThenElse() = 
+    member this.ComplextiyTestIfThenElse() =
         let content = """
 module Program
 
@@ -30,7 +28,7 @@ let x () =
         ()
 
     [<Test>]
-    member this.ComplextiyWithMatch() = 
+    member this.ComplextiyWithMatch() =
         let content = """
 module Program
 
@@ -59,7 +57,7 @@ let x y =
         ()
 
     [<Test>]
-    member this.ComplextiyTestFunctionDistribution() = 
+    member this.ComplextiyTestFunctionDistribution() =
         let content = """
 module Program
 

@@ -8,7 +8,7 @@ open FSharpLint.Framework.Configuration
 
 open FSharp.Data
 
-type InputConfigution = XmlProvider<""" 
+type InputConfigution = XmlProvider<"""
 <AnalysisInput>
   <Settings>
     <Setting>

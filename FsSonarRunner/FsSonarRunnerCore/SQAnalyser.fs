@@ -1,13 +1,10 @@
 ﻿namespace FsSonarRunnerCore
 
-open Microsoft.FSharp.Compiler.Ast
 open Microsoft.FSharp.Compiler.SourceCodeServices
 open System.Text
-open System.IO
 open System.Xml
-open System.Xml.Linq
 
-type SonarResoureMetrics(path : string) =  
+type SonarResoureMetrics(path : string) =
     member val ResourcePath : string = path with get
     member val Lines : int = -1 with get, set
     member val Classes : int = -1 with get, set
@@ -26,21 +23,21 @@ type SQAnalyser() =
     let resourcesLocker = new System.Object()
 
     let GatherMetrics(path : string, input : string, resourceMetric : SonarResoureMetrics) =
-        let parseTree = 
+        let parseTree =
             let checker = FSharpChecker.Create()
 
             // Get compiler options for the 'project' implied by a single script file
-            let (projOptions, _diagnostics) = 
+            let (projOptions, _diagnostics) =
                 checker.GetProjectOptionsFromScript(path, input)
                 |> Async.RunSynchronously
 
             // Run the first phase (untyped parsing) of the compiler
-            let parseFileResults = 
-                checker.ParseFileInProject(path, input, projOptions) 
+            let parseFileResults =
+                checker.ParseFileInProject(path, input, projOptions)
                 |> Async.RunSynchronously
-            
+
             parseFileResults.ParseTree
-       
+
         // generate metrics
         let loc, classnmb, autoProperties, functions, complexity, fileComplexityDist, functionComplexityDist
             = FsSonarRunnerCore.UntypedAstUtils.getCodeMetrics(parseTree)
@@ -66,7 +63,7 @@ type SQAnalyser() =
         GatherMetrics(path, input, resourceMetric)
         resourceMetric
 
-    member this.RunAnalyses(path : string, input : string, inputXmlConfig : string) =  
+    member this.RunAnalyses(path : string, input : string, inputXmlConfig : string) =
         // gather metrics
         let resourceMetric = this.GatherMetricsForResource(path, input)
         // gather issues
@@ -74,22 +71,22 @@ type SQAnalyser() =
         // ensure we are able to run multiple parsers at same time
         lock resourcesLocker (fun () -> resources <- resources @ [resourceMetric] )
 
-    member this.RunLint(path : string, input : string, inputXmlConfig : string) = 
+    member this.RunLint(path : string, input : string, inputXmlConfig : string) =
         // run lint
-        try            
+        try
             let lintRunner = new FsLintRunner(path, new SonarRules(), InputConfigHandler.CreateALintConfiguration(inputXmlConfig))
             lintRunner.ExecuteAnalysis()
         with
         | ex -> printf "Lint Execution Failed %A" ex
                 List.Empty
 
-    member this.PrintIssues() = 
+    member this.PrintIssues() =
         for resource in resources do
-            resource.Issues |> Seq.iter (fun diagnostic -> 
+            resource.Issues |> Seq.iter (fun diagnostic ->
                     printf "%s : %s : %i : %s\r\n" resource.ResourcePath  diagnostic.Rule diagnostic.Line diagnostic.Message
                             )
 
-    member this.WriteXmlToDisk(xmlOutPath : string, printtoconsole : bool) = 
+    member this.WriteXmlToDisk(xmlOutPath : string, printtoconsole : bool) =
         printf "Write ouput xml to file %s\r\n" xmlOutPath
         let xmlOutSettings = new XmlWriterSettings(Encoding = Encoding.UTF8, Indent = true, IndentChars = "  ")
         use xmlOut = XmlWriter.Create(xmlOutPath, xmlOutSettings)
@@ -100,7 +97,7 @@ type SQAnalyser() =
             xmlOut.WriteStartElement("File") // 3
             xmlOut.WriteElementString("Path", resource.ResourcePath)
 
-            xmlOut.WriteStartElement("Metrics") // 4 
+            xmlOut.WriteStartElement("Metrics") // 4
             xmlOut.WriteElementString("Classes", sprintf "%i" resource.Classes)
             xmlOut.WriteElementString("Accessors", sprintf "%i" resource.Accessors)
             xmlOut.WriteElementString("Functions", sprintf "%i" resource.Functions)
@@ -111,15 +108,15 @@ type SQAnalyser() =
             xmlOut.WriteStartElement("LinesOfCode") // 5
             for line in resource.LinesOfCode do
                 xmlOut.WriteElementString("Line", sprintf "%i" line)
-                
+
             xmlOut.WriteEndElement() // 5
 
             // close element metrics
             xmlOut.WriteEndElement() // 4
 
-            xmlOut.WriteStartElement("Issues") // 6 
+            xmlOut.WriteStartElement("Issues") // 6
 
-            resource.Issues |> Seq.iter (fun diagnostic -> 
+            resource.Issues |> Seq.iter (fun diagnostic ->
                 if printtoconsole then
                     printf "%s : %i => %s : %s\r\n" resource.ResourcePath diagnostic.Line diagnostic.Rule diagnostic.Message
                 xmlOut.WriteStartElement("Issue")
@@ -128,9 +125,9 @@ type SQAnalyser() =
                 xmlOut.WriteElementString("Message", sprintf "%s" diagnostic.Message)
                 xmlOut.WriteEndElement()
                 )
-                
+
             xmlOut.WriteEndElement()    // 6
-            
+
             xmlOut.WriteStartElement("CopyPasteTokens"); // 7
             for token in resource.CopyPastTokens do
                 if token.LeftColoumn < token.RightColoumn then
