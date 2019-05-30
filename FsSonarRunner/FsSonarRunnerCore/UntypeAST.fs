@@ -67,7 +67,7 @@ module UntypedAstUtils =
 
         content
         |> List.ofSeq
-        |> tokenizeLines 0L 1
+        |> tokenizeLines FSharpTokenizerLexState.Initial 1
 
         let mutable tokensSimple : TokenData List = List.empty
 
@@ -202,7 +202,7 @@ module UntypedAstUtils =
                 visitExpr expr
 
             // complexity increase
-            | SynExpr.Match (_, expr, clauses, _, range) ->
+            | SynExpr.Match (_, expr, clauses, range) ->
                 complexity <- complexity + clauses.Length - 1
                 addToUniqueRange(range)
                 visitExpr expr
@@ -239,7 +239,7 @@ module UntypedAstUtils =
                 addToUniqueRange(range)
                 visitExpr expr
 
-            | SynExpr.Tuple (exprs, _, range) ->
+            | SynExpr.Tuple (_, exprs, _, range) ->
                 addToUniqueRange(range)
                 for expr in exprs do
                     visitExpr expr

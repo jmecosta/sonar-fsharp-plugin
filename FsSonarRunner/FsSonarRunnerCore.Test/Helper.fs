@@ -4,7 +4,7 @@ open System.IO
 open FSharp.Compiler.SourceCodeServices
 open FSharp.Data
 
-let getAstByContent(file : string, input : string) =
+let getAstBySourceText(file : string, input : FSharp.Compiler.Text.ISourceText) =
     let checker = FSharpChecker.Create()
 
     // Get compiler options for the 'project' implied by a single script file
@@ -14,10 +14,14 @@ let getAstByContent(file : string, input : string) =
 
     // Run the first phase (untyped parsing) of the compiler
     let parseFileResults =
-        checker.ParseFileInProject(file, input, projOptions)
+        let (parsingOptions, _) = checker.GetParsingOptionsFromProjectOptions(projOptions)
+        checker.ParseFile(file, input, parsingOptions)
         |> Async.RunSynchronously
 
     parseFileResults.ParseTree
+
+let getAstByContent(file : string, input : string) = 
+    getAstBySourceText(file, input)
 
 let getAstByFile(file : string) =
     let input = File.ReadAllText(file)
