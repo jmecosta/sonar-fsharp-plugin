@@ -1,5 +1,5 @@
 version: '{build}'
-os: VS 2019
+os: Visual Studio 2019
 install:
   - ps: |
       Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -11,21 +11,19 @@ install:
   - ps: |
       If ($env:Platform -Match "x86") {
         $env:PCRE_PLATFORM="Win32"
-        $env:JAVA_HOME="c:/Program Files (x86)/Java/jdk1.8.0"
         $env:VCVARS_PLATFORM="x86"
         $env:LANG_PLATFORM=""
       } Else {
         $env:PCRE_PLATFORM="x64"
-        $env:JAVA_HOME="c:/Program Files/Java/jdk1.8.0"
         $env:VCVARS_PLATFORM="amd64"
         $env:LANG_PLATFORM="-x64"
       }	  
-  - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;%PATH%
+  - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%PATH%
   - cmd: SET M2_HOME=C:\maven\apache-maven-3.2.5
   - cmd: SET
   - cmd: mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=sonar-fsharp-plugin/dependencies/sonar-dotnet-tests-library-1.5-SNAPSHOT.jar
 build_script:
-  - mvn clean install -DvsBin="C:/Program Files (x86)/MSBuild/14.0/Bin/msbuild.exe" -e
+  - mvn clean install -DvsBin="C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/MSBuild/15.0/Bin/msbuild.exe" -e
 cache:
   - C:\Users\appveyor\.m2
 artifacts:
