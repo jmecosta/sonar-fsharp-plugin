@@ -118,11 +118,6 @@
       <Project>{584f069c-db4c-4561-9402-5b9b703f15a8}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\FsSonarRunner\FsSonarRunner.fsproj">
-      <Name>FsSonarRunner</Name>
-      <Project>{504f4169-b41d-431f-b31e-e72e0fe2495c}</Project>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="..\packages\FSharp.Compiler.Service.ProjectCracker.13.0.0\build\net45\FSharp.Compiler.Service.ProjectCracker.targets" Condition="Exists('..\packages\FSharp.Compiler.Service.ProjectCracker.13.0.0\build\net45\FSharp.Compiler.Service.ProjectCracker.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
