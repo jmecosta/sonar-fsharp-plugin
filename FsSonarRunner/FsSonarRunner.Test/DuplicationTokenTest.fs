@@ -1,14 +1,9 @@
 ﻿namespace FsSonarRunnerCore.Test
 
-open System.IO
 open NUnit.Framework
-open System.Reflection
 
 [<TestFixture>]
 type DuptokenTest() =
-
-    let runningPath = Directory.GetParent(Assembly.GetExecutingAssembly().CodeBase.Replace("file:///", "")).ToString()
-    let fileToAnalyse = Path.Combine(runningPath, "file.fs")
 
     [<Test>]
     member this.ShouldHandleTokens() =

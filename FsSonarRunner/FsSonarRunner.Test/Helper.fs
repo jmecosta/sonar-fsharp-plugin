@@ -22,19 +22,7 @@ let getAstByContent(file : string, input : string) =
 let getAstByFile(file : string) =
     let input = File.ReadAllText(file)
 
-    let checker = FSharpChecker.Create()
-
-    // Get compiler options for the 'project' implied by a single script file
-    let (projOptions, _diagnostics) =
-        checker.GetProjectOptionsFromScript(file, input)
-        |> Async.RunSynchronously
-
-    // Run the first phase (untyped parsing) of the compiler
-    let parseFileResults =
-        checker.ParseFileInProject(file, input, projOptions)
-        |> Async.RunSynchronously
-
-    parseFileResults.ParseTree
+    getAstByContent(file, input)
 
 type ResXml = XmlProvider<"""
 <!--This XML format is not an API-->

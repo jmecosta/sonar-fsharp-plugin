@@ -56,10 +56,7 @@ let GetEnaFlagForParam(config : InputConfigution.AnalysisInput, ruleId : string,
 
         let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
 
-        if enabledis.Value.Number.Value = 0 then
-            Enabled(false)
-        else
-            Enabled(true)
+        Enabled(enabledis.Value.Number.Value <> 0)
     with
     | ex -> Enabled(false)
 
