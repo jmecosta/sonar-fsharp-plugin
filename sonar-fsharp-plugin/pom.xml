@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-<parent>
+  <parent>
     <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
     <version>46</version>
@@ -12,33 +13,33 @@
   <artifactId>sonarqube-fsharp-plugin</artifactId>
   <version>1.0.3</version>
   <packaging>sonar-plugin</packaging>
-  
+
   <name>Sonar F# Plugin :: Core</name>
   <description>Enable analysis and reporting on F# projects.</description>
 
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
-    <sonar.version>6.7</sonar.version>    
+    <sonar.version>6.7</sonar.version>
     <sonar.pluginName>F#</sonar.pluginName>
     <sonar.pluginClass>org.sonar.plugins.fsharp.FSharpPlugin</sonar.pluginClass>
-  </properties>            
-  
-  <dependencyManagement>
-  <dependencies>             
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>FsSonarRunner</artifactId>
-      <version>${project.version}</version>
-      <type>zip</type>
-      <scope>provided</scope>
-    </dependency>
+  </properties>
 
-        <dependency>
-          <groupId>org.sonarsource.sonarqube</groupId>
-          <artifactId>sonar-plugin-api</artifactId>
-          <version>6.7</version>
-          <scope>provided</scope>
-        </dependency>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>FsSonarRunner</artifactId>
+        <version>${project.version}</version>
+        <type>zip</type>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.sonarsource.sonarqube</groupId>
+        <artifactId>sonar-plugin-api</artifactId>
+        <version>6.7</version>
+        <scope>provided</scope>
+      </dependency>
       <dependency>
         <groupId>org.codehaus.sonar</groupId>
         <artifactId>sonar-testing-harness</artifactId>
@@ -49,27 +50,27 @@
         <artifactId>maven-project</artifactId>
         <version>2.0.7</version>
       </dependency>
-      
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-      <version>4.7</version>
-    </dependency>
-    <dependency>
-      <groupId>org.easytesting</groupId>
-      <artifactId>fest-assert</artifactId>
-      <scope>test</scope>
-      <version>1.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <scope>test</scope>
-      <version>1.8.5</version>
-    </dependency>
-  </dependencies>
-</dependencyManagement>
+
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <scope>test</scope>
+        <version>4.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.easytesting</groupId>
+        <artifactId>fest-assert</artifactId>
+        <scope>test</scope>
+        <version>1.4</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-all</artifactId>
+        <scope>test</scope>
+        <version>1.8.5</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <build>
     <plugins>
       <plugin>
@@ -80,7 +81,7 @@
           <header>src/license-header.txt</header>
         </configuration>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -108,17 +109,17 @@
 
     </plugins>
   </build>
-<dependencies>
-        <dependency>
-            <groupId>org.sonarsource.sonarqube</groupId>
-            <artifactId>sonar-plugin-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>xerces</groupId>
-            <artifactId>xercesImpl</artifactId>
-            <version>2.11.0</version>
-            <type>jar</type>
-        </dependency>
+  <dependencies>
+    <dependency>
+      <groupId>org.sonarsource.sonarqube</groupId>
+      <artifactId>sonar-plugin-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.11.0</version>
+      <type>jar</type>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -138,11 +139,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-        <groupId>commons-lang</groupId>
-        <artifactId>commons-lang</artifactId>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
       <version>2.6</version>
       <type>jar</type>
     </dependency>
 
-</dependencies>
+  </dependencies>
 </project>
