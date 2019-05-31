@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.sonarsource.parent</groupId>
@@ -16,8 +17,8 @@
   <description>SonarQube F# Code Analyzer Plugin</description>
   <inceptionYear>2015</inceptionYear>
   <organization>
-    <name>jmecsoftware.com/</name>
-    <url>http://jmecsoftware.com/</url>
+    <name>jmecsoftware/</name>
+    <url>https://github.com/jmecsoftware</url>
   </organization>
 
   <scm>
