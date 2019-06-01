@@ -53,19 +53,17 @@ type InputConfigution = XmlProvider<"""
 let GetEnaFlagForParam(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
     try
         let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
-
         let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
-
         Enabled(enabledis.Value.Number.Value <> 0)
     with
-    | ex -> Enabled(false)
+    | _ -> Enabled(false)
 
 let GetEnaFlagForRule(config : InputConfigution.AnalysisInput, ruleId : string) =
     try
-        let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
+        config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId)) |> ignore
         Enabled(true)
     with
-    | ex -> Enabled(false)
+    | _ -> Enabled(false)
 
 let GetValueForInt(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : int) =
     try
@@ -73,23 +71,25 @@ let GetValueForInt(config : InputConfigution.AnalysisInput, ruleId : string, par
         let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
         enabledis.Value.Number.Value
     with
-    | ex -> defaultValue
+    | _ -> defaultValue
+
+let GetValueForStringOrStringList(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
+    let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
+    let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
+    enabledis.Value.String.Value
 
 let GetValueForStringList(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : string List) =
     try
-        let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
-        let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
-        enabledis.Value.String.Value.Split(';') |> Array.toList
+        let stringList = GetValueForStringOrStringList(config, ruleId, paramName)
+        stringList.Split(';') |> Array.toList
     with
-    | ex -> defaultValue
+    | _ -> defaultValue
 
 let GetValueForString(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : string) =
     try
-        let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
-        let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
-        enabledis.Value.String.Value
+        GetValueForStringOrStringList(config, ruleId, paramName)
     with
-    | ex -> defaultValue
+    | _ -> defaultValue
 
 let GetValueForEnum(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : string, enumType : 'T) =
     try
@@ -97,7 +97,7 @@ let GetValueForEnum(config : InputConfigution.AnalysisInput, ruleId : string, pa
         let param = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
         Enum.Parse(enumType, param.Value.String.Value) :?> 'T
     with
-    | ex -> Enum.Parse(enumType, defaultValue) :?> 'T
+    | _ -> Enum.Parse(enumType, defaultValue) :?> 'T
 
 let parseHints hints =
     let parseHint hint =
@@ -115,4 +115,4 @@ let GetValueForBool(config : InputConfigution.AnalysisInput, ruleId : string, pa
         let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
         enabledis.Value.Boolean.Value
     with
-    | ex -> defaultValue
+    | _ -> defaultValue
