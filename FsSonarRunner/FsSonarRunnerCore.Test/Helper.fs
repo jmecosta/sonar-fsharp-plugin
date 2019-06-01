@@ -2,9 +2,10 @@
 
 open System.IO
 open FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.Text
 open FSharp.Data
 
-let getAstBySourceText(file : string, input : FSharp.Compiler.Text.ISourceText) =
+let getAstBySourceText(file : string, input : ISourceText) =
     let checker = FSharpChecker.Create()
 
     // Get compiler options for the 'project' implied by a single script file
@@ -21,7 +22,7 @@ let getAstBySourceText(file : string, input : FSharp.Compiler.Text.ISourceText) 
     parseFileResults.ParseTree
 
 let getAstByContent(file : string, input : string) = 
-    getAstBySourceText(file, input)
+    getAstBySourceText(file, SourceText.ofString input)
 
 let getAstByFile(file : string) =
     let input = File.ReadAllText(file)

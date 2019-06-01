@@ -1,8 +1,9 @@
 ﻿namespace FsSonarRunnerCore
 
-open FSharp.Compiler.SourceCodeServices
 open System.Text
 open System.Xml
+open FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.Text
 
 type SonarResoureMetrics(path : string) =
     member val ResourcePath : string = path with get
@@ -28,12 +29,13 @@ type SQAnalyser() =
 
             // Get compiler options for the 'project' implied by a single script file
             let (projOptions, _diagnostics) =
-                checker.GetProjectOptionsFromScript(path, input)
+                checker.GetProjectOptionsFromScript(path, SourceText.ofString input)
                 |> Async.RunSynchronously
 
             // Run the first phase (untyped parsing) of the compiler
             let parseFileResults =
-                checker.ParseFileInProject(path, input, projOptions)
+                let (parsingOptions, _) = checker.GetParsingOptionsFromProjectOptions(projOptions)
+                checker.ParseFile(path, SourceText.ofString input, parsingOptions)
                 |> Async.RunSynchronously
 
             parseFileResults.ParseTree
