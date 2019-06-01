@@ -99,6 +99,33 @@ let GetValueForEnum(config : InputConfigution.AnalysisInput, ruleId : string, pa
     with
     | _ -> Enum.Parse(enumType, defaultValue) :?> 'T
 
+(* FSharpLint 0.10
+    let private parseHints (el:XElement) =
+        let hintsText = el.Value
+        let parseHint hint =
+            match FParsec.CharParsers.run HintParser.phint hint with
+            | FParsec.CharParsers.Success(hint, _, _) -> hint
+            | FParsec.CharParsers.Failure(error, _, _) ->
+                raise <| ConfigurationException("Failed to parse hint: " + hint + "\n" + error)
+
+        let hints =
+            parseLines hintsText
+            |> List.filter (System.String.IsNullOrWhiteSpace >> not)
+            |> List.map (fun x -> { Hint = x; ParsedHint = parseHint x })
+
+        { Hints = hints; Update = Update.From el }
+*)
+(* FSharpLint 0.11
+    let private parseHints (el:XElement) =
+        let hintsText = el.Value
+        let hints =
+            parseLines hintsText
+            |> List.filter (System.String.IsNullOrWhiteSpace >> not)
+
+        { Hints = hints }
+
+*)
+(* F# Sonar Plugin 1.0.3
 let parseHints hints =
     let parseHint hint =
         match CharParsers.run phint hint with
@@ -108,6 +135,9 @@ let parseHints hints =
     let hintsData = List.map (fun x -> { Hint = x; ParsedHint = parseHint x }) hints
 
     { Hints = hintsData; Update = Update.Overwrite }
+*)
+let parseHints (hints: string list) : Hints =
+    { Hints = hints }
 
 let GetValueForBool(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : bool) =
     try
