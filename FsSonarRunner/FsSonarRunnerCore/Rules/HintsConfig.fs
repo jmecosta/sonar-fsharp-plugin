@@ -1,20 +1,7 @@
 ﻿module HintsConfig
 
-open FParsec
-open FSharpLint.Framework.HintParser
-
 open FSharpLint.Rules.HintMatcher
 open FSharpLint.Framework.Configuration
-
-let parseHints hints =
-    let parseHint hint =
-        match CharParsers.run phint hint with
-        | FParsec.CharParsers.Success(hint, _, _) -> hint
-        | FParsec.CharParsers.Failure(error, _, _) -> failwithf "Invalid hint %s" error
-
-    let hintsData = List.map (fun x -> { Hint = x; ParsedHint = parseHint x }) hints
-
-    { Hints = hintsData; Update = Update.Overwrite }
 
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
 
@@ -33,7 +20,7 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
                     Settings = Map.ofList
                         [
                             ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesHintRefactor"))
-                            ("Hints", Hints((parseHints hints)))
+                            ("Hints", Hints(ConfHelper.parseHints hints))
                         ]
                 });
     ]
