@@ -8,8 +8,7 @@ let CreateALintConfiguration(path : string) =
     if not(String.IsNullOrEmpty(path)) && File.Exists(path) then
         let sonarConfig = ConfHelper.InputConfigution.Parse(File.ReadAllText(path))
 
-        let configdata = ()
-        {
+        let configuration = {
             Configuration.IgnoreFiles = None
             Analysers = Map(Seq.concat
                         [
@@ -25,5 +24,6 @@ let CreateALintConfiguration(path : string) =
                             (Map.toSeq (RedundantNewKeywordConfig.SonarConfiguration(sonarConfig)));
                         ])
         }
+        configuration
     else
         FSharpLint.Framework.Configuration.defaultConfiguration
