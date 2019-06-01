@@ -1,7 +1,7 @@
 ﻿module NumberOfItemsConfig
 
 open FSharpLint.Rules.NumberOfItems
-open FSharpLint.Framework.Configuration
+open FSharpLint.Application.XmlConfiguration.Configuration
 
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
     Map.ofList

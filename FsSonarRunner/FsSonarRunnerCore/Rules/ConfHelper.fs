@@ -4,7 +4,7 @@ open System
 
 open FParsec
 open FSharpLint.Framework.HintParser
-open FSharpLint.Framework.Configuration
+open FSharpLint.Application.XmlConfiguration.Configuration
 
 open FSharp.Data
 

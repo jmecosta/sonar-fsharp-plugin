@@ -1,7 +1,7 @@
 ﻿module SourceLengthConfig
 
 open FSharpLint.Rules.SourceLength
-open FSharpLint.Framework.Configuration
+open FSharpLint.Application.XmlConfiguration.Configuration
 
 [<Literal>]
 let FunctionLength = 100
