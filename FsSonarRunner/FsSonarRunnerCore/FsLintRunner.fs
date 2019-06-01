@@ -73,7 +73,7 @@ type private Argument =
     | Source of string
     | UnexpectedArgument of string
 
-type FsLintRunner(filePath : string, rules : SonarRules, configuration : FSharpLint.Framework.Configuration.Configuration) =
+type FsLintRunner(filePath : string, rules : SonarRules, configuration : ConfigurationManager.Configuration) =
     let mutable notsupportedlines = List.Empty
     let mutable issues = List.empty
 
@@ -92,6 +92,7 @@ type FsLintRunner(filePath : string, rules : SonarRules, configuration : FSharpL
                 CancellationToken = None
                 ReceivedWarning = Some reportLintWarning
                 Configuration = Some configuration
+                ReportLinterProgress = None
             }
 
         lintFile parseInfo pathToFile
@@ -103,6 +104,6 @@ type FsLintRunner(filePath : string, rules : SonarRules, configuration : FSharpL
     member this.ExecuteAnalysis() =
         issues <- List.Empty
         if File.Exists(filePath) then
-            runLintOnFile filePath (Version(4, 0)) |> outputLintResult
+            runLintOnFile filePath |> outputLintResult
 
         issues

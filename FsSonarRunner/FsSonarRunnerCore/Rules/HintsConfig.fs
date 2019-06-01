@@ -1,6 +1,5 @@
 ﻿module HintsConfig
 
-open FSharpLint.Rules.HintMatcher
 open FSharpLint.Application.XmlConfiguration.Configuration
 
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
@@ -14,7 +13,7 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
 
     Map.ofList
         [
-            (AnalyserName,
+            ("Hints",
                 {
                     Rules = Map.ofList []
                     Settings = Map.ofList

@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="XmlConfigurationHelper.fs" />
     <Compile Include="Rules\ConfHelper.fs" />
     <Compile Include="Rules\BindingConfig.fs" />
     <Compile Include="Rules\NumberOfItemsConfig.fs" />

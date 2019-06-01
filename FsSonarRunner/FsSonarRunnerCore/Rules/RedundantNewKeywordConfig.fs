@@ -1,12 +1,11 @@
 ﻿module RedundantNewKeywordConfig
 
-open FSharpLint.Rules.RedundantNewKeyword
 open FSharpLint.Application.XmlConfiguration.Configuration
 
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
     Map.ofList
         [
-            (AnalyserName,
+            ("RedundantNewKeyword",
                 {
                     Rules = Map.ofList []
                     Settings = Map.ofList

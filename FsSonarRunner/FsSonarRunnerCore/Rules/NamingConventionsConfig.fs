@@ -2,13 +2,11 @@
 
 open FSharpLint.Application.XmlConfiguration.Configuration
 
-open FSharpLint.Rules.NameConventions
-
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
     let configdata =
         Map.ofList
             [
-            (AnalyserName,
+            ("NameConventions",
                 {
                     Rules = Map.ofList
                         [

@@ -3,8 +3,9 @@
 open System
 open System.IO
 open FSharpLint.Application.XmlConfiguration.Configuration
+open FsSonarRunnerCore.XmlConfigurationHelper
 
-let CreateALintConfiguration(path : string) =
+let CreateALintXmlConfiguration(path : string) =
     if not(String.IsNullOrEmpty(path)) && File.Exists(path) then
         let sonarConfig = ConfHelper.InputConfigution.Parse(File.ReadAllText(path))
 
@@ -27,3 +28,6 @@ let CreateALintConfiguration(path : string) =
         configuration
     else
         FSharpLint.Application.XmlConfiguration.Configuration.defaultConfiguration
+
+let CreateALintConfiguration(path : string) =
+    convertToConfig (CreateALintXmlConfiguration path)
