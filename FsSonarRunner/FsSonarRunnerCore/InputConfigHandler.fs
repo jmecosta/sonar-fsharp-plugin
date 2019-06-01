@@ -2,14 +2,14 @@
 
 open System
 open System.IO
-open FSharpLint.Framework.Configuration
+open FSharpLint.Application.XmlConfiguration.Configuration
 
 let CreateALintConfiguration(path : string) =
     if not(String.IsNullOrEmpty(path)) && File.Exists(path) then
         let sonarConfig = ConfHelper.InputConfigution.Parse(File.ReadAllText(path))
 
         let configuration = {
-            Configuration.IgnoreFiles = None
+            IgnoreFiles = None
             Analysers = Map(Seq.concat
                         [
                             (Map.toSeq (NamingConventionsConfig.SonarConfiguration(sonarConfig)));
@@ -26,4 +26,4 @@ let CreateALintConfiguration(path : string) =
         }
         configuration
     else
-        FSharpLint.Framework.Configuration.defaultConfiguration
+        FSharpLint.Application.XmlConfiguration.Configuration.defaultConfiguration
