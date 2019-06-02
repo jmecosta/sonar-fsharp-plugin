@@ -7,7 +7,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsSonarRunner", "FsSonarRun
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsSonarRunnerCore", "FsSonarRunnerCore\FsSonarRunnerCore.fsproj", "{584F069C-DB4C-4561-9402-5B9B703F15A8}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsSonarRunner.Test", "FsSonarRunner.Test\FsSonarRunner.Test.fsproj", "{97E76AE8-D602-400E-8F4B-0F82204C6A84}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsSonarRunnerCore.Test", "FsSonarRunnerCore.Test\FsSonarRunnerCore.Test.fsproj", "{97E76AE8-D602-400E-8F4B-0F82204C6A84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {729302B8-D2E6-48F9-8B0F-6AB5E8700AA3}
 	EndGlobalSection
 EndGlobal
