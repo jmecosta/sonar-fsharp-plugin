@@ -59,6 +59,10 @@ packages/
 *.psess
 *.vsp
 
+# Backup files
+*.orig
+*.bak
+
 *.unittest.report.xml
 .sonarqube/
 /FsSonarRunner/.clang-tidy
