@@ -14,7 +14,7 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FsSonarRunner", "FsSonarRun
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FsSonarRunnerCore", "FsSonarRunnerCore\FsSonarRunnerCore.fsproj", "{584F069C-DB4C-4561-9402-5B9B703F15A8}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FsSonarRunner.Test", "FsSonarRunner.Test\FsSonarRunner.Test.fsproj", "{97E76AE8-D602-400E-8F4B-0F82204C6A84}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FsSonarRunnerCore.Test", "FsSonarRunnerCore.Test\FsSonarRunnerCore.Test.fsproj", "{97E76AE8-D602-400E-8F4B-0F82204C6A84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
