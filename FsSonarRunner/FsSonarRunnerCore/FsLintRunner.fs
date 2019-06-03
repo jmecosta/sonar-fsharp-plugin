@@ -20,6 +20,8 @@ type SonarRules() =
 
     let fsLintProfile =
         let resourceManager = new ResourceManager("Text" ,Assembly.Load("FSharpLint.Core"))
+        // TODO: next lines throws System.Resources.MissingManifestResourceException
+        // in FSharpLint the Text.resx is an EmbeddedResource of SubType Designer
         let set = resourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true)
         let mutable rules = List.Empty
 
@@ -33,10 +35,8 @@ type SonarRules() =
             with
             | _ -> ()
 
-        let ddd = set |> Seq.cast<ResourceSet>
-
-        for setentry in set do
-            CreateProfileRule(setentry :?> DictionaryEntry)
+        for setEntry in set do
+            CreateProfileRule(setEntry :?> DictionaryEntry)
 
         rules
 
@@ -66,12 +66,6 @@ type SonarIssue() =
     member val Line : int = 0 with get, set
     member val Component : string = "" with get, set
     member val Message : string = "" with get, set
-
-type private Argument =
-    | ProjectFile of string
-    | SingleFile of string
-    | Source of string
-    | UnexpectedArgument of string
 
 type FsLintRunner(filePath : string, rules : SonarRules, configuration : ConfigurationManager.Configuration) =
     let mutable notsupportedlines = List.Empty
