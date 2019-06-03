@@ -76,9 +76,6 @@
     <Reference Include="FSharp.Compiler.Service">
       <HintPath>..\packages\FSharp.Compiler.Service.13.0.0\lib\net45\FSharp.Compiler.Service.dll</HintPath>
     </Reference>
-    <Reference Include="FSharp.Compiler.Service.MSBuild.v12">
-      <HintPath>..\packages\FSharp.Compiler.Service.MSBuild.v12.13.0.0\lib\net45\FSharp.Compiler.Service.MSBuild.v12.dll</HintPath>
-    </Reference>
     <Reference Include="FSharp.Compiler.Service.ProjectCracker">
       <HintPath>..\packages\FSharp.Compiler.Service.ProjectCracker.13.0.0\lib\net45\FSharp.Compiler.Service.ProjectCracker.dll</HintPath>
     </Reference>
