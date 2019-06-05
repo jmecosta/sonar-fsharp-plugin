@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Resources\LintTestFile.fs" />
     <Compile Include="Helper.fs" />
     <Compile Include="TestTypes.fs" />
     <Compile Include="TestLineOfCode.fs" />

@@ -19,9 +19,14 @@ type FsLintRule(name : string, value : string) =
 type SonarRules() =
 
     let fsLintProfile =
-        let resourceManager = new ResourceManager("Text" ,Assembly.Load("FSharpLint.Core"))
-        // TODO: next lines throws System.Resources.MissingManifestResourceException
-        // in FSharpLint the Text.resx is an EmbeddedResource of SubType Designer
+        let resourceManager =
+            // see FSharpLint.Framework.Resources how to het the reource manager
+            let assembly = Assembly.Load("FSharpLint.Core")
+
+            let resourceName = assembly.GetManifestResourceNames()
+                               |> Seq.find (fun n -> n.EndsWith("Text.resources", System.StringComparison.Ordinal))
+            ResourceManager(resourceName.Replace(".resources", System.String.Empty), assembly)
+
         let set = resourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true)
         let mutable rules = List.Empty
 
