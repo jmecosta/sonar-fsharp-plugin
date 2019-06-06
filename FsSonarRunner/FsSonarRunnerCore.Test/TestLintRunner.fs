@@ -8,11 +8,11 @@ open System.Reflection
 [<TestFixture>]
 type TestLintRunner() =
 
-    let rec SolutionDirectory path =
+    let rec solutionDirectory path =
         if Path.Combine(path, "FsSonarRunner.sln") |> File.Exists
         then path
-        else Directory.GetParent(path).ToString() |> SolutionDirectory
-    let runningPath = Assembly.GetExecutingAssembly().CodeBase.Replace("file:///", "") |> SolutionDirectory
+        else Directory.GetParent(path).ToString() |> solutionDirectory
+    let runningPath = Assembly.GetExecutingAssembly().CodeBase.Replace("file:///", "") |> solutionDirectory
     let fileToAnalyse = Path.Combine(runningPath, "FsSonarRunnerCore.Test", "Resources", "LintTestFile.fs")
 
     [<Test>]

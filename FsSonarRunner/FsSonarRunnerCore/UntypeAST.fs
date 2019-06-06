@@ -30,7 +30,7 @@ module UntypedAstUtils =
 
         let createTokenData(line : int, tok : FSharpTokenInfo, extractStr : bool) =
 
-            let data = new TokenData(Line = line, LeftColoumn = tok.LeftColumn, RightColoumn = tok.RightColumn, Type = tok.TokenName)
+            let data = TokenData(Line = line, LeftColoumn = tok.LeftColumn, RightColoumn = tok.RightColumn, Type = tok.TokenName)
             if extractStr then
                 data.Content <- content.[line - 1].Substring(tok.LeftColumn, tok.RightColumn - tok.LeftColumn + 1)
             else

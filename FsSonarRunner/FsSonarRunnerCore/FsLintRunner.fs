@@ -30,24 +30,24 @@ type SonarRules() =
         let set = resourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true)
         let mutable rules = List.Empty
 
-        let CreateProfileRule(lem:DictionaryEntry) =
+        let createProfileRule(lem:DictionaryEntry) =
             try
                 if (lem.Key :?> string).StartsWith("Rules") ||
                    (lem.Key :?> string).Equals("LintError")  ||
                    (lem.Key :?> string).Equals("LintSourceError") then
-                    let rule = new FsLintRule(lem.Key :?> string, lem.Value :?> string)
+                    let rule = FsLintRule(lem.Key :?> string, lem.Value :?> string)
                     rules <- rules @ [rule]
             with
             | _ -> ()
 
         for setEntry in set do
-            CreateProfileRule(setEntry :?> DictionaryEntry)
+            createProfileRule(setEntry :?> DictionaryEntry)
 
         rules
 
     member this.GetRule(txt : string) =
 
-        let VerifyIfExists(rule : FsLintRule, txtdata : string) =
+        let verifyIfExists(rule : FsLintRule, txtdata : string) =
             let pattern = rule.Text
                                 .Replace("{0}", "[a-zA-Z0-9]{1,}")
                                 .Replace("{1}", "[a-zA-Z0-9]{1,}")
@@ -57,7 +57,7 @@ type SonarRules() =
 
             Regex.Match(txtdata, pattern).Success
 
-        let foundItem = fsLintProfile |> Seq.tryFind (fun c -> VerifyIfExists(c, txt))
+        let foundItem = fsLintProfile |> Seq.tryFind (fun c -> verifyIfExists(c, txt))
         match foundItem with
         | Some v -> v
         | _ -> null
@@ -80,7 +80,7 @@ type FsLintRunner(filePath : string, rules : SonarRules, configuration : Configu
         let output = warning.Info + System.Environment.NewLine + LintWarning.getWarningWithLocation warning.Range warning.Input
         let rule = rules.GetRule(warning.Info)
         if rule <> null then
-            let issue = new SonarIssue(Rule = rule.Rule, Line = warning.Range.StartLine, Component = filePath, Message = warning.Info)
+            let issue = SonarIssue(Rule = rule.Rule, Line = warning.Range.StartLine, Component = filePath, Message = warning.Info)
             issues  <- issues @ [issue]
         else
             notsupportedlines <- notsupportedlines @ [output]
