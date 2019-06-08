@@ -5,7 +5,7 @@
 #---------------------------------#
 
 # version format
-version: 1.1.0.{build}
+version: 1.1.0.{build}-alpha
 
 #---------------------------------#
 #    environment configuration    #
@@ -28,9 +28,7 @@ cache:
 
 # scripts that run after cloning repository
 install:
-  - cmd: set
-  - cmd: mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=sonar-fsharp-plugin/dependencies/sonar-dotnet-tests-library-1.5-SNAPSHOT.jar
-
+  - cmd: mvn install:install-file -Dfile=sonar-fsharp-plugin/dependencies/sonar-dotnet-tests-library-1.5-SNAPSHOT.jar
 
 #---------------------------------#
 #       build configuration       #
@@ -65,7 +63,7 @@ build_script:
 #test:
 
 # scripts to run before tests (working directory and environment changes are persisted from the previous steps such as "before_build")
-before_test:
+#before_test:
 
 # to run your custom scripts instead of automatic tests
 test_script:
@@ -91,6 +89,8 @@ after_test:
 artifacts:
   - path: 'sonar-fsharp-plugin/target/*.jar'
     name: sonar-fsharp-plugin
+  - path: 'FsSonarRunner/rules.txt'
+    name: rules
 
 #---------------------------------#
 #     deployment configuration    #

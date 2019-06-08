@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net472</TargetFramework>
     <ProjectGuid>504f4169-b41d-431f-b31e-e72e0fe2495c</ProjectGuid>
+    <RunPostBuildEvent>1</RunPostBuildEvent>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,5 +26,9 @@
     <PackageReference Update="FSharp.Core" Version="4.6.2" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="$(TargetPath) /displayrules &gt;$(SolutionDir)rules.txt" />
+  </Target>
 
 </Project>
