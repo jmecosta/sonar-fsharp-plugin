@@ -11,7 +11,6 @@ Download latest snapshot from : <https://ci.appveyor.com/project/jorgecosta/sona
 - Metrics: LOC, number of classes, number of methods
 - Code duplication detection
 - FSharpLint Support
-- Unit test metrics and Coverage
 - Runs under windows and Linux (mono)
 
 ## Configuration
