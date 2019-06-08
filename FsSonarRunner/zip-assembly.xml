@@ -9,7 +9,7 @@
   <fileSets>
     <fileSet>
       <directory>FsSonarRunner/bin/Release/net472</directory>
-      <outputDirectory>/</outputDirectory>
+      <outputDirectory>\</outputDirectory>
       <includes>
         <include>*.dll</include>
         <include>*.exe</include>
