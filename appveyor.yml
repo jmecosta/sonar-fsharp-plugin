@@ -1,24 +1,5 @@
-# appveyor.yml reference see https://www.appveyor.com/docs/appveyor-yml/
-
-#---------------------------------#
-#      general configuration      #
-#---------------------------------#
-
-# version format
-version: 1.0.6.{build}
-
-#---------------------------------#
-#    environment configuration    #
-#---------------------------------#
-
-# Build worker image (VM template)
-image: Visual Studio 2017
-
-# build cache to preserve files/folders between builds
-cache:
-  - C:\Users\appveyor\.m2
-
-# scripts that run after cloning repository
+version: '1.1.0.{build}'
+os: Visual Studio 2017
 install:
   - ps: |
       Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -50,29 +31,10 @@ assembly_info:
   file: '**\AssemblyInfo.*'
   assembly_version: "{version}"
   assembly_file_version: "{version}"
-
-#---------------------------------#
-#       build configuration       #
-#---------------------------------#
-
-# Build settings, not to be confused with "before_build" and "after_build".
-# "project" is relative to the original build directory and not influenced by directory changes in "before_build".
-#build:
-
-# scripts to run before build
-#before_build:
-
-# to run your custom scripts instead of automatic MSBuild
 build_script:
   - mvn clean install -DvsBin="C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/msbuild.exe" -e
-
-# scripts to run after build (working directory and environment changes are persisted from the previous steps)
-#after_build:
-
-# scripts to run *after* solution is built and *before* automatic packaging occurs (web apps, NuGet packages, Azure Cloud Services)
-#before_package:
-
-#---------------------------------#
+cache:
+  - C:\Users\appveyor\.m2
 #       tests configuration       #
 #---------------------------------#
 
@@ -99,20 +61,10 @@ after_test:
 #test: off
 
 #---------------------------------#
-#      artifacts configuration    #
-#---------------------------------#
-
 artifacts:
   - path: 'sonar-fsharp-plugin/target/*.jar'
     name: sonar-fsharp-plugin
 
-#---------------------------------#
-#     deployment configuration    #
-#---------------------------------#
-
-#---------------------------------#
-#        global handlers          #
-#---------------------------------#
 
 # on successful build
 #on_success:
@@ -122,7 +74,3 @@ artifacts:
 
 # after build failure or success
 #on_finish:
-
-#---------------------------------#
-#         notifications           #
-#---------------------------------#

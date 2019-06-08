@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <sqale>
     <chc>
-    <key>PORTABILITY</key>
-    <name>Portability</name>
+        <key>PORTABILITY</key>
+        <name>Portability</name>
         <chc>
             <key>COMPILER_RELATED_PORTABILITY</key>
             <name>Compiler related portability</name>
@@ -29,8 +29,8 @@
         </chc>
     </chc>
     <chc>
-    <key>MAINTAINABILITY</key>
-    <name>Maintainability</name>
+        <key>MAINTAINABILITY</key>
+        <name>Maintainability</name>
         <chc>
             <key>READABILITY</key>
             <name>Readability</name>
@@ -303,7 +303,7 @@
                     <val>5</val>
                     <txt>mn</txt>
                 </prop>
-            </chc>   
+            </chc>
             <chc>
                 <rule-repo>fsharplint</rule-repo>
                 <rule-key>RulesNamingConventionsMeasureError</rule-key>
@@ -316,7 +316,7 @@
                     <val>5</val>
                     <txt>mn</txt>
                 </prop>
-            </chc> 
+            </chc>
             <chc>
                 <rule-repo>fsharplint</rule-repo>
                 <rule-key>RulesNamingConventionsMemberError</rule-key>
@@ -329,8 +329,8 @@
                     <val>5</val>
                     <txt>mn</txt>
                 </prop>
-            </chc>    
-            
+            </chc>
+
             <chc>
                 <rule-repo>fsharplint</rule-repo>
                 <rule-key>RulesNamingConventionsModuleError</rule-key>
@@ -343,8 +343,8 @@
                     <val>5</val>
                     <txt>mn</txt>
                 </prop>
-            </chc>     
-            
+            </chc>
+
             <chc>
                 <rule-repo>fsharplint</rule-repo>
                 <rule-key>RulesNamingConventionsNamespaceError</rule-key>
@@ -357,7 +357,7 @@
                     <val>5</val>
                     <txt>mn</txt>
                 </prop>
-            </chc> 
+            </chc>
 
             <chc>
                 <rule-repo>fsharplint</rule-repo>
@@ -371,8 +371,8 @@
                     <val>5</val>
                     <txt>mn</txt>
                 </prop>
-            </chc>   
-            
+            </chc>
+
             <chc>
                 <rule-repo>fsharplint</rule-repo>
                 <rule-key>RulesNamingConventionsParamsError</rule-key>
@@ -385,8 +385,8 @@
                     <val>5</val>
                     <txt>mn</txt>
                 </prop>
-            </chc>     
-            
+            </chc>
+
             <chc>
                 <rule-repo>fsharplint</rule-repo>
                 <rule-key>RulesNamingConventionsPublicValuesError</rule-key>
@@ -399,8 +399,8 @@
                     <val>5</val>
                     <txt>mn</txt>
                 </prop>
-            </chc>          
-            
+            </chc>
+
             <chc>
                 <rule-repo>fsharplint</rule-repo>
                 <rule-key>RulesNamingConventionsRecordsError</rule-key>
@@ -413,8 +413,8 @@
                     <val>5</val>
                     <txt>mn</txt>
                 </prop>
-            </chc>       
-            
+            </chc>
+
             <chc>
                 <rule-repo>fsharplint</rule-repo>
                 <rule-key>RulesNamingConventionsTypesError</rule-key>
@@ -427,8 +427,8 @@
                     <val>5</val>
                     <txt>mn</txt>
                 </prop>
-            </chc>     
-            
+            </chc>
+
             <chc>
                 <rule-repo>fsharplint</rule-repo>
                 <rule-key>RulesNamingConventionsUnionError</rule-key>
@@ -441,7 +441,7 @@
                     <val>5</val>
                     <txt>mn</txt>
                 </prop>
-            </chc>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+            </chc>
         </chc>
         <chc>
             <key>UNDERSTANDABILITY</key>
@@ -563,8 +563,8 @@
         </chc>
     </chc>
     <chc>
-    <key>SECURITY</key>
-    <name>Security</name>
+        <key>SECURITY</key>
+        <name>Security</name>
         <chc>
             <key>API_ABUSE</key>
             <name>API abuse</name>
@@ -579,8 +579,8 @@
         </chc>
     </chc>
     <chc>
-    <key>EFFICIENCY</key>
-    <name>Efficiency</name>
+        <key>EFFICIENCY</key>
+        <name>Efficiency</name>
         <chc>
             <key>MEMORY_EFFICIENCY</key>
             <name>Memory use</name>
@@ -591,8 +591,8 @@
         </chc>
     </chc>
     <chc>
-    <key>CHANGEABILITY</key>
-    <name>Changeability</name>
+        <key>CHANGEABILITY</key>
+        <name>Changeability</name>
         <chc>
             <key>ARCHITECTURE_CHANGEABILITY</key>
             <name>Architecture related changeability</name>
@@ -633,8 +633,8 @@
         </chc>
     </chc>
     <chc>
-    <key>RELIABILITY</key>
-    <name>Reliability</name>
+        <key>RELIABILITY</key>
+        <name>Reliability</name>
         <chc>
             <key>ARCHITECTURE_RELIABILITY</key>
             <name>Architecture related reliability</name>
@@ -669,8 +669,8 @@
         </chc>
     </chc>
     <chc>
-    <key>TESTABILITY</key>
-    <name>Testability</name>
+        <key>TESTABILITY</key>
+        <name>Testability</name>
         <chc>
             <key>INTEGRATION_TESTABILITY</key>
             <name>Integration level testability</name>
@@ -725,8 +725,8 @@
         </chc>
     </chc>
     <chc>
-    <key>REUSABILITY</key>
-    <name>Reusability</name>
+        <key>REUSABILITY</key>
+        <name>Reusability</name>
         <chc>
             <key>MODULARITY</key>
             <name>Modularity</name>

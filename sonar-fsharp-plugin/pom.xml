@@ -10,6 +10,7 @@
   </parent>
 
   <!-- it's recommended to follow the pattern "sonar-{key}-plugin", for example "sonar-php-plugin" -->
+  <!-- it's recommended to follow the pattern "sonar-{key}-plugin", for example "sonar-php-plugin" -->
   <artifactId>sonarqube-fsharp-plugin</artifactId>
 
   <!-- this is important for sonar-packaging-maven-plugin -->
