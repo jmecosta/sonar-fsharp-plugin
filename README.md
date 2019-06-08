@@ -30,18 +30,6 @@ Review the F# quality profile before running.
 
 - sonar.fs.file.suffixes - files extensions to import
 
-### Coverage
+### Coverage and Tests
 
- Generate reports and feed using the following properties:
-
-- sonar.fs.ncover3.reportsPaths
-- sonar.fs.opencover.reportsPaths
-- sonar.fs.dotcover.reportsPaths
-- sonar.fs.vscoveragexml.reportsPaths
-
-### Test Reports
-
-Generate reports and feed using the following properties:
-
-- sonar.fs.vstest.reportsPaths
-- sonar.fs.nunit.reportsPaths
+Please use generic solutions like https://docs.sonarqube.org/latest/analysis/generic-test/ or https://github.com/jmecsoftware/sonarqube-testdata-plugin

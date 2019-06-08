@@ -67,3 +67,4 @@ packages/
 .sonarqube/
 /FsSonarRunner/.clang-tidy
 /FsSonarRunner/compile_commands.json
+**/.vs/**
