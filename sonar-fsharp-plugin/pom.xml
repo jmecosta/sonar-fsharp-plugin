@@ -11,7 +11,7 @@
 
   <groupId>jmecsoftware.sonarqube.fsharp</groupId>
   <artifactId>sonarqube-fsharp-plugin</artifactId>
-  <version>1.0.4</version>
+  <version>1.0.5</version>
   <packaging>sonar-plugin</packaging>
 
   <name>Sonar F# Plugin :: Core</name>
