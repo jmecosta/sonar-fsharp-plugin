@@ -28,9 +28,9 @@ cache:
 
 # scripts that run after cloning repository
 install:
-  - cmd: path
-  - cmd: set Java
   - cmd: set
+  - cmd: mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=sonar-fsharp-plugin/dependencies/sonar-dotnet-tests-library-1.5-SNAPSHOT.jar
+
 
 #---------------------------------#
 #       build configuration       #
@@ -69,7 +69,7 @@ before_test:
 
 # to run your custom scripts instead of automatic tests
 test_script:
-  - dotnet test FsSonarRunner\FsSonarRunner.sln
+  - dotnet test --test-adapter-path:. --logger:Appveyor FsSonarRunner\FsSonarRunner.sln
 
 # scripts to run after tests
 after_test:
