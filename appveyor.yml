@@ -27,8 +27,7 @@ cache:
   - C:\Users\appveyor\.m2
 
 # scripts that run after cloning repository
-install:
-  - cmd: mvn install:install-file -Dfile=sonar-fsharp-plugin/dependencies/sonar-dotnet-tests-library-1.5-SNAPSHOT.jar
+#install:
 
 #---------------------------------#
 #       build configuration       #
