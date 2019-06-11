@@ -4,14 +4,15 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.sonarsource.parent</groupId>
-    <artifactId>parent</artifactId>
-    <version>46</version>
+    <groupId>jmecsoftware.sonarqube.fsharp</groupId>
+    <artifactId>sonarqube-fsharp</artifactId>
+    <version>1.0.6</version>
   </parent>
 
-  <groupId>jmecsoftware.sonarqube.fsharp</groupId>
+  <!-- it's recommended to follow the pattern "sonar-{key}-plugin", for example "sonar-php-plugin" -->
   <artifactId>sonarqube-fsharp-plugin</artifactId>
-  <version>1.0.5</version>
+
+  <!-- this is important for sonar-packaging-maven-plugin -->
   <packaging>sonar-plugin</packaging>
 
   <name>Sonar F# Plugin :: Core</name>
