@@ -65,6 +65,25 @@ build_script:
 #before_package:
 
 #---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+
+# to run tests against only selected assemblies and/or categories
+#test:
+
+# scripts to run before tests (working directory and environment changes are persisted from the previous steps such as "before_build")
+#before_test:
+
+# to run your custom scripts instead of automatic tests
+#test_script:
+
+# scripts to run after tests
+#after_test:
+
+# to disable automatic tests
+#test: off
+
+#---------------------------------#
 #      artifacts configuration    #
 #---------------------------------#
 
