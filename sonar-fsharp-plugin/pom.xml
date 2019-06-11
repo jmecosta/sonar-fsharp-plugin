@@ -18,6 +18,12 @@
   <name>Sonar F# Plugin :: Core</name>
   <description>Enable analysis and reporting on F# projects.</description>
 
+  <url>https://github.com/jmecsoftware/sonar-fsharp-plugin/</url>
+  <scm>
+    <connection>scm:git:https://github.com/jmecsoftware/sonar-fsharp-plugin.git</connection>
+    <url>https://github.com/jmecsoftware/sonar-fsharp-plugin</url>
+  </scm>
+
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
     <sonar.version>6.7</sonar.version>
@@ -124,7 +130,6 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
   </build>
 

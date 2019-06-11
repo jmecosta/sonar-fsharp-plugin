@@ -15,7 +15,6 @@
 
   <name>SonarQube F# Plugin</name>
   <description>SonarQube F# Code Analyzer Plugin</description>
-  <url>https://github.com/jmecsoftware/sonar-fsharp-plugin/</url>
   <inceptionYear>2015</inceptionYear>
   <organization>
     <name>jmecsoftware</name>
@@ -54,11 +53,6 @@
     <module>sonar-fsharp-plugin</module>
   </modules>
 
-  <scm>
-    <connection>scm:git:https://github.com/jmecsoftware/sonar-fsharp-plugin.git</connection>
-    <url>https://github.com/jmecsoftware/sonar-fsharp-plugin</url>
-    <tag>1.0.6</tag>
-  </scm>
   <issueManagement>
     <system>GitHub</system>
     <url>https://github.com/jmecsoftware/sonar-fsharp-plugin/issues</url>
