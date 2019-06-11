@@ -6,14 +6,13 @@
   <parent>
     <groupId>jmecsoftware.sonarqube.fsharp</groupId>
     <artifactId>sonarqube-fsharp</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
   </parent>
 
   <artifactId>FsSonarRunner</artifactId>
   <packaging>pom</packaging>
 
   <name>Sonar F# Plugin :: FsSonarRunner</name>
-
 
   <profiles>
     <profile>
@@ -27,16 +26,12 @@
       <properties>
         <vsBin>C:/Program Files (x86)/MSBuild/14.0/Bin/msbuild.exe</vsBin>
       </properties>
-
-
     </profile>
   </profiles>
+
   <build>
-
     <plugins>
-
       <plugin>
-
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.3.2</version>
@@ -84,7 +79,6 @@
               </arguments>
             </configuration>
           </execution>
-
         </executions>
       </plugin>
       <plugin>

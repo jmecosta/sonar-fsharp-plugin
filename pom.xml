@@ -11,13 +11,13 @@
   <groupId>jmecsoftware.sonarqube.fsharp</groupId>
   <artifactId>sonarqube-fsharp</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.5</version>
+  <version>1.0.6</version>
 
   <name>SonarQube F# Plugin</name>
   <description>SonarQube F# Code Analyzer Plugin</description>
   <inceptionYear>2015</inceptionYear>
   <organization>
-    <name>jmecsoftware/</name>
+    <name>jmecsoftware</name>
     <url>https://github.com/jmecsoftware</url>
   </organization>
 
@@ -25,7 +25,7 @@
     <connection>scm:git:git@github.com:jmecsoftware/sonar-fsharp-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:jmecsoftware/sonar-fsharp-plugin.git</developerConnection>
     <url>https://github.com/jmecsoftware/sonar-fsharp-plugin</url>
-    <tag>1.0.5</tag>
+    <tag>1.0.6</tag>
   </scm>
   <issueManagement>
     <system>GitHub</system>
