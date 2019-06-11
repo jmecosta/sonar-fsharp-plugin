@@ -34,18 +34,17 @@ package org.sonar.plugins.fsharp;
 
 import static org.junit.Assert.assertEquals;
 import org.sonar.plugins.fsharp.FSharpSonarRulesDefinition;
-import org.junit.Test;
 import org.sonar.api.server.rule.RulesDefinition.Context;
 
 public class FSharpSonarRulesDefinitionTest {
 
-  //@Test
+  // @Test
   public void test() {
     Context context = new Context();
     assertEquals(0, context.repositories().size());
 
     new FSharpSonarRulesDefinition().define(context);
-    assertEquals(1, context.repositories().size());    
+    assertEquals(1, context.repositories().size());
     assertEquals(47, context.repository("fsharplint").rules().size());
   }
 }

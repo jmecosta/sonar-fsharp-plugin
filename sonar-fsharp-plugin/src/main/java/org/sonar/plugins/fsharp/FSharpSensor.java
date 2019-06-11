@@ -81,7 +81,6 @@ public class FSharpSensor implements Sensor {
 
   private static final Logger LOG = Loggers.get(FSharpSensor.class);
 
-  private final Configuration settings;
   private final FsSonarRunnerExtractor extractor;
   private final FileSystem fs;
   private final FileLinesContextFactory fileLinesContextFactory;
@@ -89,18 +88,17 @@ public class FSharpSensor implements Sensor {
 
   public FSharpSensor(Configuration settings, FsSonarRunnerExtractor extractor, FileSystem fs, FileLinesContextFactory fileLinesContextFactory,
     NoSonarFilter noSonarFilter) {
-    this.settings = settings;
     this.extractor = extractor;
     this.fs = fs;
     this.fileLinesContextFactory = fileLinesContextFactory;
     this.noSonarFilter = noSonarFilter;
   }
-  
+
   @Override
   public void describe(SensorDescriptor descriptor) {
     descriptor.name("F#").onlyOnLanguage(FSharpPlugin.LANGUAGE_KEY);
   }
-  
+
   @Override
   public void execute(SensorContext context) {
     analyze(context);
@@ -111,7 +109,7 @@ public class FSharpSensor implements Sensor {
     StringBuilder sb = CreateConfiguration(context);
     File analysisInput = toolInput();
     File analysisOutput = toolOutput();
-   
+
     try {
       String workdirRoot = context.fileSystem().workDir().getCanonicalPath();
       FSharpSensor.writeStringToFile(analysisInput.getAbsolutePath(), sb.toString());
@@ -122,25 +120,19 @@ public class FSharpSensor implements Sensor {
       if (OsUtils.isWindows()) {
         command = Command.create(executableFile.getAbsolutePath())
                 .addArgument("/i:" + analysisInput.getAbsolutePath())
-                .addArgument("/o:" + analysisOutput.getAbsolutePath());      
+                .addArgument("/o:" + analysisOutput.getAbsolutePath());
       } else {
         command = Command.create("mono")
                 .addArgument(executableFile.getAbsolutePath())
                 .addArgument("/i:" + analysisInput.getAbsolutePath())
-                .addArgument("/o:" + analysisOutput.getAbsolutePath());  
+                .addArgument("/o:" + analysisOutput.getAbsolutePath());
       }
       LOG.debug(command.toCommandLine());
       CommandExecutor.create().execute(command, new LogInfoStreamConsumer(), new LogErrorStreamConsumer(), Integer.MAX_VALUE);
     } catch (IOException e) {
-        
-        LOG.error("Could not write settings to file '{0}'", e.getMessage());
-        
-        String msg = new StringBuilder()
-          .append("Could not write settings to file: '")
-          .append(e)
-          .append("'")
-          .toString();
-    }    
+
+      LOG.error("Could not write settings to file '{0}'", e.getMessage());
+    }
   }
 
   private StringBuilder CreateConfiguration(SensorContext context) {
@@ -160,7 +152,7 @@ public class FSharpSensor implements Sensor {
           if ("RuleKey".equals(parameter.getKey())) {
             continue;
           }
-          
+
           appendLine(sb, "        <Parameter>");
           appendLine(sb, "          <Key>" + parameter.getKey() + "</Key>");
           appendLine(sb, "          <Value>" + StringEscapeUtils.escapeXml(parameter.getValue()) + "</Value>");
@@ -270,7 +262,7 @@ public class FSharpSensor implements Sensor {
             handleIssuesTag(inputFile, context);
           } else if ("CopyPasteTokens".equals(tagName)) {
             NewCpdTokens cpdTokens = context.newCpdTokens().onFile(inputFile);
-            NewHighlighting highlights = context.newHighlighting().onFile(inputFile);            
+            NewHighlighting highlights = context.newHighlighting().onFile(inputFile);
             handleCopyPasteTokensTag(cpdTokens, highlights);
             cpdTokens.save();
             highlights.save();
@@ -282,7 +274,7 @@ public class FSharpSensor implements Sensor {
     private void handleCopyPasteTokensTag(NewCpdTokens cpdTokens, NewHighlighting highlights) throws XMLStreamException {
       while (stream.hasNext()) {
         int next = stream.next();
-    
+
         if (next == XMLStreamConstants.END_ELEMENT && "CopyPasteTokens".equals(stream.getLocalName())) {
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
@@ -308,18 +300,18 @@ public class FSharpSensor implements Sensor {
         int next = stream.next();
 
         if (next == XMLStreamConstants.END_ELEMENT && "Token".equals(stream.getLocalName())) {
-          cpdTokens.addToken(line, leftCol, line, rightCol, value);        
-          
+          cpdTokens.addToken(line, leftCol, line, rightCol, value);
+
           try
           {
               if (highlight != null) {
                   highlights.highlight(line, leftCol, line, rightCol, TypeOfText.valueOf(highlight));
               }
-              
-          } catch(IllegalArgumentException ex) {
-              LOG.error("Invalid token for hightlight : " + highlight + " : " + ex.getMessage());
+
+          } catch (IllegalArgumentException ex) {
+            LOG.error("Invalid token for hightlight : " + highlight + " : " + ex.getMessage());
           }
-          
+
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
@@ -340,7 +332,7 @@ public class FSharpSensor implements Sensor {
         }
       }
     }
-    
+
     private void handleMetricsTag(InputFile inputFile) throws XMLStreamException {
       while (stream.hasNext()) {
         int next = stream.next();
@@ -373,19 +365,19 @@ public class FSharpSensor implements Sensor {
             handleCommentsMetricTag(inputFile);
           } else if ("LinesOfCode".equals(tagName)) {
             handleLinesOfCodeMetricTag(inputFile);
-          } 
+          }
         }
       }
     }
 
     private void handleLinesMetricTag(InputFile inputFile) throws XMLStreamException {
-      Integer value = Integer.parseInt(stream.getElementText());      
+      Integer value = Integer.parseInt(stream.getElementText());
       context.<Integer>newMeasure().forMetric(CoreMetrics.LINES).on(inputFile).withValue(value).save();
     }
 
     private void handleClassesMetricTag(InputFile inputFile) throws XMLStreamException {
       Integer value = Integer.parseInt(stream.getElementText());
-      context.<Integer>newMeasure().forMetric(CoreMetrics.CLASSES).on(inputFile).withValue(value).save();      
+      context.<Integer>newMeasure().forMetric(CoreMetrics.CLASSES).on(inputFile).withValue(value).save();
     }
 
     private void handleStatementsMetricTag(InputFile inputFile) throws XMLStreamException {
@@ -405,12 +397,12 @@ public class FSharpSensor implements Sensor {
 
     private void handlePublicUndocumentedApiMetricTag(InputFile inputFile) throws XMLStreamException {
       Integer value = Integer.parseInt(stream.getElementText());
-      context.<Integer>newMeasure().forMetric(CoreMetrics.PUBLIC_UNDOCUMENTED_API).on(inputFile).withValue(value).save();        
+      context.<Integer>newMeasure().forMetric(CoreMetrics.PUBLIC_UNDOCUMENTED_API).on(inputFile).withValue(value).save();
     }
 
     private void handleComplexityMetricTag(InputFile inputFile) throws XMLStreamException {
       Integer value = Integer.parseInt(stream.getElementText());
-      context.<Integer>newMeasure().forMetric(CoreMetrics.COMPLEXITY).on(inputFile).withValue(value).save();        
+      context.<Integer>newMeasure().forMetric(CoreMetrics.COMPLEXITY).on(inputFile).withValue(value).save();
     }
 
     private void handleFileComplexityDistributionMetricTag(InputFile inputFile) throws XMLStreamException {
@@ -442,7 +434,7 @@ public class FSharpSensor implements Sensor {
     }
 
     private void handleNoSonarCommentsMetricTag(InputFile inputFile) throws XMLStreamException {
-      HashSet builder = new HashSet();
+      HashSet<Integer> builder = new HashSet<>();
 
       while (stream.hasNext()) {
         int next = stream.next();
@@ -543,7 +535,7 @@ public class FSharpSensor implements Sensor {
         int next = stream.next();
 
         if (next == XMLStreamConstants.END_ELEMENT && "Issue".equals(stream.getLocalName())) {
-            
+
           NewIssue newIssue = context.newIssue().forRule(RuleKey.of(FSharpPlugin.REPOSITORY_KEY, id));
           NewIssueLocation location = newIssue.newLocation()
             .on(inputFile)
@@ -551,10 +543,10 @@ public class FSharpSensor implements Sensor {
             .message(message);
 
           newIssue.at(location);
-          newIssue.save();          
-          
+          newIssue.save();
+
             LOG.info("Save Issue : " + inputFile + " Line " + line + "  message " + message);
-          
+
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
@@ -610,7 +602,6 @@ public class FSharpSensor implements Sensor {
     return new File(fileSystem.workDir(), "fs-analysis-output.xml");
   }
 
-
   public static void writeStringToFile(String path, String content) throws IOException {
       File file = new File(path);
       BufferedWriter writer = null;
@@ -619,6 +610,6 @@ public class FSharpSensor implements Sensor {
           writer.write(content);
       } finally {
           if (writer != null) writer.close();
-      }  
+      }
   }
 }
