@@ -5,13 +5,13 @@
   <parent>
     <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
-    <version>46</version>
+    <version>52</version>
   </parent>
 
   <groupId>jmecsoftware.sonarqube.fsharp</groupId>
   <artifactId>sonarqube-fsharp</artifactId>
-  <packaging>pom</packaging>
   <version>1.0.6</version>
+  <packaging>pom</packaging>
 
   <name>SonarQube F# Plugin</name>
   <description>SonarQube F# Code Analyzer Plugin</description>
@@ -63,9 +63,4 @@
     <system>GitHub</system>
     <url>https://github.com/jmecsoftware/sonar-fsharp-plugin/issues</url>
   </issueManagement>
-
-  <properties>
-    <sonar.version>6.7</sonar.version>
-    <license.owner>Jorge Costa</license.owner>
-  </properties>
 </project>
