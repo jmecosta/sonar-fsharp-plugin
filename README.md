@@ -31,4 +31,6 @@ Review the F# quality profile before running.
 
 ### Coverage and Tests
 
-Please use generic solutions like https://docs.sonarqube.org/latest/analysis/generic-test/ or https://github.com/jmecsoftware/sonarqube-testdata-plugin
+Please use generic solutions like
+<https://docs.sonarqube.org/latest/analysis/generic-test/> or
+<https://github.com/jmecsoftware/sonarqube-testdata-plugin>

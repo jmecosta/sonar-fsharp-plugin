@@ -5,7 +5,7 @@
 #---------------------------------#
 
 # version format
-version: 1.0.5.{build}
+version: 1.0.6.{build}
 
 #---------------------------------#
 #    environment configuration    #
@@ -65,6 +65,25 @@ build_script:
 #before_package:
 
 #---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+
+# to run tests against only selected assemblies and/or categories
+#test:
+
+# scripts to run before tests (working directory and environment changes are persisted from the previous steps such as "before_build")
+#before_test:
+
+# to run your custom scripts instead of automatic tests
+#test_script:
+
+# scripts to run after tests
+#after_test:
+
+# to disable automatic tests
+#test: off
+
+#---------------------------------#
 #      artifacts configuration    #
 #---------------------------------#
 
@@ -79,6 +98,17 @@ artifacts:
 #---------------------------------#
 #        global handlers          #
 #---------------------------------#
+
+# on successful build
+#on_success:
+
+# on build failure
+#on_failure:
+
+# after build failure or success
+on_finish:
+  - sh: |
+      find "$APPVEYOR_BUILD_FOLDER" -type f -name 'TEST*.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID"
 
 #---------------------------------#
 #         notifications           #

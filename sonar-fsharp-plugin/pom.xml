@@ -4,18 +4,25 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.sonarsource.parent</groupId>
-    <artifactId>parent</artifactId>
-    <version>46</version>
+    <groupId>jmecsoftware.sonarqube.fsharp</groupId>
+    <artifactId>sonarqube-fsharp</artifactId>
+    <version>1.0.6</version>
   </parent>
 
-  <groupId>jmecsoftware.sonarqube.fsharp</groupId>
+  <!-- it's recommended to follow the pattern "sonar-{key}-plugin", for example "sonar-php-plugin" -->
   <artifactId>sonarqube-fsharp-plugin</artifactId>
-  <version>1.0.5</version>
+
+  <!-- this is important for sonar-packaging-maven-plugin -->
   <packaging>sonar-plugin</packaging>
 
   <name>Sonar F# Plugin :: Core</name>
   <description>Enable analysis and reporting on F# projects.</description>
+
+  <url>https://github.com/jmecsoftware/sonar-fsharp-plugin/</url>
+  <scm>
+    <connection>scm:git:https://github.com/jmecsoftware/sonar-fsharp-plugin.git</connection>
+    <url>https://github.com/jmecsoftware/sonar-fsharp-plugin</url>
+  </scm>
 
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
@@ -71,17 +78,34 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
   <build>
     <plugins>
       <plugin>
-        <groupId>com.mycila.maven-license-plugin</groupId>
-        <artifactId>maven-license-plugin</artifactId>
-        <version>1.9.0</version>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <version>3.0</version>
         <configuration>
           <header>src/license-header.txt</header>
+          <properties>
+            <owner>Jorge Costa</owner>
+            <email>jmecosta@gmail.com</email>
+            <strictCheck>true</strictCheck>
+          </properties>
+          <excludes>
+            <exclude>**/README</exclude>
+            <exclude>src/test/resources/**</exclude>
+            <exclude>src/main/resources/**</exclude>
+          </excludes>
         </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -106,9 +130,9 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
   </build>
+
   <dependencies>
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
@@ -144,6 +168,5 @@
       <version>2.6</version>
       <type>jar</type>
     </dependency>
-
   </dependencies>
 </project>
