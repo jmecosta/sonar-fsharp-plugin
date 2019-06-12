@@ -106,7 +106,9 @@ artifacts:
 #on_failure:
 
 # after build failure or success
-#on_finish:
+on_finish:
+  - cmd: echo "on_finish - localte JUnit results"
+  - cmd: dir Test*.xml
 
 #---------------------------------#
 #         notifications           #
