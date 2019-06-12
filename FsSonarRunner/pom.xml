@@ -13,6 +13,7 @@
   <packaging>pom</packaging>
 
   <name>Sonar F# Plugin :: FsSonarRunner</name>
+
   <build>
     <plugins>
       <plugin>

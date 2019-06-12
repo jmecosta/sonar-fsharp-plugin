@@ -6,10 +6,9 @@
   <parent>
     <groupId>jmecsoftware.sonarqube.fsharp</groupId>
     <artifactId>sonarqube-fsharp</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.0-alpha</version>
   </parent>
 
-  <!-- it's recommended to follow the pattern "sonar-{key}-plugin", for example "sonar-php-plugin" -->
   <!-- it's recommended to follow the pattern "sonar-{key}-plugin", for example "sonar-php-plugin" -->
   <artifactId>sonarqube-fsharp-plugin</artifactId>
 
@@ -27,9 +26,6 @@
 
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
-    <sonar.version>6.7</sonar.version>
-    <sonar.pluginName>F#</sonar.pluginName>
-    <sonar.pluginClass>org.sonar.plugins.fsharp.FSharpPlugin</sonar.pluginClass>
   </properties>
 
   <dependencyManagement>
@@ -45,7 +41,9 @@
       <dependency>
         <groupId>org.sonarsource.sonarqube</groupId>
         <artifactId>sonar-plugin-api</artifactId>
+        <!-- minimal version of SonarQube to support. -->
         <version>6.7</version>
+        <!-- mandatory scope -->
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -106,6 +104,19 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+        <artifactId>sonar-packaging-maven-plugin</artifactId>
+        <version>1.18.0.372</version>
+        <extensions>true</extensions>
+        <configuration>
+          <!-- the entry-point class that extends org.sonar.api.SonarPlugin -->
+          <pluginClass>org.sonar.plugins.fsharp.FSharpPlugin</pluginClass>
+
+          <!-- advanced properties can be set here. See paragraph "Advanced Build Properties". -->
+          <name>F#</name>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
