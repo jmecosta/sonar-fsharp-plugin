@@ -512,7 +512,7 @@ public class FSharpSensor implements Sensor {
           newIssue.at(location);
           newIssue.save();
 
-            LOG.info("Save Issue : " + inputFile + " Line " + line + "  message " + message);
+          LOG.info("Save Issue : " + inputFile + " Line " + line + "  message " + message);
 
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
@@ -570,13 +570,14 @@ public class FSharpSensor implements Sensor {
   }
 
   public static void writeStringToFile(String path, String content) throws IOException {
-      File file = new File(path);
-      BufferedWriter writer = null;
-      try {
-          writer = new BufferedWriter(new FileWriter(file));
-          writer.write(content);
-      } finally {
-          if (writer != null) writer.close();
-      }
+    File file = new File(path);
+    BufferedWriter writer = null;
+    try {
+      writer = new BufferedWriter(new FileWriter(file));
+      writer.write(content);
+    } finally {
+      if (writer != null)
+        writer.close();
+    }
   }
 }
