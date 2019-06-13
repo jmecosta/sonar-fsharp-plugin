@@ -145,8 +145,8 @@ public class FSharpSensor implements Sensor {
     }
     appendLine(sb, "  </Rules>");
     appendLine(sb, "  <Files>");
-    for (File file : filesToAnalyze()) {
-      appendLine(sb, "    <File>" + file.getAbsolutePath() + "</File>");
+    for (InputFile file : filesToAnalyze()) {
+      appendLine(sb, "    <File>" + file.filename() + "</File>");
     }
     appendLine(sb, "  </Files>");
     appendLine(sb, "</AnalysisInput>");
@@ -338,10 +338,6 @@ public class FSharpSensor implements Sensor {
             handlePublicUndocumentedApiMetricTag(inputFile);
           } else if ("Complexity".equals(tagName)) {
             handleComplexityMetricTag(inputFile);
-          } else if ("FileComplexityDistribution".equals(tagName)) {
-            handleFileComplexityDistributionMetricTag(inputFile);
-          } else if ("FunctionComplexityDistribution".equals(tagName)) {
-            handleFunctionComplexityDistributionMetricTag(inputFile);
           } else if ("Comments".equals(tagName)) {
             handleCommentsMetricTag(inputFile);
           } else if ("LinesOfCode".equals(tagName)) {
@@ -384,16 +380,6 @@ public class FSharpSensor implements Sensor {
     private void handleComplexityMetricTag(InputFile inputFile) throws XMLStreamException {
       Integer value = Integer.parseInt(stream.getElementText());
       context.<Integer>newMeasure().forMetric(CoreMetrics.COMPLEXITY).on(inputFile).withValue(value).save();
-    }
-
-    private void handleFileComplexityDistributionMetricTag(InputFile inputFile) throws XMLStreamException {
-      String value = stream.getElementText();
-      context.<String>newMeasure().forMetric(CoreMetrics.FILE_COMPLEXITY_DISTRIBUTION).on(inputFile).withValue(value).save();
-    }
-
-    private void handleFunctionComplexityDistributionMetricTag(InputFile inputFile) throws XMLStreamException {
-      String value = stream.getElementText();
-      context.<String>newMeasure().forMetric(CoreMetrics.FUNCTION_COMPLEXITY_DISTRIBUTION).on(inputFile).withValue(value).save();
     }
 
     private void handleCommentsMetricTag(InputFile inputFile) throws XMLStreamException {
@@ -526,7 +512,7 @@ public class FSharpSensor implements Sensor {
           newIssue.at(location);
           newIssue.save();
 
-            LOG.info("Save Issue : " + inputFile + " Line " + line + "  message " + message);
+          LOG.info("Save Issue : " + inputFile + " Line " + line + "  message " + message);
 
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
@@ -567,8 +553,8 @@ public class FSharpSensor implements Sensor {
 
   }
 
-  private Iterable<File> filesToAnalyze() {
-    return fs.files(fs.predicates().hasLanguage(FSharpPlugin.LANGUAGE_KEY));
+  private Iterable<InputFile> filesToAnalyze() {
+    return fs.inputFiles(fs.predicates().hasLanguage(FSharpPlugin.LANGUAGE_KEY));
   }
 
   private File toolInput() {
@@ -584,13 +570,14 @@ public class FSharpSensor implements Sensor {
   }
 
   public static void writeStringToFile(String path, String content) throws IOException {
-      File file = new File(path);
-      BufferedWriter writer = null;
-      try {
-          writer = new BufferedWriter(new FileWriter(file));
-          writer.write(content);
-      } finally {
-          if (writer != null) writer.close();
-      }
+    File file = new File(path);
+    BufferedWriter writer = null;
+    try {
+      writer = new BufferedWriter(new FileWriter(file));
+      writer.write(content);
+    } finally {
+      if (writer != null)
+        writer.close();
+    }
   }
 }

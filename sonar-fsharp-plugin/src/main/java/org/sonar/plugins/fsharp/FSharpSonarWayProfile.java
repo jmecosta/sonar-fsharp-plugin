@@ -13,63 +13,61 @@
  */
 package org.sonar.plugins.fsharp;
 
-import org.sonar.api.profiles.ProfileDefinition;
-import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.rules.Rule;
-import org.sonar.api.utils.ValidationMessages;
+import org.sonar.api.server.profile.BuiltInQualityProfilesDefinition;
 
-// based on plugins from from https://github.com/SonarSource
-public class FSharpSonarWayProfile extends ProfileDefinition {
+public class FSharpSonarWayProfile implements BuiltInQualityProfilesDefinition {
 
   @Override
-  public RulesProfile createProfile(ValidationMessages validation) {
-    RulesProfile profile = RulesProfile.create(FSharpPlugin.FSHARP_WAY_PROFILE, FSharpPlugin.LANGUAGE_KEY);
+  public void define(Context context) {
 
-    activateRule(profile, "RulesTypographyTrailingLineError");
-    activateRule(profile, "RulesTypographyTabCharacterError");
-    activateRule(profile, "RulesTypographyFileLengthError");
-    activateRule(profile, "RulesTypographyLineLengthError");
-    activateRule(profile, "RulesTypographyTrailingWhitespaceError");
-    activateRule(profile, "RulesNestedStatementsError");
-    activateRule(profile, "RulesHintRefactor");
-    activateRule(profile, "RulesHintSuggestion");
-    activateRule(profile, "RulesXmlDocumentationExceptionError");
-    activateRule(profile, "RulesXmlDocumentationUnionError");
-    activateRule(profile, "RulesXmlDocumentationRecordError");
-    activateRule(profile, "RulesXmlDocumentationMemberError");
-    activateRule(profile, "RulesXmlDocumentationTypeError");
-    activateRule(profile, "RulesXmlDocumentationAutoPropertyError");
-    activateRule(profile, "RulesXmlDocumentationEnumError");
-    activateRule(profile, "RulesXmlDocumentationModuleError");
-    activateRule(profile, "RulesXmlDocumentationLetError");
-    activateRule(profile, "RulesNamingConventionsExceptionError");
-    activateRule(profile, "RulesNamingConventionsCamelCaseError");
-    activateRule(profile, "RulesNamingConventionsPascalCaseError");
-    activateRule(profile, "RulesNamingConventionsInterfaceError");
-    activateRule(profile, "RulesRaiseWithSingleArgument");
-    activateRule(profile, "RulesFailwithWithSingleArgument");
-    activateRule(profile, "RulesNullArgWithSingleArgument");
-    activateRule(profile, "RulesInvalidOpWithSingleArgument");
-    activateRule(profile, "RulesInvalidArgWithTwoArguments");
-    activateRule(profile, "RulesFailwithfWithArgumentsMatchingFormatString");
-    activateRule(profile, "RulesTupleOfWildcardsError");
-    activateRule(profile, "RulesWildcardNamedWithAsPattern");
-    activateRule(profile, "RulesUselessBindingError");
-    activateRule(profile, "RulesFavourIgnoreOverLetWildError");
-    activateRule(profile, "RulesCanBeReplacedWithComposition");
-    activateRule(profile, "RulesReimplementsFunction");
+    NewBuiltInQualityProfile profile = context.createBuiltInQualityProfile(
+            FSharpPlugin.FSHARP_WAY_PROFILE, FSharpPlugin.LANGUAGE_KEY);
 
-    activateRule(profile, "RulesSourceLengthError");
-    activateRule(profile, "RulesNumberOfItemsTupleError");
-    activateRule(profile, "RulesNumberOfItemsClassMembersError");
-    activateRule(profile, "RulesNumberOfItemsFunctionError");
-    activateRule(profile, "RulesNumberOfItemsBooleanConditionsError");
-
-    return profile;
+    profile.setDefault(true);
+    activateRule(profile, "RulesTypographyTrailingLineError", "MAJOR");
+    activateRule(profile, "RulesTypographyTabCharacterError", "MAJOR");
+    activateRule(profile, "RulesTypographyFileLengthError", "MAJOR");
+    activateRule(profile, "RulesTypographyLineLengthError", "MAJOR");
+    activateRule(profile, "RulesTypographyTrailingWhitespaceError", "MAJOR");
+    activateRule(profile, "RulesNestedStatementsError", "MAJOR");
+    activateRule(profile, "RulesHintRefactor", "MAJOR");
+    activateRule(profile, "RulesHintSuggestion", "MAJOR");
+    activateRule(profile, "RulesHintSuggestion", "MAJOR");
+    activateRule(profile, "RulesXmlDocumentationExceptionError", "MAJOR");
+    activateRule(profile, "RulesXmlDocumentationUnionError", "MAJOR");
+    activateRule(profile, "RulesXmlDocumentationRecordError", "MAJOR");
+    activateRule(profile, "RulesXmlDocumentationMemberError", "MAJOR");
+    activateRule(profile, "RulesXmlDocumentationTypeError", "MAJOR");
+    activateRule(profile, "RulesXmlDocumentationAutoPropertyError", "MAJOR");
+    activateRule(profile, "RulesXmlDocumentationEnumError", "MAJOR");
+    activateRule(profile, "RulesXmlDocumentationModuleError", "MAJOR");
+    activateRule(profile, "RulesXmlDocumentationLetError", "MAJOR");
+    activateRule(profile, "RulesNamingConventionsExceptionError", "MAJOR");
+    activateRule(profile, "RulesNamingConventionsCamelCaseError", "MAJOR");
+    activateRule(profile, "RulesNamingConventionsPascalCaseError", "MAJOR");
+    activateRule(profile, "RulesNamingConventionsInterfaceError", "MAJOR");
+    activateRule(profile, "RulesRaiseWithSingleArgument", "MAJOR");
+    activateRule(profile, "RulesFailwithWithSingleArgument", "MAJOR");
+    activateRule(profile, "RulesNullArgWithSingleArgument", "MAJOR");
+    activateRule(profile, "RulesInvalidOpWithSingleArgument", "MAJOR");
+    activateRule(profile, "RulesInvalidArgWithTwoArguments", "MAJOR");
+    activateRule(profile, "RulesFailwithfWithArgumentsMatchingFormatString", "MAJOR");
+    activateRule(profile, "RulesTupleOfWildcardsError", "MAJOR");
+    activateRule(profile, "RulesWildcardNamedWithAsPattern", "MAJOR");
+    activateRule(profile, "RulesUselessBindingError", "MAJOR");
+    activateRule(profile, "RulesFavourIgnoreOverLetWildError", "MAJOR");
+    activateRule(profile, "RulesCanBeReplacedWithComposition", "MAJOR");
+    activateRule(profile, "RulesReimplementsFunction", "MAJOR");
+    activateRule(profile, "RulesSourceLengthError", "MAJOR");
+    activateRule(profile, "RulesNumberOfItemsTupleError", "MAJOR");
+    activateRule(profile, "RulesNumberOfItemsClassMembersError", "MAJOR");
+    activateRule(profile, "RulesNumberOfItemsFunctionError", "MAJOR");
+    activateRule(profile, "RulesNumberOfItemsBooleanConditionsError", "MAJOR");
+    profile.done();
   }
 
-  private static void activateRule(RulesProfile profile, String ruleKey) {
-    profile.activateRule(Rule.create(FSharpPlugin.REPOSITORY_KEY, ruleKey), null);
+  private void activateRule(NewBuiltInQualityProfile profile, String ruleKey, String severity) {
+    NewBuiltInActiveRule rule1 = profile.activateRule(FSharpPlugin.REPOSITORY_KEY, ruleKey);
+    rule1.overrideSeverity(severity);
   }
-
 }
