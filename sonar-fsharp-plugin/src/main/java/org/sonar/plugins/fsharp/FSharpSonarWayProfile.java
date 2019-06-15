@@ -32,7 +32,6 @@ public class FSharpSonarWayProfile implements BuiltInQualityProfilesDefinition {
     activateRule(profile, "RulesNestedStatementsError", "MAJOR");
     activateRule(profile, "RulesHintRefactor", "MAJOR");
     activateRule(profile, "RulesHintSuggestion", "MAJOR");
-    activateRule(profile, "RulesHintSuggestion", "MAJOR");
     activateRule(profile, "RulesXmlDocumentationExceptionError", "MAJOR");
     activateRule(profile, "RulesXmlDocumentationUnionError", "MAJOR");
     activateRule(profile, "RulesXmlDocumentationRecordError", "MAJOR");
