@@ -46,8 +46,14 @@ let main argv =
                 let options = XmlHelper.InputXml.Parse(File.ReadAllText(input))
 
                 let metrics = new SQAnalyser()
-                options.Files |> Seq.iter  (fun c -> if File.Exists(c) then metrics.RunAnalyses(c, File.ReadAllText(c), input))
+                let HandleFileToAnalyse(file) = 
+                    if File.Exists(file) then
+                        metrics.RunAnalyses(file, File.ReadAllText(file), input)
+                    else
+                        printf "    [FsSonarRunner] [Error]: %s not found \r\n" file
 
+                options.Files
+                |> Seq.iter (fun file -> HandleFileToAnalyse(file))
                 metrics.WriteXmlToDisk(output, false)
             with
             | ex -> printf "    Failed: %A" ex
