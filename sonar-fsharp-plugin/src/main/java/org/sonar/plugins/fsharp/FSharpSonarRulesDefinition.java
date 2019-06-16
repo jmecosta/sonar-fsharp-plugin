@@ -31,7 +31,7 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
     NewRule fileLines = createRule(repository, "RulesTypographyFileLengthError");
     fileLines.createParam("Lines").setDescription("The maximum number of lines allowed in a file")
       .setType(RuleParamType.INTEGER).setDefaultValue("1000");
-    NewRule lineLength = createRule(repository, "RulesTypographyLineLengthError")
+    NewRule lineLength = createRule(repository, "RulesTypographyLineLengthError");
     lineLength.createParam("Length").setDescription("The maximum authorized line length")
       .setType(RuleParamType.INTEGER).setDefaultValue("200");
     NewRule trailingWhiteSpace = createRule(repository, "RulesTypographyTrailingWhitespaceError");
@@ -56,7 +56,7 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
       .setType(RuleParamType.STRING).setDefaultValue("");
 
     // name convention
-    NewRule interfaceNaming = createRule(repository, "RulesNamingConventionsInterfaceError")
+    NewRule interfaceNaming = createRule(repository, "RulesNamingConventionsInterfaceError");
     NewRule exceptionNaming = createRule(repository, "RulesNamingConventionsExceptionError");
     NewRule typeNaming = repository.createRule("RulesNamingConventionsTypesError").setName("Type naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
     NewRule recordsNaming = repository.createRule("RulesNamingConventionsRecordsError").setName("Record naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
