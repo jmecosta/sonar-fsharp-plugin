@@ -111,7 +111,6 @@ public class FSharpSensor implements Sensor {
       LOG.debug(command.toCommandLine());
       CommandExecutor.create().execute(command, new LogInfoStreamConsumer(), new LogErrorStreamConsumer(), Integer.MAX_VALUE);
     } catch (IOException e) {
-
       LOG.error("Could not write settings to file '{0}'", e.getMessage());
     }
   }
@@ -283,11 +282,10 @@ public class FSharpSensor implements Sensor {
         if (next == XMLStreamConstants.END_ELEMENT && "Token".equals(stream.getLocalName())) {
           cpdTokens.addToken(line, leftCol, line, rightCol, value);
 
-          try
-          {
-              if (highlight != null) {
-                  highlights.highlight(line, leftCol, line, rightCol, TypeOfText.valueOf(highlight));
-              }
+          try {
+            if (highlight != null) {
+              highlights.highlight(line, leftCol, line, rightCol, TypeOfText.valueOf(highlight));
+            }
 
           } catch (IllegalArgumentException ex) {
             LOG.error("Invalid token for hightlight : " + highlight + " : " + ex.getMessage());

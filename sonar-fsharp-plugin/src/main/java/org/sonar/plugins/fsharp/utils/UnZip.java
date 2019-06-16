@@ -25,61 +25,60 @@ import org.sonar.api.utils.log.Loggers;
 
 // https://www.mkyong.com/java/how-to-decompress-files-from-a-zip-file/
 
-public class UnZip
-{
+public class UnZip {
   public static final Logger LOG = Loggers.get(UnZip.class);
   List<String> fileList;
 
   /**
    * Unzip it
+   *
    * @param zipFile input zip file
-   * @param output zip file output folder
+   * @param output  zip file output folder
    */
-  public void unZipIt(String zipFile, String outputFolder) throws IOException{
+  public void unZipIt(String zipFile, String outputFolder) throws IOException {
 
     byte[] buffer = new byte[1024];
 
-    try{
+    try {
 
-      //create output directory is not exists
+      // create output directory is not exists
       File folder = new File(outputFolder);
-      if(!folder.exists()){
-          folder.mkdir();
+      if (!folder.exists()) {
+        folder.mkdir();
       }
 
-      //get the zip file content
-      ZipInputStream zis =
-          new ZipInputStream(new FileInputStream(zipFile));
-      //get the zipped file list entry
+      // get the zip file content
+      ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
+      // get the zipped file list entry
       ZipEntry ze = zis.getNextEntry();
 
-      while(ze!=null){
+      while (ze != null) {
 
-         String fileName = ze.getName();
-         File newFile = new File(outputFolder + File.separator + fileName);
+        String fileName = ze.getName();
+        File newFile = new File(outputFolder + File.separator + fileName);
 
-         LOG.debug("Unzip {}", newFile.getAbsolutePath());
+        LOG.debug("Unzip {}", newFile.getAbsolutePath());
 
-          //create all non exists folders
-          //else you will hit FileNotFoundException for compressed folder
-          new File(newFile.getParent()).mkdirs();
+        // create all non exists folders
+        // else you will hit FileNotFoundException for compressed folder
+        new File(newFile.getParent()).mkdirs();
 
-          FileOutputStream fos = new FileOutputStream(newFile);
+        FileOutputStream fos = new FileOutputStream(newFile);
 
-          int len;
-          while ((len = zis.read(buffer)) > 0) {
+        int len;
+        while ((len = zis.read(buffer)) > 0) {
           fos.write(buffer, 0, len);
-          }
+        }
 
-          fos.close();
-          ze = zis.getNextEntry();
+        fos.close();
+        ze = zis.getNextEntry();
       }
 
       zis.closeEntry();
       zis.close();
 
       LOG.debug("Unzip Done.");
-    }catch(IOException ex){
+    } catch (IOException ex) {
       LOG.error("Unzip Failed {}", ex.getMessage());
       throw ex;
     }
