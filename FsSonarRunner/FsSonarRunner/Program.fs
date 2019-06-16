@@ -53,7 +53,7 @@ let main argv =
                         printf "    [FsSonarRunner] [Error]: %s not found \r\n" file
 
                 options.Files
-                |> Seq.iter (fun file -> HandleFileToAnalyse(file))
+                |> Seq.iter (fun file -> HandleFileToAnalyse(file.Replace("file:///", "")))
                 metrics.WriteXmlToDisk(output, false)
             with
             | ex -> printf "    Failed: %A" ex
