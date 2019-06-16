@@ -13,6 +13,7 @@
  */
 package org.sonar.plugins.fsharp;
 
+import org.sonar.api.rule.Severity;
 import org.sonar.api.server.profile.BuiltInQualityProfilesDefinition;
 
 public class FSharpSonarWayProfile implements BuiltInQualityProfilesDefinition {
@@ -24,44 +25,44 @@ public class FSharpSonarWayProfile implements BuiltInQualityProfilesDefinition {
             FSharpPlugin.FSHARP_WAY_PROFILE, FSharpPlugin.LANGUAGE_KEY);
 
     profile.setDefault(true);
-    activateRule(profile, "RulesTypographyTrailingLineError", "MAJOR");
-    activateRule(profile, "RulesTypographyTabCharacterError", "MAJOR");
-    activateRule(profile, "RulesTypographyFileLengthError", "MAJOR");
-    activateRule(profile, "RulesTypographyLineLengthError", "MAJOR");
-    activateRule(profile, "RulesTypographyTrailingWhitespaceError", "MAJOR");
-    activateRule(profile, "RulesNestedStatementsError", "MAJOR");
-    activateRule(profile, "RulesHintRefactor", "MAJOR");
-    activateRule(profile, "RulesHintSuggestion", "MAJOR");
-    activateRule(profile, "RulesXmlDocumentationExceptionError", "MAJOR");
-    activateRule(profile, "RulesXmlDocumentationUnionError", "MAJOR");
-    activateRule(profile, "RulesXmlDocumentationRecordError", "MAJOR");
-    activateRule(profile, "RulesXmlDocumentationMemberError", "MAJOR");
-    activateRule(profile, "RulesXmlDocumentationTypeError", "MAJOR");
-    activateRule(profile, "RulesXmlDocumentationAutoPropertyError", "MAJOR");
-    activateRule(profile, "RulesXmlDocumentationEnumError", "MAJOR");
-    activateRule(profile, "RulesXmlDocumentationModuleError", "MAJOR");
-    activateRule(profile, "RulesXmlDocumentationLetError", "MAJOR");
-    activateRule(profile, "RulesNamingConventionsExceptionError", "MAJOR");
-    activateRule(profile, "RulesNamingConventionsCamelCaseError", "MAJOR");
-    activateRule(profile, "RulesNamingConventionsPascalCaseError", "MAJOR");
-    activateRule(profile, "RulesNamingConventionsInterfaceError", "MAJOR");
-    activateRule(profile, "RulesRaiseWithSingleArgument", "MAJOR");
-    activateRule(profile, "RulesFailwithWithSingleArgument", "MAJOR");
-    activateRule(profile, "RulesNullArgWithSingleArgument", "MAJOR");
-    activateRule(profile, "RulesInvalidOpWithSingleArgument", "MAJOR");
-    activateRule(profile, "RulesInvalidArgWithTwoArguments", "MAJOR");
-    activateRule(profile, "RulesFailwithfWithArgumentsMatchingFormatString", "MAJOR");
-    activateRule(profile, "RulesTupleOfWildcardsError", "MAJOR");
-    activateRule(profile, "RulesWildcardNamedWithAsPattern", "MAJOR");
-    activateRule(profile, "RulesUselessBindingError", "MAJOR");
-    activateRule(profile, "RulesFavourIgnoreOverLetWildError", "MAJOR");
-    activateRule(profile, "RulesCanBeReplacedWithComposition", "MAJOR");
-    activateRule(profile, "RulesReimplementsFunction", "MAJOR");
-    activateRule(profile, "RulesSourceLengthError", "MAJOR");
-    activateRule(profile, "RulesNumberOfItemsTupleError", "MAJOR");
-    activateRule(profile, "RulesNumberOfItemsClassMembersError", "MAJOR");
-    activateRule(profile, "RulesNumberOfItemsFunctionError", "MAJOR");
-    activateRule(profile, "RulesNumberOfItemsBooleanConditionsError", "MAJOR");
+    activateRule(profile, "RulesTypographyTrailingLineError", Severity.MAJOR);
+    activateRule(profile, "RulesTypographyTabCharacterError", Severity.MAJOR);
+    activateRule(profile, "RulesTypographyFileLengthError", Severity.MAJOR);
+    activateRule(profile, "RulesTypographyLineLengthError", Severity.MAJOR);
+    activateRule(profile, "RulesTypographyTrailingWhitespaceError", Severity.MAJOR);
+    activateRule(profile, "RulesNestedStatementsError", Severity.MAJOR);
+    activateRule(profile, "RulesHintRefactor", Severity.MAJOR);
+    activateRule(profile, "RulesHintSuggestion", Severity.MAJOR);
+    activateRule(profile, "RulesXmlDocumentationExceptionError", Severity.MAJOR);
+    activateRule(profile, "RulesXmlDocumentationUnionError", Severity.MAJOR);
+    activateRule(profile, "RulesXmlDocumentationRecordError", Severity.MAJOR);
+    activateRule(profile, "RulesXmlDocumentationMemberError", Severity.MAJOR);
+    activateRule(profile, "RulesXmlDocumentationTypeError", Severity.MAJOR);
+    activateRule(profile, "RulesXmlDocumentationAutoPropertyError", Severity.MAJOR);
+    activateRule(profile, "RulesXmlDocumentationEnumError", Severity.MAJOR);
+    activateRule(profile, "RulesXmlDocumentationModuleError", Severity.MAJOR);
+    activateRule(profile, "RulesXmlDocumentationLetError", Severity.MAJOR);
+    activateRule(profile, "RulesNamingConventionsExceptionError", Severity.MAJOR);
+    activateRule(profile, "RulesNamingConventionsCamelCaseError", Severity.MAJOR);
+    activateRule(profile, "RulesNamingConventionsPascalCaseError", Severity.MAJOR);
+    activateRule(profile, "RulesNamingConventionsInterfaceError", Severity.MAJOR);
+    activateRule(profile, "RulesRaiseWithSingleArgument", Severity.MAJOR);
+    activateRule(profile, "RulesFailwithWithSingleArgument", Severity.MAJOR);
+    activateRule(profile, "RulesNullArgWithSingleArgument", Severity.MAJOR);
+    activateRule(profile, "RulesInvalidOpWithSingleArgument", Severity.MAJOR);
+    activateRule(profile, "RulesInvalidArgWithTwoArguments", Severity.MAJOR);
+    activateRule(profile, "RulesFailwithfWithArgumentsMatchingFormatString", Severity.MAJOR);
+    activateRule(profile, "RulesTupleOfWildcardsError", Severity.MAJOR);
+    activateRule(profile, "RulesWildcardNamedWithAsPattern", Severity.MAJOR);
+    activateRule(profile, "RulesUselessBindingError", Severity.MAJOR);
+    activateRule(profile, "RulesFavourIgnoreOverLetWildError", Severity.MAJOR);
+    activateRule(profile, "RulesCanBeReplacedWithComposition", Severity.MAJOR);
+    activateRule(profile, "RulesReimplementsFunction", Severity.MAJOR);
+    activateRule(profile, "RulesSourceLengthError", Severity.MAJOR);
+    activateRule(profile, "RulesNumberOfItemsTupleError", Severity.MAJOR);
+    activateRule(profile, "RulesNumberOfItemsClassMembersError", Severity.MAJOR);
+    activateRule(profile, "RulesNumberOfItemsFunctionError", Severity.MAJOR);
+    activateRule(profile, "RulesNumberOfItemsBooleanConditionsError", Severity.MAJOR);
     profile.done();
   }
 
