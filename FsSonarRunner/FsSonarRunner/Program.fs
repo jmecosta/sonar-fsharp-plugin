@@ -27,7 +27,7 @@ let main argv =
         rules.ShowRules()
     elif arguments.ContainsKey("f") then
         let input = arguments.["f"] |> Seq.head
-        let metrics = new SQAnalyser()
+        let metrics = SQAnalyser()
         try
             metrics.RunAnalyses(input, File.ReadAllText(input), "")
             metrics.PrintIssues()
@@ -45,9 +45,15 @@ let main argv =
                 let output = arguments.["o"] |> Seq.head
                 let options = XmlHelper.InputXml.Parse(File.ReadAllText(input))
 
-                let metrics = new SQAnalyser()
-                options.Files |> Seq.iter  (fun c -> if File.Exists(c) then metrics.RunAnalyses(c, File.ReadAllText(c), input))
+                let metrics = SQAnalyser()
+                let HandleFileToAnalyse(file) = 
+                    if File.Exists(file) then
+                        metrics.RunAnalyses(file, File.ReadAllText(file), input)
+                    else
+                        printf "    [FsSonarRunner] [Error]: %s not found \r\n" file
 
+                options.Files
+                |> Seq.iter (fun file -> HandleFileToAnalyse(file.Replace("file:///", "")))
                 metrics.WriteXmlToDisk(output, false)
             with
             | ex -> printf "    Failed: %A" ex
@@ -59,7 +65,7 @@ let main argv =
             let fsfiles = Directory.GetFiles(directory, "*.fs", SearchOption.AllDirectories)
             let fsxfiles = Directory.GetFiles(directory, "*.fsx", SearchOption.AllDirectories)
 
-            let metrics = new SQAnalyser()
+            let metrics = SQAnalyser()
 
             fsfiles |> Seq.iter (fun c -> metrics.RunAnalyses(c, File.ReadAllText(c), ""))
             fsxfiles |> Seq.iter (fun c -> metrics.RunAnalyses(c, File.ReadAllText(c), ""))
