@@ -19,7 +19,6 @@ import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.api.server.rule.RulesDefinition;
 
 public class FSharpSonarRulesDefinition implements RulesDefinition {
-
   @Override
   public void define(Context context) {
     NewRepository repository = context
@@ -27,15 +26,15 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
       .setName(FSharpPlugin.REPOSITORY_NAME);
 
     // Typography
-    repository.createRule("RulesTypographyTrailingLineError").setName("File should not have a trailing new line").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
-    repository.createRule("RulesTypographyTabCharacterError").setName("Tabulation character should not be used").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
-    NewRule fileLines = repository.createRule("RulesTypographyFileLengthError").setName("File should not have too many lines").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    createRule(repository, "RulesTypographyTrailingLineError");
+    createRule(repository, "RulesTypographyTabCharacterError");
+    NewRule fileLines = createRule(repository, "RulesTypographyFileLengthError");
     fileLines.createParam("Lines").setDescription("The maximum number of lines allowed in a file")
       .setType(RuleParamType.INTEGER).setDefaultValue("1000");
-    NewRule lineLength = repository.createRule("RulesTypographyLineLengthError").setName("Lines should not be too long").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule lineLength = createRule(repository, "RulesTypographyLineLengthError");
     lineLength.createParam("Length").setDescription("The maximum authorized line length")
       .setType(RuleParamType.INTEGER).setDefaultValue("200");
-    NewRule trailingWhiteSpace = repository.createRule("RulesTypographyTrailingWhitespaceError").setName("Lines should not have trailing whitespace").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule trailingWhiteSpace = createRule(repository, "RulesTypographyTrailingWhitespaceError");
     trailingWhiteSpace.createParam("NumberOfSpacesAllowed").setDescription("Number of spaces allowed")
       .setType(RuleParamType.INTEGER).setDefaultValue("4");
     trailingWhiteSpace.createParam("OneSpaceAllowedAfterOperator").setDescription("Allow space after operator")
@@ -44,21 +43,21 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
       .setType(RuleParamType.BOOLEAN).setDefaultValue("true");
 
     // nested statements
-    NewRule nesting = repository.createRule("RulesNestedStatementsError").setName("Maximum allowed of nesting").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule nesting = createRule(repository, "RulesNestedStatementsError");
     nesting.createParam("Depth").setDescription("Maximum depth")
       .setType(RuleParamType.INTEGER).setDefaultValue("5");
 
     // hint matcher - todo Map of list
-    NewRule hintRefactor = repository.createRule("RulesHintRefactor").setName("Hint Refactor").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule hintRefactor = createRule(repository, "RulesHintRefactor");
     hintRefactor.createParam("Hints").setDescription("Hints to use")
       .setType(RuleParamType.STRING).setDefaultValue("");
-    NewRule hintSuggestions = repository.createRule("RulesHintSuggestion").setName("Hint Suggestion").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule hintSuggestions = createRule(repository, "RulesHintSuggestion");
     hintSuggestions.createParam("Hints").setDescription("Hints to use")
       .setType(RuleParamType.STRING).setDefaultValue("");
 
     // name convention
-    NewRule interfaceNaming = repository.createRule("RulesNamingConventionsInterfaceError").setName("Interface naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
-    NewRule exceptionNaming = repository.createRule("RulesNamingConventionsExceptionError").setName("Exception naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule interfaceNaming = createRule(repository, "RulesNamingConventionsInterfaceError");
+    NewRule exceptionNaming = createRule(repository, "RulesNamingConventionsExceptionError");
     NewRule typeNaming = repository.createRule("RulesNamingConventionsTypesError").setName("Type naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
     NewRule recordsNaming = repository.createRule("RulesNamingConventionsRecordsError").setName("Record naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
     NewRule enumNaming = repository.createRule("RulesNamingConventionsEnumError").setName("Enum naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
@@ -119,26 +118,25 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
     nonPublicNaming.createParam("Underscores").setDescription("Allow underscores: None(0), AllowPrefix(1), AllowAny(2)").setType(RuleParamType.multipleListOfValues("0", "1", "2")).setDefaultValue("0");
 
     // RaiseWithTooManyArguments
-    repository.createRule("RulesRaiseWithSingleArgument").setName("Expected raise to have a single argument").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
-    repository.createRule("RulesFailwithWithSingleArgument").setName("Fail with should have a sigle argument").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
-    repository.createRule("RulesNullArgWithSingleArgument").setName("Expected nullArg to have a single argument").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
-    repository.createRule("RulesInvalidOpWithSingleArgument").setName("Expected invalidOp to have a single argument").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
-    repository.createRule("RulesInvalidArgWithTwoArguments").setName("Expected invalidArg to have two arguments").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
-    repository.createRule("RulesFailwithfWithArgumentsMatchingFormatString").setName("Expected failwithf's arguments to match the format string (there were too many arguments)").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    createRule(repository, "RulesRaiseWithSingleArgument");
+    createRule(repository, "RulesFailwithWithSingleArgument");
+    createRule(repository, "RulesNullArgWithSingleArgument");
+    createRule(repository, "RulesInvalidOpWithSingleArgument");
+    createRule(repository, "RulesInvalidArgWithTwoArguments");
+    createRule(repository, "RulesFailwithfWithArgumentsMatchingFormatString");
 
     // bindings
-    repository.createRule("RulesTupleOfWildcardsError").setName("A constructor argument in a pattern that is a tuple consisting of entirely wildcards can be replaced with a single wildcard").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
-    repository.createRule("RulesWildcardNamedWithAsPattern").setName("Unnecessary wildcard named using the as pattern").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
-    repository.createRule("RulesUselessBindingError").setName("Useless binding").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
-    repository.createRule("RulesFavourIgnoreOverLetWildError").setName("Favour using the ignore function rather than let").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
-
+    createRule(repository, "RulesTupleOfWildcardsError");
+    createRule(repository, "RulesWildcardNamedWithAsPattern");
+    createRule(repository, "RulesUselessBindingError");
+    createRule(repository, "RulesFavourIgnoreOverLetWildError");
 
     // function reinplementation
-    repository.createRule("RulesCanBeReplacedWithComposition").setName("Function composition should be used instead of current function").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
-    repository.createRule("RulesReimplementsFunction").setName("Pointless function redefines").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    createRule(repository, "RulesCanBeReplacedWithComposition");
+    createRule(repository, "RulesReimplementsFunction");
 
     // source length
-    NewRule fileLines2 = repository.createRule("RulesSourceLengthError").setName("Source length check").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule fileLines2 = createRule(repository, "RulesSourceLengthError");
     fileLines2.createParam("MaxLinesInFunction").setDescription("The maximum lines in function - 0 means disable")
       .setType(RuleParamType.INTEGER).setDefaultValue("300");
     fileLines2.createParam("MaxLinesInLambdaFunction").setDescription("The maximum lines in lambda function - 0 means disable")
@@ -164,45 +162,47 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
     fileLines2.createParam("MaxLinesInModule").setDescription("The maximum lines in module - 0 means disable")
       .setType(RuleParamType.INTEGER).setDefaultValue("1000");
 
-
     // NumberOfItems
-    NewRule tuples = repository.createRule("RulesNumberOfItemsTupleError").setName("The maximum number of tuples allowed").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule tuples = createRule(repository, "RulesNumberOfItemsTupleError");
     tuples.createParam("MaxItems").setDescription("Maximum allowed values")
       .setType(RuleParamType.INTEGER).setDefaultValue("5");
-    NewRule parameters = repository.createRule("RulesNumberOfItemsClassMembersError").setName("The maximum number of members in class allowed").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule parameters = createRule(repository, "RulesNumberOfItemsClassMembersError");
     parameters.createParam("MaxItems").setDescription("Maximum allowed values")
       .setType(RuleParamType.INTEGER).setDefaultValue("5");
-    NewRule members = repository.createRule("RulesNumberOfItemsFunctionError").setName("The maximum number of parameters allowed").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule members = createRule(repository, "RulesNumberOfItemsFunctionError");
     members.createParam("MaxItems").setDescription("Maximum allowed values")
       .setType(RuleParamType.INTEGER).setDefaultValue("5");
-    NewRule booleanOperators = repository.createRule("RulesNumberOfItemsBooleanConditionsError").setName("Maximum allowed boolean operatores in condition").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    NewRule booleanOperators = createRule(repository, "RulesNumberOfItemsBooleanConditionsError");
     booleanOperators.createParam("MaxItems").setDescription("Maximum allowed values")
       .setType(RuleParamType.INTEGER).setDefaultValue("4");
 
     // RulesRedundantNewKeyword
     repository.createRule("RulesRedundantNewKeyword").setName("Redudant usage of new Keywork").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
 
-
     // lint errors
     repository.createRule("LintSourceError").setName("Parsing errors").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
     repository.createRule("LintError").setName("Lint errors").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
 
+    createRule(repository, "RulesXmlDocumentationExceptionError");
+    createRule(repository, "RulesXmlDocumentationUnionError");
+    createRule(repository, "RulesXmlDocumentationRecordError");
+    createRule(repository, "RulesXmlDocumentationMemberError");
+    createRule(repository, "RulesXmlDocumentationTypeError");
+    createRule(repository, "RulesXmlDocumentationAutoPropertyError");
 
-    repository.createRule("RulesXmlDocumentationExceptionError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
-    repository.createRule("RulesXmlDocumentationUnionError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
-    repository.createRule("RulesXmlDocumentationRecordError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
-    repository.createRule("RulesXmlDocumentationMemberError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
-    repository.createRule("RulesXmlDocumentationTypeError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
-    repository.createRule("RulesXmlDocumentationAutoPropertyError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
+    createRule(repository, "RulesXmlDocumentationEnumError");
+    createRule(repository, "RulesXmlDocumentationModuleError");
+    createRule(repository, "RulesXmlDocumentationLetError");
 
-    repository.createRule("RulesXmlDocumentationEnumError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
-    repository.createRule("RulesXmlDocumentationModuleError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
-    repository.createRule("RulesXmlDocumentationLetError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
-
-    repository.createRule("RulesNamingConventionsCamelCaseError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
-    repository.createRule("RulesNamingConventionsPascalCaseError").setName("deprecated rule").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
+    createRule(repository, "RulesNamingConventionsCamelCaseError");
+    createRule(repository, "RulesNamingConventionsPascalCaseError");
 
     repository.done();
   }
 
+  private static NewRule createRule(NewExtendedRepository repository, String ruleKey)
+  {
+    RuleProperty p = FSharpRuleProperties.ALL.get(ruleKey);
+    return repository.createRule(ruleKey).setName(p.getName()).setSeverity(p.getSeverity()).setHtmlDescription(p.getHtmlDescription());
+  }
 }
