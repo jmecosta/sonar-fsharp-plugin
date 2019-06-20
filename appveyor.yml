@@ -78,7 +78,12 @@ build_script:
 #test_script:
 
 # scripts to run after tests
-#after_test:
+after_test:
+  - ps: |
+      $url = "https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)"
+      Get-ChildItem -Recurse
+      $wc = New-Object 'System.Net.WebClient'
+      $wc.UploadFile($url, (Resolve-Path .\TEST-*.xml))
 
 # to disable automatic tests
 #test: off
