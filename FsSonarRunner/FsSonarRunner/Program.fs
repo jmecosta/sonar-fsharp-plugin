@@ -70,9 +70,10 @@ let main argv =
             fsfiles |> Seq.iter (fun c -> metrics.RunAnalyses(c, File.ReadAllText(c), ""))
             fsxfiles |> Seq.iter (fun c -> metrics.RunAnalyses(c, File.ReadAllText(c), ""))
 
-            if arguments.ContainsKey("o")
+            let writeToDisk, xmlOutPath = arguments.TryGetValue "o"
+            if writeToDisk
             then
-                let xmlOutPath = arguments.["o"] |> Seq.head
+                let xmlOutPath = xmlOutPath |> Seq.head
                 metrics.WriteXmlToDisk(xmlOutPath, true)
             metrics.PrintIssues()
         with
