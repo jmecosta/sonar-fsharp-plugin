@@ -15,6 +15,11 @@ version: 1.1.0.{build}-rc
 image: Visual Studio 2017
 
 # build cache to preserve files/folders between builds
+cache:
+  - C:\Users\appveyor\.m2
+
+# scripts that run after cloning repository
+install:
   - cmd: mvn versions:set -DnewVersion=%APPVEYOR_BUILD_VERSION%
 
 # enable patching of AssemblyInfo.* files
@@ -23,11 +28,6 @@ assembly_info:
   file: '**\AssemblyInfo.*'
   assembly_version: "{version}"
   assembly_file_version: "{version}"
-cache:
-  - C:\Users\appveyor\.m2
-
-# scripts that run after cloning repository
-#install:
 
 #---------------------------------#
 #       build configuration       #
