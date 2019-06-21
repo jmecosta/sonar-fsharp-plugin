@@ -70,7 +70,11 @@ let main argv =
             fsfiles |> Seq.iter (fun c -> metrics.RunAnalyses(c, File.ReadAllText(c), ""))
             fsxfiles |> Seq.iter (fun c -> metrics.RunAnalyses(c, File.ReadAllText(c), ""))
 
-            metrics.WriteXmlToDisk(argv.[2], true)
+            if arguments.ContainsKey("o")
+            then
+                let xmlOutPath = arguments.["o"] |> Seq.head
+                metrics.WriteXmlToDisk(xmlOutPath, true)
+            metrics.PrintIssues()
         with
         | ex -> printf "    Failed: %A" ex
     else
