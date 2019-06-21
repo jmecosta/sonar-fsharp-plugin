@@ -81,7 +81,7 @@ type FsLintRunner(filePath : string, rules : theSonarRules, configuration : Conf
         let output = warning.Info + System.Environment.NewLine + LintWarning.getWarningWithLocation warning.Range warning.Input
         let rule = rules.GetRule(warning.Info)
         if rule <> null then
-            let issue = new SonarIssue(Rule = rule.Rule, Line = warning.Range.StartLine, Component = filePath, Message = warning.Info)
+            let issue = SonarIssue(Rule = rule.Rule, Line = warning.Range.StartLine, Component = filePath, Message = warning.Info)
             issues  <- issues @ [issue]
         else
             notsupportedlines <- notsupportedlines @ [output]

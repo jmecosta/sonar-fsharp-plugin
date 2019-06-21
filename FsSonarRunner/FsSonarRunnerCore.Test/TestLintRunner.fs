@@ -19,7 +19,7 @@ type TestLintRunner() =
     member this.RunLintInSource() =
         let fileToAnalyseExists = File.Exists fileToAnalyse
         Assume.That(fileToAnalyseExists, "File to analyze not found")
-        let lintRunner = new FsLintRunner(fileToAnalyse, new SonarRules(), FSharpLint.Framework.Configuration.defaultConfiguration)
+        let lintRunner = FsLintRunner(fileToAnalyse, SonarRules(), FSharpLint.Framework.Configuration.defaultConfiguration)
         let issues = lintRunner.ExecuteAnalysis()
         issues |> List.iter (fun m -> printfn "%O" m)
         Assert.That(lintRunner.ExecuteAnalysis().Length, Is.EqualTo(7))

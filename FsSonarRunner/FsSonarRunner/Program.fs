@@ -23,7 +23,7 @@ let main argv =
     if arguments.ContainsKey("h") then
         ShowHelp()
     if arguments.ContainsKey("displayrules") then
-        let rules = new SonarRules()
+        let rules = SonarRules()
         rules.ShowRules()
     elif arguments.ContainsKey("f") then
         let input = arguments.["f"] |> Seq.head
