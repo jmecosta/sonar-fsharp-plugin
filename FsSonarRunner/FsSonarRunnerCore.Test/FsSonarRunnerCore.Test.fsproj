@@ -18,7 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Resources\LintTestFile.fs" />
+    <Compile Include="Resources\LintTestFile.fs">
+      <SonarQubeExclude>true</SonarQubeExclude>
+    </Compile>
     <Compile Include="Helper.fs" />
     <Compile Include="TestTypes.fs" />
     <Compile Include="TestLineOfCode.fs" />

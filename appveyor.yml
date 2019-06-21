@@ -22,12 +22,15 @@ cache:
 install:
   - cmd: mvn versions:set -DnewVersion=%APPVEYOR_BUILD_VERSION%
 
-# enable patching of AssemblyInfo.* files
-assembly_info:
+# .NET Core project files patching
+dotnet_csproj:
   patch: true
-  file: '**\AssemblyInfo.*'
-  assembly_version: "{version}"
-  assembly_file_version: "{version}"
+  file: '**\*.csproj;**\*.props;**\*.fsproj;**\*.xml'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
 
 #---------------------------------#
 #       build configuration       #
