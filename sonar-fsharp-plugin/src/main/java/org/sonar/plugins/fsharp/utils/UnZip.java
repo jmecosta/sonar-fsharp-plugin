@@ -24,13 +24,22 @@ import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
 // https://www.mkyong.com/java/how-to-decompress-files-from-a-zip-file/
+// https://howtodoinjava.com/java/io/unzip-file-with-subdirectories/
+// https://www.baeldung.com/java-compress-and-uncompress
 
 public class UnZip {
   public static final Logger LOG = Loggers.get(UnZip.class);
   List<String> fileList;
 
+  public static void main(String[] args) throws IOException {
+    String workingDirectory = System.getProperty("user.dir");
+    String zipFile = workingDirectory + "/FsSonarRunner/target/FsSonarRunner-1.1.0-rc.zip";
+    String outputFolder = workingDirectory + "/FsSonarRunner/target/extracted";
+    new UnZip().unZipIt(zipFile, outputFolder);
+  }
+
   /**
-   * Unzip it
+   * Unzip an archive with sub-directories and extract its contents
    *
    * @param zipFile input zip file
    * @param output  zip file output folder
@@ -40,37 +49,38 @@ public class UnZip {
     byte[] buffer = new byte[1024];
 
     try {
-
       // create output directory is not exists
-      File folder = new File(outputFolder);
-      if (!folder.exists()) {
-        folder.mkdir();
-      }
+      File folder = newFolder(null, outputFolder);
 
       // get the zip file content
       ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
-      // get the zipped file list entry
-      ZipEntry ze = zis.getNextEntry();
 
+      // get the first zipped file list entry
+      ZipEntry ze = zis.getNextEntry();
       while (ze != null) {
 
-        String fileName = ze.getName();
-        File newFile = new File(outputFolder + File.separator + fileName);
+        if (ze.isDirectory()) {
+          // If directory then create a new directory in uncompressed folder
+          String folderName = ze.getName();
+          File newFolder = newFolder(folder, folderName);
+          LOG.debug("folder created: {}", newFolder.getAbsolutePath());
+        } else {
+          // else create the file
+          String fileName = ze.getName();
+          File newFile = newFile(folder, fileName);
 
-        LOG.debug("Unzip {}", newFile.getAbsolutePath());
+          LOG.debug("file unzip: {}", newFile.getAbsolutePath());
 
-        // create all non exists folders
-        // else you will hit FileNotFoundException for compressed folder
-        new File(newFile.getParent()).mkdirs();
+          FileOutputStream fos = new FileOutputStream(newFile);
 
-        FileOutputStream fos = new FileOutputStream(newFile);
+          int len;
+          while ((len = zis.read(buffer)) > 0) {
+            fos.write(buffer, 0, len);
+          }
 
-        int len;
-        while ((len = zis.read(buffer)) > 0) {
-          fos.write(buffer, 0, len);
+          fos.close();
         }
 
-        fos.close();
         ze = zis.getNextEntry();
       }
 
@@ -82,5 +92,34 @@ public class UnZip {
       LOG.error("Unzip Failed {}", ex.getMessage());
       throw ex;
     }
+  }
+
+  // create output directory is not exists
+  public File newFolder(File parent, String folderName) throws IOException {
+    File folder = newFile(parent, folderName);
+
+    if (!folder.exists()) {
+      folder.mkdir();
+    }
+
+    return folder;
+  }
+
+  public File newFile(File parent, String fileName) throws IOException {
+    File destFile = new File(parent, fileName);
+
+    if (parent != null) {
+      // test on Zip Slip is only possible if `parent` is not `null`
+      String destDirPath = parent.getCanonicalPath();
+      String destFilePath = destFile.getCanonicalPath();
+
+      if (!destFilePath.startsWith(destDirPath + File.separator)) {
+        String msg = "Zip Slip: Entry is outside of the target dir: " + fileName;
+        LOG.error(msg);
+        throw new IOException(msg);
+      }
+    }
+
+    return destFile;
   }
 }

@@ -60,7 +60,7 @@ public class FsSonarRunnerExtractor {
       }
 
       UnZip unZip = new UnZip();
-      unZip.unZipIt(zipFile.getAbsolutePath(),toolWorkingDir.getAbsolutePath());
+      unZip.unZipIt(zipFile.getAbsolutePath(), toolWorkingDir.getAbsolutePath());
       return new File(toolWorkingDir, fileName);
     } catch (IOException e) {
       LOG.error("Unable to unzip File: {} => {}", fileName, e.getMessage());

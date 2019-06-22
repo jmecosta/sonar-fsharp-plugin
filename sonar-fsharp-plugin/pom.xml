@@ -117,21 +117,6 @@
           <!-- advanced properties can be set here. See paragraph "Advanced Build Properties". -->
           <pluginName>Sonar F#</pluginName>
           <pluginDescription>Code Analyzer for F#</pluginDescription>
-          <developers>
-            <developer>
-              <id>jmecosta</id>
-              <name>Jorge Costa</name>
-              <organization>jmecsoftware</organization>
-              <organizationUrl>https://github.com/jmecsoftware</organizationUrl>
-              <roles>
-                <role>owner</role>
-              </roles>
-            </developer>
-            <developer>
-              <id>milbrandt</id>
-              <name>Volker Milbrandt</name>
-            </developer>
-          </developers>
         </configuration>
       </plugin>
       <plugin>
