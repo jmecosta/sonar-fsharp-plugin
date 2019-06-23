@@ -119,19 +119,6 @@
             </chc>
             <chc>
                 <rule-repo>fsharplint</rule-repo>
-                <rule-key>RulesNamingConventionsExceptionError</rule-key>
-                <prop>
-                    <key>remediationFunction</key>
-                    <txt>constant_issue</txt>
-                </prop>
-                <prop>
-                    <key>offset</key>
-                    <val>5</val>
-                    <txt>mn</txt>
-                </prop>
-            </chc>
-            <chc>
-                <rule-repo>fsharplint</rule-repo>
                 <rule-key>RulesTypographyFileLengthError</rule-key>
                 <prop>
                     <key>remediationFunction</key>
@@ -159,19 +146,6 @@
             <chc>
                 <rule-repo>fsharplint</rule-repo>
                 <rule-key>RulesFavourIgnoreOverLetWildError</rule-key>
-                <prop>
-                    <key>remediationFunction</key>
-                    <txt>constant_issue</txt>
-                </prop>
-                <prop>
-                    <key>offset</key>
-                    <val>5</val>
-                    <txt>mn</txt>
-                </prop>
-            </chc>
-            <chc>
-                <rule-repo>fsharplint</rule-repo>
-                <rule-key>RulesNamingConventionsInterfaceError</rule-key>
                 <prop>
                     <key>remediationFunction</key>
                     <txt>constant_issue</txt>
@@ -498,19 +472,6 @@
             <chc>
                 <rule-repo>fsharplint</rule-repo>
                 <rule-key>RulesTypographyTabCharacterError</rule-key>
-                <prop>
-                    <key>remediationFunction</key>
-                    <txt>constant_issue</txt>
-                </prop>
-                <prop>
-                    <key>offset</key>
-                    <val>5</val>
-                    <txt>mn</txt>
-                </prop>
-            </chc>
-            <chc>
-                <rule-repo>fsharplint</rule-repo>
-                <rule-key>RulesXmlDocumentationExceptionError</rule-key>
                 <prop>
                     <key>remediationFunction</key>
                     <txt>constant_issue</txt>

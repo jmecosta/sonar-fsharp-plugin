@@ -56,8 +56,6 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
       .setType(RuleParamType.STRING).setDefaultValue("");
 
     // name convention
-    NewRule interfaceNaming = createRule(repository, "RulesNamingConventionsInterfaceError");
-    NewRule exceptionNaming = createRule(repository, "RulesNamingConventionsExceptionError");
     NewRule typeNaming = repository.createRule("RulesNamingConventionsTypesError").setName("Type naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
     NewRule recordsNaming = repository.createRule("RulesNamingConventionsRecordsError").setName("Record naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
     NewRule enumNaming = repository.createRule("RulesNamingConventionsEnumError").setName("Enum naming convention").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
@@ -182,17 +180,6 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
     // lint errors
     repository.createRule("LintSourceError").setName("Parsing errors").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
     repository.createRule("LintError").setName("Lint errors").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
-
-    createRule(repository, "RulesXmlDocumentationExceptionError");
-    createRule(repository, "RulesXmlDocumentationUnionError");
-    createRule(repository, "RulesXmlDocumentationRecordError");
-    createRule(repository, "RulesXmlDocumentationMemberError");
-    createRule(repository, "RulesXmlDocumentationTypeError");
-    createRule(repository, "RulesXmlDocumentationAutoPropertyError");
-
-    createRule(repository, "RulesXmlDocumentationEnumError");
-    createRule(repository, "RulesXmlDocumentationModuleError");
-    createRule(repository, "RulesXmlDocumentationLetError");
 
     createRule(repository, "RulesNamingConventionsCamelCaseError");
     createRule(repository, "RulesNamingConventionsPascalCaseError");

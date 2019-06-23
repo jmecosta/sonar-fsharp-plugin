@@ -10,24 +10,6 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
                 {
                     Rules = Map.ofList
                         [
-                            ("InterfaceNames",
-                                {
-                                    Settings = Map.ofList
-                                        [
-                                        ("Enabled", ConfHelper.GetEnaFlagForParam(config, "RulesNamingConventionsInterfaceError", "InterfaceNames"))
-                                        ("Naming", Naming(enum<XmlNaming>(ConfHelper.GetValueForInt(config, "RulesNamingConventionsInterfaceError", "Naming", 0))))
-                                        ("Underscores", Underscores(enum<XmlNamingUnderscores>(ConfHelper.GetValueForInt(config, "RulesNamingConventionsInterfaceError", "Underscores", 1))))
-                                        ("Prefix", Prefix(Some(ConfHelper.GetValueForString(config, "RulesNamingConventionsInterfaceError", "Prefix", "I")))) ]
-                                })
-                            ("ExceptionNames",
-                                {
-                                    Settings = Map.ofList
-                                        [
-                                        ("Enabled", ConfHelper.GetEnaFlagForParam(config, "RulesNamingConventionsExceptionError", "ExceptionNames"))
-                                        ("Naming", Naming(enum<XmlNaming>(ConfHelper.GetValueForInt(config, "RulesNamingConventionsExceptionError", "Naming", 0))))
-                                        ("Underscores", Underscores(enum<XmlNamingUnderscores>(ConfHelper.GetValueForInt(config, "RulesNamingConventionsExceptionError", "Underscores", 0))))
-                                        ("Prefix", Prefix(Some(ConfHelper.GetValueForString(config, "RulesNamingConventionsExceptionError", "Prefix", "I")))) ]
-                                })
                             ("TypeNames",
                                 {
                                     Settings = Map.ofList

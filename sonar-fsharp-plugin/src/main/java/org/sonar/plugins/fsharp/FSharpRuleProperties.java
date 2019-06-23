@@ -27,32 +27,20 @@ final class FSharpRuleProperties {
         Map<String, RuleProperty> rules = new HashMap<>();
 
         // Typography
-        rules.put("RulesTypographyTrailingLineError", new RuleProperty(Severity.MAJOR, "File should not have a trailing new line", "<p></p>"));
+        rules.put("RulesTypographyTrailingLineError", new RuleProperty(Severity.MINOR, "File should not have a trailing new line", "<p></p>"));
         rules.put("RulesTypographyTabCharacterError", new RuleProperty(Severity.MAJOR, "Tabulation character should not be used", "<p></p>"));
         rules.put("RulesTypographyFileLengthError", new RuleProperty(Severity.MAJOR, "File should not have too many lines", "<p></p>"));
         rules.put("RulesTypographyLineLengthError", new RuleProperty(Severity.MAJOR, "Lines should not be too long", "<p></p>"));
-        rules.put("RulesTypographyTrailingWhitespaceError", new RuleProperty(Severity.MAJOR, "Lines should not have trailing whitespace", "<p></p>"));
+        rules.put("RulesTypographyTrailingWhitespaceError", new RuleProperty(Severity.MINOR, "Lines should not have trailing whitespace", "<p></p>"));
 
         // nested statements
         rules.put("RulesNestedStatementsError", new RuleProperty(Severity.MAJOR, "Maximum allowed of nesting", "<p></p>"));
 
         // hint matcher - todo Map of list
-        rules.put("RulesHintRefactor", new RuleProperty(Severity.MAJOR, "Hint Refactor", "<p></p>"));
-        rules.put("RulesHintSuggestion", new RuleProperty(Severity.MAJOR, "Hint Suggestion", "<p></p>"));
-
-        rules.put("RulesXmlDocumentationExceptionError", new RuleProperty(Severity.INFO, "deprecated rule", "<p></p>"));
-        rules.put("RulesXmlDocumentationUnionError", new RuleProperty(Severity.INFO, "deprecated rule", "<p></p>"));
-        rules.put("RulesXmlDocumentationRecordError", new RuleProperty(Severity.INFO, "deprecated rule", "<p></p>"));
-        rules.put("RulesXmlDocumentationMemberError", new RuleProperty(Severity.INFO, "deprecated rule", "<p></p>"));
-        rules.put("RulesXmlDocumentationTypeError", new RuleProperty(Severity.INFO, "deprecated rule", "<p></p>"));
-        rules.put("RulesXmlDocumentationAutoPropertyError", new RuleProperty(Severity.INFO, "deprecated rule", "<p></p>"));
-        rules.put("RulesXmlDocumentationEnumError", new RuleProperty(Severity.INFO, "deprecated rule", "<p></p>"));
-        rules.put("RulesXmlDocumentationModuleError", new RuleProperty(Severity.INFO, "deprecated rule", "<p></p>"));
-        rules.put("RulesXmlDocumentationLetError", new RuleProperty(Severity.INFO, "deprecated rule", "<p></p>"));
+        rules.put("RulesHintRefactor", new RuleProperty(Severity.INFO, "Hint Refactor", "<p></p>"));
+        rules.put("RulesHintSuggestion", new RuleProperty(Severity.INFO, "Hint Suggestion", "<p></p>"));
 
         // name convention
-        rules.put("RulesNamingConventionsInterfaceError", new RuleProperty(Severity.MAJOR, "Interface naming convention", "<p></p>"));
-        rules.put("RulesNamingConventionsExceptionError", new RuleProperty(Severity.MAJOR, "Exception naming convention", "<p></p>"));
         rules.put("RulesNamingConventionsCamelCaseError", new RuleProperty(Severity.INFO, "deprecated rule", "<p></p>"));
         rules.put("RulesNamingConventionsPascalCaseError", new RuleProperty(Severity.INFO, "deprecated rule", "<p></p>"));
 
