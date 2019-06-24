@@ -20,7 +20,7 @@ type SonarRules() =
 
     let fsLintProfile =
         let resourceManager =
-            // see FSharpLint.Framework.Resources how to het the reource manager
+            // see FSharpLint.Framework.Resources how to het the resource manager
             let assembly = Assembly.Load("FSharpLint.Core")
 
             let resourceName = assembly.GetManifestResourceNames()

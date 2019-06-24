@@ -16,7 +16,6 @@
     <Compile Include="Rules\RaiseWithTooManyArgumentsConfig.fs" />
     <Compile Include="Rules\HintsConfig.fs" />
     <Compile Include="Rules\RedundantNewKeywordConfig.fs" />
-    <Compile Include="Rules\NamingConventionsConfig.fs" />
     <Compile Include="Rules\SourceLengthConfig.fs" />
     <Compile Include="InputConfigHandler.fs" />
     <Compile Include="ComplexityDistributions.fs" />
