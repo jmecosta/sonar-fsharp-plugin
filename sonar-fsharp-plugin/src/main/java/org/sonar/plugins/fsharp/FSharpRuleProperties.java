@@ -41,8 +41,8 @@ final class FSharpRuleProperties {
         rules.put("RulesHintSuggestion", new RuleProperty(Severity.INFO, "Hint Suggestion", "<p></p>"));
 
         // name convention
-        rules.put("RulesNamingConventionsCamelCaseError", new RuleProperty(Severity.INFO, "deprecated rule", "<p></p>"));
-        rules.put("RulesNamingConventionsPascalCaseError", new RuleProperty(Severity.INFO, "deprecated rule", "<p></p>"));
+        rules.put("RulesNamingConventionsCamelCaseError", new RuleProperty(Severity.INFO, "Use PascalCasing for all public member, type, and namespace names consisting of multiple words", "<p></p>"));
+        rules.put("RulesNamingConventionsPascalCaseError", new RuleProperty(Severity.INFO, "Use camelCasing for parameter names", "<p></p>"));
 
         // RaiseWithTooManyArguments
         rules.put("RulesRaiseWithSingleArgument", new RuleProperty(Severity.MAJOR, "Expected raise to have a single argument", "<p></p>"));
