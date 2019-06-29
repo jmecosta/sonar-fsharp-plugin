@@ -13,15 +13,15 @@ let CreateALintXmlConfiguration(path : string) =
             IgnoreFiles = None
             Analysers = Map(Seq.concat
                         [
-                            (Map.toSeq (SourceLengthConfig.SonarConfiguration(sonarConfig)));
-                            (Map.toSeq (BindingConfig.SonarConfiguration(sonarConfig)));
-                            (Map.toSeq (NumberOfItemsConfig.SonarConfiguration(sonarConfig)));
-                            (Map.toSeq (NestedStatementsConfig.SonarConfiguration(sonarConfig)));
-                            (Map.toSeq (TypographyConfig.SonarConfiguration(sonarConfig)));
-                            (Map.toSeq (FunctionReimplementationConfig.SonarConfiguration(sonarConfig)));
-                            (Map.toSeq (RaiseWithTooManyArgumentsConfig.SonarConfiguration(sonarConfig)));
-                            (Map.toSeq (HintsConfig.SonarConfiguration(sonarConfig)));
-                            (Map.toSeq (RedundantNewKeywordConfig.SonarConfiguration(sonarConfig)));
+                            (Map.toSeq (SourceLengthConfig.SonarConfiguration(sonarConfig)))
+                            (Map.toSeq (BindingConfig.SonarConfiguration(sonarConfig)))
+                            (Map.toSeq (NumberOfItemsConfig.SonarConfiguration(sonarConfig)))
+                            (Map.toSeq (NestedStatementsConfig.SonarConfiguration(sonarConfig)))
+                            (Map.toSeq (TypographyConfig.SonarConfiguration(sonarConfig)))
+                            (Map.toSeq (FunctionReimplementationConfig.SonarConfiguration(sonarConfig)))
+                            (Map.toSeq (RaiseWithTooManyArgumentsConfig.SonarConfiguration(sonarConfig)))
+                            (Map.toSeq (HintsConfig.SonarConfiguration(sonarConfig)))
+                            (Map.toSeq (RedundantNewKeywordConfig.SonarConfiguration(sonarConfig)))
                         ])
         }
         configuration

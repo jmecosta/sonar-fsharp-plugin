@@ -115,7 +115,8 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
       .setType(RuleParamType.INTEGER).setDefaultValue("4");
 
     // RulesRedundantNewKeyword
-    repository.createRule("RulesRedundantNewKeyword").setName("Redudant usage of new Keywork").setSeverity(Severity.MAJOR).setHtmlDescription("<p></p>");
+    createRule(repository, "RulesRedundantNewKeywordError");
+
 
     // lint errors
     repository.createRule("LintSourceError").setName("Parsing errors").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");

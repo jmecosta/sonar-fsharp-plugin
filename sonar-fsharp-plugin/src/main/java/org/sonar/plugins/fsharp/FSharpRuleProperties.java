@@ -38,11 +38,11 @@ final class FSharpRuleProperties {
 
         // hint matcher - todo Map of list
         rules.put("RulesHintRefactor", new RuleProperty(Severity.INFO, "Hint Refactor", "<p></p>"));
-        rules.put("RulesHintSuggestion", new RuleProperty(Severity.INFO, "Hint Suggestion", "<p></p>"));
+        // rules.put("RulesHintSuggestion", new RuleProperty(Severity.INFO, "Hint Suggestion", "<p></p>"));
 
         // name convention
-        rules.put("RulesNamingConventionsCamelCaseError", new RuleProperty(Severity.INFO, "Use PascalCasing for all public member, type, and namespace names consisting of multiple words", "<p></p>"));
-        rules.put("RulesNamingConventionsPascalCaseError", new RuleProperty(Severity.INFO, "Use camelCasing for parameter names", "<p></p>"));
+        // rules.put("RulesNamingConventionsCamelCaseError", new RuleProperty(Severity.INFO, "Use PascalCasing for all public member, type, and namespace names consisting of multiple words", "<p></p>"));
+        // rules.put("RulesNamingConventionsPascalCaseError", new RuleProperty(Severity.INFO, "Use camelCasing for parameter names", "<p></p>"));
 
         // RaiseWithTooManyArguments
         rules.put("RulesRaiseWithSingleArgument", new RuleProperty(Severity.MAJOR, "Expected raise to have a single argument", "<p></p>"));
@@ -70,6 +70,9 @@ final class FSharpRuleProperties {
         rules.put("RulesNumberOfItemsClassMembersError", new RuleProperty(Severity.MAJOR, "The maximum number of members in class allowed", "<p></p>"));
         rules.put("RulesNumberOfItemsFunctionError", new RuleProperty(Severity.MAJOR, "The maximum number of parameters allowed", "<p></p>"));
         rules.put("RulesNumberOfItemsBooleanConditionsError", new RuleProperty(Severity.MAJOR, "Maximum allowed boolean operatores in condition", "<p></p>"));
+
+        // RulesRedundantNewKeyword
+        rules.put("RulesRedundantNewKeywordError", new RuleProperty(Severity.MINOR, "Redudant usage of new Keywork", "<p></p>"));
 
         ALL = unmodifiableMap(rules);
     }
