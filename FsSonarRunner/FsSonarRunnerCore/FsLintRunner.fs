@@ -97,8 +97,8 @@ type FsLintRunner(filePath : string, rules : SonarRules, configuration : FSharpL
         lintFile parseInfo pathToFile
 
     let outputLintResult = function
-        | LintResult.Success(_) -> Console.WriteLine("Lint Ok")
-        | LintResult.Failure(error) -> Console.WriteLine("Lint Nok" + error.ToString())
+        | LintResult.Success(_) -> printfn "Lint Ok"
+        | LintResult.Failure(error) -> printfn "Lint Nok %s" (error.ToString())
 
     member this.ExecuteAnalysis() =
         issues <- List.Empty
