@@ -1,7 +1,6 @@
 ﻿// DO NOT FIX ISSUES - this file is for testing the analyser
 namespace FsSonarRunnerCore.Test.lintTestFile
 
-open System
 open FSharpLint.Framework.Ast
 open FSharpLint.Application
 open System.Resources
@@ -21,7 +20,7 @@ type theSonarRules() =
 
     let fsLintProfile =
         let resourceManager =
-            // see FSharpLint.Framework.Resources how to het the reource manager
+            // see FSharpLint.Framework.Resources how to get the resource manager
             let assembly = Assembly.Load("FSharpLint.Core")
 
             let resourceName = assembly.GetManifestResourceNames()
@@ -98,8 +97,8 @@ type FsLintRunner(filePath : string, rules : theSonarRules, configuration : Conf
         lintFile parseInfo pathToFile
 
     let outputLintResult = function
-        | LintResult.Success(_) -> Console.WriteLine("Lint Ok")
-        | LintResult.Failure(error) -> Console.WriteLine("Lint Nok" + error.ToString())
+        | LintResult.Success(_) -> printfn "Lint Ok"
+        | LintResult.Failure(error) -> printfn "Lint Nok %s" (error.ToString())
 
     member this.ExecuteAnalysis() =
         issues <- List.Empty     

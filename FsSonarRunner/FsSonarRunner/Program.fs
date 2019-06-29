@@ -1,81 +1,89 @@
-﻿// Learn more about F# at http://fsharp.org
-// See the 'F# Tutorial' project for more help.
-open System
-open System.IO
+﻿open System.IO
 open FsSonarRunnerCore
+open System.Reflection
+open System.Diagnostics
 
-let ShowHelp () =
-        Console.WriteLine ("Usage: FsSonarRunner [OPTIONS]")
-        Console.WriteLine ("Collects results for Sonar Analsyis using FSharpLint")
-        Console.WriteLine ()
-        Console.WriteLine ("Options:")
-        Console.WriteLine ("    /I|/i:<input xml>")
-        Console.WriteLine ("    /F|/f:<analyse single file>")
-        Console.WriteLine ("    /O|/o:<output xml file>")
-        Console.WriteLine ("    /D|/d:<directory to analyse>")
-        Console.WriteLine ("    /displayrules")
+let ProductVersion() =
+    let versionInfo = Assembly.GetExecutingAssembly().Location
+                    |> FileVersionInfo.GetVersionInfo
+    versionInfo.ProductVersion
+
+let ShowHelp() =
+    let indent = "    "
+    let optionsList = [
+        "/I|/i:<input xml>";
+        "/F|/f:<analyse single file>";
+        "/O|/o:<output xml file>";
+        "/D|/d:<directory to analyse>";
+        "/displayrules";
+        "/version" ]
+
+    printfn "Syntax: FsSonarRunner [OPTIONS]"
+    printfn "Collects results for Sonar Analsyis using FSharpLint"
+    printfn ""
+    printfn "Options:"
+    optionsList |> List.iter (fun s -> printfn "%s%s" indent s)
 
 [<EntryPoint>]
 let main argv =
     printfn "%A" argv
     let arguments = XmlHelper.parseArgs(argv)
 
+    let output =
+        if arguments.ContainsKey("o") then
+            arguments.["o"] |> Seq.head |> Some
+        else None
+
+    let writeMetrics (metrics : SQAnalyser) =
+        match output with
+        | Some xmlOutPath -> metrics.WriteXmlToDisk(xmlOutPath, false)
+        | None -> metrics.PrintIssues()
+
     if arguments.ContainsKey("h") then
         ShowHelp()
-    if arguments.ContainsKey("displayrules") then
+    elif arguments.ContainsKey("displayrules") then
         let rules = SonarRules()
         rules.ShowRules()
+    elif arguments.ContainsKey("version") then
+        printfn "%s" (ProductVersion())
     elif arguments.ContainsKey("f") then
         let input = arguments.["f"] |> Seq.head
-        let metrics = SQAnalyser()
         try
+            let metrics = SQAnalyser()
             metrics.RunAnalyses(input, File.ReadAllText(input), "")
-            metrics.PrintIssues()
+            writeMetrics metrics
         with
         | ex -> printf "    Failed: %A" ex
-
-        // todo print to output
     elif arguments.ContainsKey("i") then
-        if not(arguments.ContainsKey("o")) then
-            Console.WriteLine ("    Mission /O")
-            ShowHelp()
-        else
-            try
-                let input = arguments.["i"] |> Seq.head
-                let output = arguments.["o"] |> Seq.head
-                let options = XmlHelper.InputXml.Parse(File.ReadAllText(input))
+        try
+            let input = arguments.["i"] |> Seq.head
+            let options = XmlHelper.InputXml.Parse(File.ReadAllText(input))
 
-                let metrics = SQAnalyser()
-                let HandleFileToAnalyse(file) = 
-                    if File.Exists(file) then
-                        metrics.RunAnalyses(file, File.ReadAllText(file), input)
-                    else
-                        printf "    [FsSonarRunner] [Error]: %s not found \r\n" file
+            let metrics = SQAnalyser()
+            let handleFileToAnalyse(file) =
+                if File.Exists(file) then
+                    metrics.RunAnalyses(file, File.ReadAllText(file), input)
+                else
+                    printf "    [FsSonarRunner] [Error]: %s not found \r\n" file
 
-                options.Files
-                |> Seq.iter (fun file -> HandleFileToAnalyse(file.Replace("file:///", "")))
-                metrics.WriteXmlToDisk(output, false)
-            with
-            | ex -> printf "    Failed: %A" ex
-        ()
+            options.Files
+            |> Seq.iter (fun file -> handleFileToAnalyse(file.Replace("file:///", "")))
+
+            writeMetrics metrics
+        with
+        | ex -> printf "    Failed: %A" ex
     elif arguments.ContainsKey("d") then
         try
             let directory = arguments.["d"] |> Seq.head
-
             let fsfiles = Directory.GetFiles(directory, "*.fs", SearchOption.AllDirectories)
             let fsxfiles = Directory.GetFiles(directory, "*.fsx", SearchOption.AllDirectories)
 
             let metrics = SQAnalyser()
 
-            fsfiles |> Seq.iter (fun c -> metrics.RunAnalyses(c, File.ReadAllText(c), ""))
-            fsxfiles |> Seq.iter (fun c -> metrics.RunAnalyses(c, File.ReadAllText(c), ""))
+            Array.append fsfiles fsxfiles
+            |> Seq.iter (fun c -> metrics.RunAnalyses(c, File.ReadAllText(c), ""))
 
-            let writeToDisk, xmlOutPath = arguments.TryGetValue "o"
-            if writeToDisk
-            then
-                let xmlOutPath = xmlOutPath |> Seq.head
-                metrics.WriteXmlToDisk(xmlOutPath, true)
-            metrics.PrintIssues()
+            writeMetrics metrics
         with
         | ex -> printf "    Failed: %A" ex
     else
