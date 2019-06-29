@@ -1,4 +1,4 @@
-﻿// This code borrowed from https://github.com/fsprojects/VisualFSharpPowerTools/
+﻿// This code borrowed from https://github.com/fsprojects/VisualFSharpPowerTools/FSharp.Editing/Common/UntypedAstUtils.fs
 namespace FsSonarRunnerCore
 
 module UntypedAstUtils =
@@ -114,13 +114,17 @@ module UntypedAstUtils =
         let mutable functionNodes = List.Empty
 
         let addToUniqueRange(range : Range.range) =
-            if not(uniqueLines.Contains(range.StartLine)) then
-                uniqueLines <- uniqueLines.Add(range.StartLine)
+            let addToUniqueRangeStartLine startLine =
+                if not(uniqueLines.Contains(startLine)) then
+                    uniqueLines <- uniqueLines.Add(startLine)
+            addToUniqueRangeStartLine range.StartLine
 
         let addToUniqueFunctions(range : Range.range, binding) =
-            if not(functionNodesRanges.Contains(range.StartLine)) then
-                functionNodesRanges <- functionNodesRanges.Add(range.StartLine)
-                functionNodes <- functionNodes @ [binding]
+            let addToUniqueFunctions startLine binding =
+                if not(functionNodesRanges.Contains(startLine)) then
+                    functionNodesRanges <- functionNodesRanges.Add(startLine)
+                    functionNodes <- functionNodes @ [binding]
+            addToUniqueFunctions range.StartLine binding
 
         let rec visitExpr = function
 
@@ -334,8 +338,8 @@ module UntypedAstUtils =
             visitExpr expr
         and visitMatches = List.iter visitMatch
 
-        let dataRange range =
-            printfn "Not Supported member Report"
+        let dataRange (defn : SynMemberDefn) =
+            printfn "Not Supported member Report (information message)"
 
         let visitMember = function
             | SynMemberDefn.LetBindings (bindings, _, _, range) ->
@@ -354,7 +358,8 @@ module UntypedAstUtils =
             | SynMemberDefn.ImplicitCtor (_, _, _, _, range) ->
                 nmbClass <- nmbClass + 1
                 addToUniqueRange(range)
-            | range -> dataRange range
+            // TODO: add remaining DU cases (#68)
+            | defn -> dataRange defn
 
         let rec visitType ty =
             let (SynTypeDefn.TypeDefn (_, repr, _, _)) = ty
@@ -372,6 +377,8 @@ module UntypedAstUtils =
                 for d in defns do
                     addToUniqueRange(d.Range)
                     visitMember d
+
+            | SynTypeDefnRepr.Exception _ -> ()
 
         let rec visitDeclarations decls =
             for declaration in decls do
