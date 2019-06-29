@@ -51,9 +51,6 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
     NewRule hintRefactor = createRule(repository, "RulesHintRefactor");
     hintRefactor.createParam("Hints").setDescription("Hints to use")
       .setType(RuleParamType.STRING).setDefaultValue("");
-    NewRule hintSuggestions = createRule(repository, "RulesHintSuggestion");
-    hintSuggestions.createParam("Hints").setDescription("Hints to use")
-      .setType(RuleParamType.STRING).setDefaultValue("");
 
     // RaiseWithTooManyArguments
     createRule(repository, "RulesRaiseWithSingleArgument");
