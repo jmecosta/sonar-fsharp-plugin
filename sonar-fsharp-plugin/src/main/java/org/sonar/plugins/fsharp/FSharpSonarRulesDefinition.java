@@ -119,9 +119,6 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
     repository.createRule("LintSourceError").setName("Parsing errors").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
     repository.createRule("LintError").setName("Lint errors").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
 
-    createRule(repository, "RulesNamingConventionsCamelCaseError");
-    createRule(repository, "RulesNamingConventionsPascalCaseError");
-
     repository.done();
   }
 
