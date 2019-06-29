@@ -17,6 +17,75 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.6.0</version>
+        <executions>
+          <execution>
+            <id>dotnet-clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>dotnet</executable>
+              <workingDirectory>.</workingDirectory>
+              <arguments>
+                <argument>clean</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>dotnet-build</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>dotnet</executable>
+              <workingDirectory>.</workingDirectory>
+              <arguments>
+                <argument>build</argument>
+                <argument>-c</argument>
+                <argument>${configuration}</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>dotnet-publish</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>dotnet</executable>
+              <workingDirectory>.</workingDirectory>
+              <arguments>
+                <argument>publish</argument>
+                <argument>-c</argument>
+                <argument>${configuration}</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>dotnet-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>dotnet</executable>
+              <workingDirectory>.</workingDirectory>
+              <arguments>
+                <argument>test</argument>
+                <argument>-c</argument>
+                <argument>${configuration}</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <version>3.1.1</version>
         <configuration>
