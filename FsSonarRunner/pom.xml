@@ -78,6 +78,8 @@
               <workingDirectory>.</workingDirectory>
               <arguments>
                 <argument>test</argument>
+                <argument>--logger:Appveyor</argument>
+                <argument>--test-adapter-path:.</argument>
                 <argument>-c</argument>
                 <argument>${configuration}</argument>
               </arguments>
