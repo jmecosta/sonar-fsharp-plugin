@@ -19,7 +19,7 @@ type CreatesCorrectXml() =
                                 member val SubModules : SonarModule List = List.Empty with get, set
                                 member val ParentModule : SonarModule = null with get, set """
 
-        let metrics = new SQAnalyser()
+        let metrics = SQAnalyser()
         metrics.RunAnalyses("/file.fs", content, "")
         let tmpFile = Path.GetTempFileName()
         metrics.WriteXmlToDisk(tmpFile, false)

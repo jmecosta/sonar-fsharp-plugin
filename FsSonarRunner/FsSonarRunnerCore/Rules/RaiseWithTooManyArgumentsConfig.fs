@@ -1,12 +1,11 @@
 ﻿module RaiseWithTooManyArgumentsConfig
 
-open FSharpLint.Rules.RaiseWithTooManyArguments
-open FSharpLint.Framework.Configuration
+open FSharpLint.Application.XmlConfiguration.Configuration
 
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
     Map.ofList
         [
-            (AnalyserName,
+            ("RaiseWithTooManyArguments",
                 {
                     Rules = Map.ofList
                         [

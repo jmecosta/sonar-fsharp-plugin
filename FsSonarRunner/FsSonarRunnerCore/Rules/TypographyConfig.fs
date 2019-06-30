@@ -1,12 +1,11 @@
 ﻿module TypographyConfig
 
-open FSharpLint.Rules.Typography
-open FSharpLint.Framework.Configuration
+open FSharpLint.Application.XmlConfiguration.Configuration
 
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
     Map.ofList
         [
-            (AnalyserName,
+            ("Typography",
                 {
                     Rules = Map.ofList
                         [

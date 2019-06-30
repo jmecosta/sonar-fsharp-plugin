@@ -13,9 +13,9 @@ using NUnit.Core.Extensibility;
 namespace NUnit.Core
 {
 	/// <summary>
-	/// Static methods that implement aspects of the NUnit framework that cut 
-	/// across individual test types, extensions, etc. Some of these use the 
-	/// methods of the Reflect class to implement operations specific to the 
+	/// Static methods that implement aspects of the NUnit framework that cut
+	/// across individual test types, extensions, etc. Some of these use the
+	/// methods of the Reflect class to implement operations specific to the
 	/// NUnit Framework.
 	/// </summary>
 	public class NUnitFramework
@@ -141,7 +141,7 @@ namespace NUnit.Core
 
 		#region ApplyCommonAttributes
         /// <summary>
-        /// Modify a newly constructed test based on a type or method by 
+        /// Modify a newly constructed test based on a type or method by
         /// applying any of NUnit's common attributes.
         /// </summary>
         /// <param name="member">The type or method from which the test was constructed</param>
@@ -152,7 +152,7 @@ namespace NUnit.Core
         }
 
         /// <summary>
-        /// Modify a newly constructed test based on an assembly by applying 
+        /// Modify a newly constructed test based on an assembly by applying
         /// any of NUnit's common attributes.
         /// </summary>
         /// <param name="assembly">The assembly from which the test was constructed</param>
@@ -318,7 +318,7 @@ namespace NUnit.Core
 
         /// <summary>
         /// NUnitFramework.Assert is a nested class that implements
-        /// a few of the framework operations by reflection, 
+        /// a few of the framework operations by reflection,
         /// using whatever framework version is available.
         /// </summary>
         public class Assert
@@ -343,9 +343,9 @@ namespace NUnit.Core
                 {
                     if (areEqualMethod == null && AssertType != null)
                         areEqualMethod = AssertType.GetMethod(
-                            "AreEqual", 
-                            BindingFlags.Static | BindingFlags.Public, 
-                            null, 
+                            "AreEqual",
+                            BindingFlags.Static | BindingFlags.Public,
+                            null,
                             new Type[] { typeof(object), typeof(object) },
                             null );
 

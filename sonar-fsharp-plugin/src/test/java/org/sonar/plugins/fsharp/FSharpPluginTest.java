@@ -23,9 +23,9 @@ public class FSharpPluginTest {
 
   @Test
   public void getExtensions() {
-   Plugin.Context context = new Plugin.Context(mock(SonarRuntime.class));
-   FSharpPlugin plugin = new FSharpPlugin();
-   plugin.define(context);
-   assertEquals(5, context.getExtensions().size());
+    Plugin.Context context = new Plugin.Context(mock(SonarRuntime.class));
+    FSharpPlugin plugin = new FSharpPlugin();
+    plugin.define(context);
+    assertEquals(5, context.getExtensions().size());
   }
 }

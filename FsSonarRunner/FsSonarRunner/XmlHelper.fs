@@ -53,7 +53,7 @@ type InputXml = XmlProvider<"""
 // parse command using regex
 // if matched, return (command name, command value) as a tuple
 let (|Command|_|) (s:string) =
-    let r = new Regex(@"^(?:-{1,2}|\/)(?<command>\w+)[=:]*(?<value>.*)$",RegexOptions.IgnoreCase)
+    let r = Regex(@"^(?:-{1,2}|\/)(?<command>\w+)[=:]*(?<value>.*)$", RegexOptions.IgnoreCase)
     let m = r.Match(s)
     if m.Success then
         Some(m.Groups.["command"].Value.ToLower(), m.Groups.["value"].Value)

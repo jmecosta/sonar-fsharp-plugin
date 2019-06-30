@@ -1,7 +1,6 @@
 ﻿module SourceLengthConfig
 
-open FSharpLint.Rules.SourceLength
-open FSharpLint.Framework.Configuration
+open FSharpLint.Application.XmlConfiguration.Configuration
 
 [<Literal>]
 let FunctionLength = 100
@@ -42,7 +41,7 @@ let ModuleLength = 1000
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
     Map.ofList
         [
-            (AnalyserName,
+            ("SourceLength",
                 {
                     Rules = Map.ofList
                         [

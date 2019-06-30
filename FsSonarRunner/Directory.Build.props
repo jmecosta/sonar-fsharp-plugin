@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <Copyright>Copyright © 2015, 2019</Copyright>
+    <Product>Sonar F# Plugin</Product>
+    <Description>The plugin enables analysis of F# within SonarQube.</Description>
+    <Version>0.0.0.1</Version>
+    <Company>jmecsoftware</Company>
+  </PropertyGroup>
+</Project>
