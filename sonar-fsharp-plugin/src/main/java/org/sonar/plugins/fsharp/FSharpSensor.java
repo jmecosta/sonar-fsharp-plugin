@@ -62,6 +62,8 @@ public class FSharpSensor implements Sensor {
 
   private static final Logger LOG = Loggers.get(FSharpSensor.class);
 
+  private static String LineSeparator = System.getProperty("line.separator");
+
   private final FsSonarRunnerExtractor extractor;
   private final FileSystem fs;
   private final FileLinesContextFactory fileLinesContextFactory;
@@ -456,6 +458,7 @@ public class FSharpSensor implements Sensor {
     }
 
     private void handleLinesOfCodeMetricTag(InputFile inputFile) throws XMLStreamException {
+      LOG.trace("-> handleLinesOfCodeMetricTag start");
       Integer value = 0;
       FileLinesContext fileLinesContext = fileLinesContextFactory.createFor(inputFile);
 
@@ -463,6 +466,7 @@ public class FSharpSensor implements Sensor {
         int next = stream.next();
 
         if (next == XMLStreamConstants.END_ELEMENT && "LinesOfCode".equals(stream.getLocalName())) {
+          LOG.trace("<- handleLinesOfCodeMetricTag end");
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
@@ -552,7 +556,7 @@ public class FSharpSensor implements Sensor {
 
   private void appendLine(StringBuilder sb, String line) {
     sb.append(line);
-    sb.append("\r\n");
+    sb.append(LineSeparator);
   }
 
   private static class LogInfoStreamConsumer implements StreamConsumer {
