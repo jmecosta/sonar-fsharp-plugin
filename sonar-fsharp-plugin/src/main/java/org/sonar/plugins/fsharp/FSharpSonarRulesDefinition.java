@@ -112,7 +112,7 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
       .setType(RuleParamType.INTEGER).setDefaultValue("4");
 
     // RulesRedundantNewKeyword
-    createRule(repository, "RulesRedundantNewKeywordError");
+    createRule(repository, "RulesRedundantNewKeyword");
 
 
     // lint errors

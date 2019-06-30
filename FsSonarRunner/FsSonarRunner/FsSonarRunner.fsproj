@@ -26,8 +26,4 @@
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="$(TargetPath) /displayrules &gt;$(SolutionDir)rules.txt" />
-  </Target>
-
 </Project>

@@ -99,15 +99,12 @@ public class FSharpSensor implements Sensor {
 
       Command command;
       if (OsUtils.isWindows()) {
-        command = Command.create(executableFile.getAbsolutePath())
-                .addArgument("/i:" + analysisInput.getAbsolutePath())
-                .addArgument("/o:" + analysisOutput.getAbsolutePath());
+        command = Command.create(executableFile.getAbsolutePath());
       } else {
-        command = Command.create("mono")
-                .addArgument(executableFile.getAbsolutePath())
-                .addArgument("/i:" + analysisInput.getAbsolutePath())
-                .addArgument("/o:" + analysisOutput.getAbsolutePath());
+        command = Command.create("mono").addArgument(executableFile.getAbsolutePath());
       }
+      command.addArgument("/i:" + analysisInput.getAbsolutePath())
+          .addArgument("/o:" + analysisOutput.getAbsolutePath());
       LOG.debug(command.toCommandLine());
       CommandExecutor.create().execute(command, new LogInfoStreamConsumer(), new LogErrorStreamConsumer(), Integer.MAX_VALUE);
     } catch (IOException e) {
@@ -190,6 +187,7 @@ public class FSharpSensor implements Sensor {
     public void parse(File file, SensorContext context) {
       InputStreamReader reader = null;
       XMLInputFactory xmlFactory = XMLInputFactory.newInstance();
+      LOG.trace("-> AnalysisResultImporter.parse start");
 
       try {
         reader = new InputStreamReader(new FileInputStream(file), "UTF-8");
@@ -205,10 +203,12 @@ public class FSharpSensor implements Sensor {
           }
         }
       } catch (IOException | XMLStreamException e) {
-        closeXmlStream();
         LOG.error("Not able to parse file : {0}", e.getMessage());
+      } finally {
+        closeXmlStream();
       }
 
+      LOG.trace("<- AnalysisResultImporter.parse end");
       return;
     }
 
@@ -224,11 +224,13 @@ public class FSharpSensor implements Sensor {
 
     private void handleFileTag(SensorContext context) throws XMLStreamException {
       InputFile inputFile = null;
+      LOG.trace("-> handleFileTag of file " + stream.getLocalName() + " start");
 
       while (stream.hasNext()) {
         int next = stream.next();
 
         if (next == XMLStreamConstants.END_ELEMENT && "File".equals(stream.getLocalName())) {
+          LOG.trace("<- handleFileTag of file " + stream.getLocalName() + " end", stream.getLocalName());
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
@@ -236,6 +238,7 @@ public class FSharpSensor implements Sensor {
           if ("Path".equals(tagName)) {
             String path = stream.getElementText();
             inputFile = fs.inputFile(fs.predicates().hasAbsolutePath(path));
+            LOG.trace("handleFileTag inputFile " + inputFile != null? inputFile.filename(): "<no input file>");
           } else if ("Metrics".equals(tagName)) {
             handleMetricsTag(inputFile);
           } else if ("Issues".equals(tagName)) {
@@ -252,10 +255,12 @@ public class FSharpSensor implements Sensor {
     }
 
     private void handleCopyPasteTokensTag(NewCpdTokens cpdTokens, NewHighlighting highlights) throws XMLStreamException {
+      LOG.trace("-> handleCopyPasteTokensTag start");
       while (stream.hasNext()) {
         int next = stream.next();
 
         if (next == XMLStreamConstants.END_ELEMENT && "CopyPasteTokens".equals(stream.getLocalName())) {
+          LOG.trace("<- handleCopyPasteTokensTag start");
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
@@ -313,10 +318,12 @@ public class FSharpSensor implements Sensor {
     }
 
     private void handleMetricsTag(InputFile inputFile) throws XMLStreamException {
+      LOG.trace("-> handleMetricsTag start");
       while (stream.hasNext()) {
         int next = stream.next();
 
         if (next == XMLStreamConstants.END_ELEMENT && "Metrics".equals(stream.getLocalName())) {
+          LOG.trace("<- handleMetricsTag end");
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
@@ -476,10 +483,12 @@ public class FSharpSensor implements Sensor {
     }
 
     private void handleIssuesTag(InputFile inputFile, SensorContext context) throws XMLStreamException {
+      LOG.trace("-> handleIssuesTag start");
       while (stream.hasNext()) {
         int next = stream.next();
 
         if (next == XMLStreamConstants.END_ELEMENT && "Issues".equals(stream.getLocalName())) {
+          LOG.trace("<- handleIssuesTag end");
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
@@ -494,24 +503,37 @@ public class FSharpSensor implements Sensor {
     private void handleIssueTag(InputFile inputFile, SensorContext context) throws XMLStreamException {
       String id = null;
       String message = null;
-      Integer line = 0;
+      Integer line = null;
+
+      LOG.trace("-> handleIssueTag start");
 
       while (stream.hasNext()) {
         int next = stream.next();
 
         if (next == XMLStreamConstants.END_ELEMENT && "Issue".equals(stream.getLocalName())) {
+          RuleKey ruleKey = RuleKey.of(FSharpPlugin.REPOSITORY_KEY, id);
+          ActiveRule rule = context.activeRules().find(ruleKey);
+          if (rule != null) {
+            NewIssue newIssue = context.newIssue().forRule(ruleKey);
+            NewIssueLocation location = newIssue.newLocation().on(inputFile);
+            if (line != null && line > 0)
+            {
+              location = location.at(inputFile.selectLine(line)):
+            }
+            if (message != null)
+            {
+              location = location.message(message);
+            }
 
-          NewIssue newIssue = context.newIssue().forRule(RuleKey.of(FSharpPlugin.REPOSITORY_KEY, id));
-          NewIssueLocation location = newIssue.newLocation()
-            .on(inputFile)
-            .at(inputFile.selectLine(line))
-            .message(message);
+            newIssue.at(location);
+            newIssue.save();
 
-          newIssue.at(location);
-          newIssue.save();
+            LOG.info("Save Issue : " + inputFile + " Line " + line + "  message " + message);
+          } else {
+            LOG.error("Rule not active: " + id);
+          }
 
-          LOG.info("Save Issue : " + inputFile + " Line " + line + "  message " + message);
-
+          LOG.trace("<- handleIssueTag end");
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();

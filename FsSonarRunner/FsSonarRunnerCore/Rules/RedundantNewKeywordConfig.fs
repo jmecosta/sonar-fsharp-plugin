@@ -10,7 +10,7 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
                     Rules = Map.ofList []
                     Settings = Map.ofList
                         [
-                            ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesRedundantNewKeywordError"))
+                            ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesRedundantNewKeyword"))
                         ]
                 });
     ]

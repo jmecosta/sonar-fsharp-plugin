@@ -11,8 +11,7 @@ let CreateALintXmlConfiguration(path : string) =
 
         let configuration = {
             IgnoreFiles = None
-            Analysers = Map(Seq.concat
-                        [
+            Analysers = Map(Seq.concat [
                             (Map.toSeq (SourceLengthConfig.SonarConfiguration(sonarConfig)))
                             (Map.toSeq (BindingConfig.SonarConfiguration(sonarConfig)))
                             (Map.toSeq (NumberOfItemsConfig.SonarConfiguration(sonarConfig)))

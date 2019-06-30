@@ -72,7 +72,7 @@ final class FSharpRuleProperties {
         rules.put("RulesNumberOfItemsBooleanConditionsError", new RuleProperty(Severity.MAJOR, "Maximum allowed boolean operatores in condition", "<p></p>"));
 
         // RulesRedundantNewKeyword
-        rules.put("RulesRedundantNewKeywordError", new RuleProperty(Severity.MINOR, "Redudant usage of new Keywork", "<p></p>"));
+        rules.put("RulesRedundantNewKeyword", new RuleProperty(Severity.MINOR, "Redundant keyword \"new\" should be avoided", "<p></p>"));
 
         ALL = unmodifiableMap(rules);
     }
