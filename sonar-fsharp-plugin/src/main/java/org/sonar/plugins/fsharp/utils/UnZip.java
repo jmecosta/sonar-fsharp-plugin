@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -33,9 +35,17 @@ public class UnZip {
 
   public static void main(String[] args) throws IOException {
     String workingDirectory = System.getProperty("user.dir");
-    String zipFile = workingDirectory + "/FsSonarRunner/target/FsSonarRunner-1.1.0-rc.zip";
+    String zipFile = workingDirectory + "/FsSonarRunner/target/FsSonarRunner-0.0.0.1.zip";
     String outputFolder = workingDirectory + "/FsSonarRunner/target/extracted";
+
+    if (Files.notExists(Paths.get(zipFile)))
+    {
+      System.err.println("Input zip files does not exist: " + zipFile);
+      return;
+    }
+
     new UnZip().unZipIt(zipFile, outputFolder);
+    System.out.println("File extracted to directory: " + outputFolder);
   }
 
   /**
