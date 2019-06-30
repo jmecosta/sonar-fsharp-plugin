@@ -518,7 +518,7 @@ public class FSharpSensor implements Sensor {
             NewIssueLocation location = newIssue.newLocation().on(inputFile);
             if (line != null && line > 0)
             {
-              location = location.at(inputFile.selectLine(line)):
+              location = location.at(inputFile.selectLine(line));
             }
             if (message != null)
             {
