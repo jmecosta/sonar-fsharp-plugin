@@ -21,7 +21,7 @@ type SonarResoureMetrics(path : string) =
 type SQAnalyser() =
 
     let mutable resources : SonarResoureMetrics List = List.Empty
-    let resourcesLocker = System.Object()
+    let resourcesLocker = obj()
 
     let gatherMetrics(path : string, input : string, resourceMetric : SonarResoureMetrics) =
         let parseTree =

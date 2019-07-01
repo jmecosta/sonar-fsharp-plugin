@@ -62,8 +62,12 @@
               <workingDirectory>.</workingDirectory>
               <arguments>
                 <argument>publish</argument>
+                <argument>--no-build</argument>
                 <argument>-c</argument>
                 <argument>${configuration}</argument>
+                <argument>--output</argument>
+                <argument>publish</argument>
+                <argument>FsSonarRunner</argument>
               </arguments>
             </configuration>
           </execution>
