@@ -5,7 +5,18 @@
 #---------------------------------#
 
 # version format
-version: 1.2.0.{build}
+version: 1.2.0.{build}-ci
+
+for:
+- branches:
+    only:
+      - master
+  version: 1.2.0.{build}-rc
+
+- branches:
+    only:
+      - /v\d*\.\d*\.\d*/
+  version: 1.2.0
 
 #---------------------------------#
 #    environment configuration    #
