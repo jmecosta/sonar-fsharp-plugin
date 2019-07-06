@@ -22,6 +22,7 @@ import java.nio.file.Files;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
+import org.sonar.plugins.fsharp.utils.OSInfo;
 import org.sonar.plugins.fsharp.utils.UnZip;
 
 // addapted from https://github.com/SonarSource/sonar-csharp
@@ -31,7 +32,6 @@ public class FsSonarRunnerExtractor {
   public static final Logger LOG = Loggers.get(FsSonarRunnerExtractor.class);
   private static final String N_SONARQUBE_ANALYZER = "FsSonarRunner";
   private static final String N_SONARQUBE_ANALYZER_ZIP = N_SONARQUBE_ANALYZER + ".zip";
-  private static final String N_SONARQUBE_ANALYZER_EXE = N_SONARQUBE_ANALYZER + ".exe";
 
   private File file = null;
 
@@ -40,7 +40,22 @@ public class FsSonarRunnerExtractor {
 
   public File executableFile(String workDir) throws IOException {
     if (file == null) {
-      file = unzipProjectCheckerFile(N_SONARQUBE_ANALYZER_EXE, workDir);
+      String filePath;
+      switch (OSInfo.getOs()) {
+      case WINDOWS:
+        filePath = "win-x86" + File.separator + N_SONARQUBE_ANALYZER + ".exe";
+        break;
+      case MAC:
+        filePath = "osx-x86" + File.separator + N_SONARQUBE_ANALYZER;
+        break;
+      case LINUX:
+        filePath = "linux-x86" + File.separator + N_SONARQUBE_ANALYZER;
+        break;
+      default:
+        throw new UnsupportedOperationException("Operation system `" + OSInfo.getOs().toString() + "`not supported");
+      }
+
+      file = unzipProjectCheckerFile(filePath, workDir);
     }
 
     return file;

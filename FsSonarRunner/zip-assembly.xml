@@ -11,10 +11,9 @@
       <directory>FsSonarRunner/publish</directory>
       <outputDirectory>\</outputDirectory>
       <includes>
-        <include>*.dll</include>
-        <include>*.exe</include>
-        <include>*.config</include>
-        <include>*/FSharp.Core.resources.dll</include>
+        <include>win-x86/**</include>
+        <include>osx-x86/**</include>
+        <include>linux-x86/**</include>
       </includes>
     </fileSet>
   </fileSets>

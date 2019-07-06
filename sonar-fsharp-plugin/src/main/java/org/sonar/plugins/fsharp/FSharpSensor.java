@@ -99,12 +99,7 @@ public class FSharpSensor implements Sensor {
 
       File executableFile = extractor.executableFile(workdirRoot);
 
-      Command command;
-      if (OsUtils.isWindows()) {
-        command = Command.create(executableFile.getAbsolutePath());
-      } else {
-        command = Command.create("mono").addArgument(executableFile.getAbsolutePath());
-      }
+      Command command = Command.create(executableFile.getAbsolutePath());
       command.addArgument("/i:" + analysisInput.getAbsolutePath())
           .addArgument("/o:" + analysisOutput.getAbsolutePath());
       LOG.debug(command.toCommandLine());
@@ -240,7 +235,7 @@ public class FSharpSensor implements Sensor {
           if ("Path".equals(tagName)) {
             String path = stream.getElementText();
             inputFile = fs.inputFile(fs.predicates().hasAbsolutePath(path));
-            LOG.trace("handleFileTag inputFile " + inputFile != null? inputFile.filename(): "<no input file>");
+            LOG.trace("handleFileTag inputFile " + inputFile != null ? inputFile.filename() : "<no input file>");
           } else if ("Metrics".equals(tagName)) {
             handleMetricsTag(inputFile);
           } else if ("Issues".equals(tagName)) {
@@ -520,12 +515,10 @@ public class FSharpSensor implements Sensor {
           if (rule != null) {
             NewIssue newIssue = context.newIssue().forRule(ruleKey);
             NewIssueLocation location = newIssue.newLocation().on(inputFile);
-            if (line != null && line > 0)
-            {
+            if (line != null && line > 0) {
               location = location.at(inputFile.selectLine(line));
             }
-            if (message != null)
-            {
+            if (message != null) {
               location = location.message(message);
             }
 
