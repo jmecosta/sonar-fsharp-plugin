@@ -52,7 +52,9 @@ public class FsSonarRunnerExtractor {
         filePath = "linux-x86" + File.separator + N_SONARQUBE_ANALYZER;
         break;
       default:
-        throw new UnsupportedOperationException("Operation system `" + OSInfo.getOs().toString() + "`not supported");
+        String msg = "Operation system `" + OSInfo.getOs().toString() + "`not supported";
+        LOG.error(msg);
+        throw new UnsupportedOperationException(msg);
       }
 
       file = unzipProjectCheckerFile(filePath, workDir);

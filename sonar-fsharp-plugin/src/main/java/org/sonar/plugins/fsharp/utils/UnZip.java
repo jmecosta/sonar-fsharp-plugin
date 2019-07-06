@@ -25,15 +25,23 @@ import java.util.zip.ZipInputStream;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
-// https://www.mkyong.com/java/how-to-decompress-files-from-a-zip-file/
-// https://howtodoinjava.com/java/io/unzip-file-with-subdirectories/
-// https://www.baeldung.com/java-compress-and-uncompress
-
+/**
+ * Unzip file with subdirectories to a folder
+ *
+ * @see <a href="https://www.mkyong.com/java/how-to-decompress-files-from-a-zip-file/">How to decompress files from a ZIP file</a>, the original reference used
+ * @see <a href="https://howtodoinjava.com/java/io/unzip-file-with-subdirectories/">Java – Unzip File with Sub-directories</a>
+ * @see <a href="https://www.baeldung.com/java-compress-and-uncompress">Zipping and Unzipping in Java</a>, especially how to avoid vulnerability because of zip slip
+ */
 public class UnZip {
   public static final Logger LOG = Loggers.get(UnZip.class);
   List<String> fileList;
 
-  public static void main(String[] args) throws IOException {
+  /**
+   * Test for unzipping FsSonarRunner.zip archive on local development
+   *
+    * @return 0 - success, 1 zip file not found, 2 exception on unzip
+    */
+  public static int main() {
     String workingDirectory = System.getProperty("user.dir");
     String zipFile = workingDirectory + "/FsSonarRunner/target/FsSonarRunner-0.0.0.1.zip";
     String outputFolder = workingDirectory + "/FsSonarRunner/target/extracted";
@@ -41,11 +49,22 @@ public class UnZip {
     if (Files.notExists(Paths.get(zipFile)))
     {
       System.err.println("Input zip files does not exist: " + zipFile);
-      return;
+      return 1;
     }
 
-    new UnZip().unZipIt(zipFile, outputFolder);
-    System.out.println("File extracted to directory: " + outputFolder);
+    try {
+
+      new UnZip().unZipIt(zipFile, outputFolder);
+      System.out.println("File extracted to directory: " + outputFolder);
+    }
+    catch (IOException ex)
+    {
+      System.err.println("catched exception on unzipping " + zipFile);
+      ex.printStackTrace();
+      return 2;
+    }
+
+    return 0;
   }
 
   /**
@@ -104,8 +123,14 @@ public class UnZip {
     }
   }
 
-  // create output directory is not exists
-  public File newFolder(File parent, String folderName) throws IOException {
+  /**
+   * create output directory is not exists
+   * @param parent parent folder in which the new folder should be created
+   * @param folderName folder to create
+   * @return handle to created folder
+   * @throws IOException
+   */
+  private File newFolder(File parent, String folderName) throws IOException {
     File folder = newFile(parent, folderName);
 
     if (!folder.exists()) {
@@ -115,7 +140,7 @@ public class UnZip {
     return folder;
   }
 
-  public File newFile(File parent, String fileName) throws IOException {
+  private File newFile(File parent, String fileName) throws IOException {
     File destFile = new File(parent, fileName);
 
     if (parent != null) {

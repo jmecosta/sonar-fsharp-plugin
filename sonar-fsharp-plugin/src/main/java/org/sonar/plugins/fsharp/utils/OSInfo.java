@@ -16,7 +16,18 @@ package org.sonar.plugins.fsharp.utils;
 import java.io.IOException;
 import java.util.Locale;
 
-// https://memorynotfound.com/detect-os-name-version-java/
+/**
+ * Detect OS Name and Version Java
+ *
+ * Java is Platform independent and can run everywhere. Knowing this,
+ * it can be worth knowing in what operation system the application is
+ * running. To detect the current operation system, you can use the
+ * OSInfo class below, which retrieves the information from the
+ * system properties and returns an OS enum that holds the name and
+ * version of the operating system the application is running on.
+ *
+* @see <a href="https://memorynotfound.com/detect-os-name-version-java/">original code at MemoryNotFound.org</a>
+ */
 public class OSInfo {
 
     public enum OS {
@@ -33,7 +44,7 @@ public class OSInfo {
             return version;
         }
 
-        public void setVersion(String version) {
+        private void setVersion(String version) {
             this.version = version;
         }
     }
