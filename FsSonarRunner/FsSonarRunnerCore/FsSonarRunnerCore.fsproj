@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="XmlConfigurationHelper.fs" />
     <Compile Include="Rules\ConfHelper.fs" />
     <Compile Include="Rules\BindingConfig.fs" />
     <Compile Include="Rules\NumberOfItemsConfig.fs" />
@@ -26,7 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="FSharp.Data" Version="3.1.1" />
-    <PackageReference Include="FSharpLint.Core" Version="0.12.1" />
+    <PackageReference Include="FSharpLint.Core" Version="0.12.2" />
   </ItemGroup>
 
   <ItemGroup>
