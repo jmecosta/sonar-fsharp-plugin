@@ -11,9 +11,17 @@ Download latest snapshot from : <https://ci.appveyor.com/project/jorgecosta/sona
 - Metrics: LOC, number of classes, number of methods
 - Code duplication detection
 - FSharpLint Support
-- Runs under windows and Linux (mono)
+- Runs under .NET Core 2.2 on Windows, Linux, and OS-X
 
 ## Configuration
+
+### Requirements
+
+- Minimal supported version of SonarQube: 6.7 LTS
+- Analyzer uses .NET Core 2.2, the corresponding depencies of .NET Core
+  needs to be installed (especially on Linux). .NET Core is not
+  required to be installed, as the application is self-contained.
+- Operating system (64 bit only): Windows, Linux or OS X.
 
 ### Installation
 
@@ -27,7 +35,7 @@ Review the F# quality profile before running.
 
 ### General Configuration
 
-- sonar.fs.file.suffixes - files extensions to import
+- `sonar.fs.file.suffixes` - files extensions to import
 
 ### Coverage and Tests
 
