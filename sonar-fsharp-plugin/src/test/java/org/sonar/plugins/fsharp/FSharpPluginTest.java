@@ -14,18 +14,24 @@
 package org.sonar.plugins.fsharp;
 
 import static org.junit.Assert.assertEquals;
-import org.junit.Test;
 import static org.mockito.Mockito.mock;
+
+import org.junit.Test;
 import org.sonar.api.Plugin;
 import org.sonar.api.SonarRuntime;
 
 public class FSharpPluginTest {
 
   @Test
-  public void getExtensions() {
+  public void addExtensions_expectedNumber() {
+    // Arramhe
     Plugin.Context context = new Plugin.Context(mock(SonarRuntime.class));
     FSharpPlugin plugin = new FSharpPlugin();
+
+    // Act
     plugin.define(context);
+
+    // Assert
     assertEquals(5, context.getExtensions().size());
   }
 }

@@ -14,18 +14,48 @@
 package org.sonar.plugins.fsharp;
 
 import static org.junit.Assert.assertEquals;
-import org.sonar.plugins.fsharp.FSharpSonarRulesDefinition;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Test;
 import org.sonar.api.server.rule.RulesDefinition.Context;
 
 public class FSharpSonarRulesDefinitionTest {
-
-  // @Test
-  public void test() {
+  @Test
+  public void repositories_exactelyOne() {
+    // Arrange
     Context context = new Context();
     assertEquals(0, context.repositories().size());
 
+    // Act
     new FSharpSonarRulesDefinition().define(context);
+
+    // Assert
     assertEquals(1, context.repositories().size());
-    assertEquals(47, context.repository("fsharplint").rules().size());
+  }
+
+  @Test
+  public void repository_expectedNameAndKey() {
+    // Arrange
+    Context context = new Context();
+
+    // Act
+    new FSharpSonarRulesDefinition().define(context);
+
+    // Assert
+    assertEquals(FSharpPlugin.REPOSITORY_NAME, context.repositories().get(0).name());
+    assertNotNull(context.repository(FSharpPlugin.REPOSITORY_KEY));
+  }
+
+  // @Test
+  public void FSharpLint_numberOfRules() {
+    // Arrange
+    Context context = new Context();
+    assertEquals(0, context.repositories().size());
+
+    // Act
+    new FSharpSonarRulesDefinition().define(context);
+
+    // Assert
+    assertEquals(55, context.repository(FSharpPlugin.REPOSITORY_KEY).rules().size());
   }
 }
