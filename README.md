@@ -18,18 +18,20 @@ Download latest snapshot from : <https://ci.appveyor.com/project/jorgecosta/sona
 ### Requirements
 
 - Minimal supported version of SonarQube: 6.7 LTS
-- Analyzer is deployed as .NET Core 2.2 framework dependent executeable (FDE).
-- .NET Core 2.2 runtime needs to be installed on the build server.
+- Analyzer uses .NET Core 2.2, the corresponding depencies of .NET Core
+  needs to be installed (especially on Linux). .NET Core is not
+  required to be installed, as the application is self-contained.
+- Operating system (64 bit only): Windows, Linux or OS X.
 
 ### Installation
 
-- Download the JAR plugin file from releases and copy it to the _extensions/plugins/_
+Download the JAR plugin file from releases and copy it to the _extensions/plugins/_
 directory of your SonarQube installation then start server.
 The file _logs/sonar.log_ will then contain a log line indicating the loaded
 plugin or any errors. The installed plugin will also be shown
 on the Marketplace of your SonarQube installation.
-- Review the F# quality profile before running.
-- Install .NET Core 2.2 Runtime on build server. Download is available from [Microsoft](https://dotnet.microsoft.com/download).
+
+Review the F# quality profile before running.
 
 ### General Configuration
 
