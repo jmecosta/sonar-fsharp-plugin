@@ -35,22 +35,6 @@
               </arguments>
             </configuration>
           </execution>
-          <!-- <execution>
-            <id>dotnet-build</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>dotnet</executable>
-              <workingDirectory>.</workingDirectory>
-              <arguments>
-                <argument>build</argument>
-                <argument>-c</argument>
-                <argument>${configuration}</argument>
-              </arguments>
-            </configuration>
-          </execution> -->
           <execution>
             <id>dotnet-publish-win</id>
             <phase>package</phase>
@@ -68,6 +52,8 @@
                 <argument>publish/win-x86</argument>
                 <argument>--runtime </argument>
                 <argument>win-x64</argument>
+                <argument>--self-contained</argument>
+                <argument>false</argument>
                 <argument>FsSonarRunner</argument>
               </arguments>
             </configuration>
@@ -89,6 +75,8 @@
                 <argument>publish/osx-x86</argument>
                 <argument>--runtime </argument>
                 <argument>osx-x64</argument>
+                <argument>--self-contained</argument>
+                <argument>false</argument>
                 <argument>FsSonarRunner</argument>
               </arguments>
             </configuration>
@@ -110,6 +98,8 @@
                 <argument>publish/linux-x86</argument>
                 <argument>--runtime </argument>
                 <argument>linux-x64</argument>
+                <argument>--self-contained</argument>
+                <argument>false</argument>
                 <argument>FsSonarRunner</argument>
               </arguments>
             </configuration>
