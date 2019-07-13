@@ -58,6 +58,10 @@ public class FsSonarRunnerExtractor {
       }
 
       file = unzipProjectCheckerFile(filePath, workDir);
+      if (!file.canExecute())
+      {
+        file.setExecutable(true);
+      }
     }
 
     return file;

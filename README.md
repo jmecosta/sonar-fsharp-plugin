@@ -25,13 +25,12 @@ Download latest snapshot from : <https://ci.appveyor.com/project/jorgecosta/sona
 
 ### Installation
 
-Download the JAR plugin file from releases and copy it to the _extensions/plugins/_
+- Download the JAR plugin file from releases and copy it to the _extensions/plugins/_
 directory of your SonarQube installation then start server.
 The file _logs/sonar.log_ will then contain a log line indicating the loaded
 plugin or any errors. The installed plugin will also be shown
 on the Marketplace of your SonarQube installation.
-
-Review the F# quality profile before running.
+- Review the F# quality profile before running.
 
 ### General Configuration
 

@@ -35,22 +35,6 @@
               </arguments>
             </configuration>
           </execution>
-          <!-- <execution>
-            <id>dotnet-build</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>dotnet</executable>
-              <workingDirectory>.</workingDirectory>
-              <arguments>
-                <argument>build</argument>
-                <argument>-c</argument>
-                <argument>${configuration}</argument>
-              </arguments>
-            </configuration>
-          </execution> -->
           <execution>
             <id>dotnet-publish-win</id>
             <phase>package</phase>
