@@ -19,16 +19,16 @@ import org.sonar.api.resources.AbstractLanguage;
 
 public class FSharp extends AbstractLanguage {
 
-  private final Configuration settings;
+  private final Configuration configuration;
 
-  public FSharp(Configuration settings) {
+  public FSharp(Configuration configuration) {
     super(FSharpPlugin.LANGUAGE_KEY, FSharpPlugin.LANGUAGE_NAME);
-    this.settings = settings;
+    this.configuration = configuration;
   }
 
   @Override
   public String[] getFileSuffixes() {
-    String[] suffixes = settings.getStringArray(FSharpPlugin.FILE_SUFFIXES_KEY);
+    String[] suffixes = configuration.getStringArray(FSharpPlugin.FILE_SUFFIXES_KEY);
     if (suffixes.length == 0) {
       suffixes = StringUtils.split(FSharpPlugin.FILE_SUFFIXES_DEFVALUE, ",");
     }

@@ -35,9 +35,6 @@ public class FsSonarRunnerExtractor {
 
   private File file = null;
 
-  public FsSonarRunnerExtractor() {
-  }
-
   public File executableFile(String workDir) throws IOException {
     if (file == null) {
       file = unzipProjectCheckerFile(N_SONARQUBE_ANALYZER_EXE, workDir);
