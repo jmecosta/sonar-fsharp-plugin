@@ -2,7 +2,9 @@
 
 The plugin enables analysis of F# within SonarQube.
 
-[![Build status](https://ci.appveyor.com/api/projects/status/jira637y22trnuc4?svg=true)](https://ci.appveyor.com/project/jorgecosta/sonar-fsharp-plugin-wxq94)
+## Builds
+
+[![Build status](https://ci.appveyor.com/api/projects/status/jira637y22trnuc4/branch/master?svg=true)](https://ci.appveyor.com/project/jorgecosta/sonar-fsharp-plugin-wxq94/branch/master)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jmecsoftware.sonarqube.fsharp%3Asonar-communityfsharp-analyzer&metric=alert_status)](https://sonarcloud.io/dashboard?id=jmecsoftware.sonarqube.fsharp%3Asonar-communityfsharp-analyzer)
 
 Download latest snapshot from Appveyor: <https://ci.appveyor.com/project/jorgecosta/sonar-fsharp-plugin-wxq94/build/artifacts>

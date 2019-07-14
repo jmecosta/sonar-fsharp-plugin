@@ -56,6 +56,8 @@ import org.sonar.api.utils.command.CommandExecutor;
 import org.sonar.api.utils.command.StreamConsumer;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
+import org.sonar.plugins.fsharp.utils.OSInfo;
+import org.sonar.plugins.fsharp.utils.OSInfo.OS;
 
 @DependedUpon("NSonarQubeAnalysis")
 public class FSharpSensor implements Sensor {
@@ -100,7 +102,7 @@ public class FSharpSensor implements Sensor {
       File executableFile = extractor.executableFile(workdirRoot);
 
       Command command;
-      if (OsUtils.isWindows()) {
+      if (OSInfo.getOs() == OS.WINDOWS) {
         command = Command.create(executableFile.getAbsolutePath());
       } else {
         command = Command.create("mono").addArgument(executableFile.getAbsolutePath());
@@ -519,12 +521,10 @@ public class FSharpSensor implements Sensor {
           if (rule != null) {
             NewIssue newIssue = context.newIssue().forRule(ruleKey);
             NewIssueLocation location = newIssue.newLocation().on(inputFile);
-            if (line != null && line > 0)
-            {
+            if (line != null && line > 0) {
               location = location.at(inputFile.selectLine(line));
             }
-            if (message != null)
-            {
+            if (message != null) {
               location = location.message(message);
             }
 

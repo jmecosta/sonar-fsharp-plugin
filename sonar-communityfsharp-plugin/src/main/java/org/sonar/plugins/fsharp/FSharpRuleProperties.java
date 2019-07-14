@@ -24,8 +24,7 @@ final class FSharpRuleProperties {
     public static final Map<String, RuleProperty> ALL;
     private static final String EMPTY_HTML_DESCRIPTION = "<p></p>";
 
-    private FSharpRuleProperties()
-    {
+    private FSharpRuleProperties() {
         throw new IllegalStateException("Utility class");
     }
 

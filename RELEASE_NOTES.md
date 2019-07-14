@@ -1,12 +1,11 @@
 # Release Notes
 
-## v2.0 (draft)
+## v2.0 Quality Gate (draft)
 
 - BREAKING: rename plugin to `sonar-communityfsharp-plugin` to match SonarQube marketplace requirement
+- #53 Add analysis of Quality Gate at Sonarcloud.io (no F# analyzed)
 
-## v1.2 (draft)
-
-- #74 Update to FSharpLint.Core 0.12.2
+- #52 Update to FSharpLint.Core 0.12.2
 
 ## v1.1 Update to net472 and FSharpLint 0.12.1
 
