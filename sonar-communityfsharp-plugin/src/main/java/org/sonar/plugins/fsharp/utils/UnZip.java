@@ -46,14 +46,13 @@ public class UnZip {
     String zipFile = workingDirectory + "/FsSonarRunner/target/FsSonarRunner-0.0.0.1.zip";
     String outputFolder = workingDirectory + "/FsSonarRunner/target/extracted";
 
-    if (Files.notExists(Paths.get(zipFile)))
+    if (!Paths.get(zipFile).toFile().exists())
     {
       System.err.println("Input zip files does not exist: " + zipFile);
       return 1;
     }
 
     try {
-
       new UnZip().unZipIt(zipFile, outputFolder);
       System.out.println("File extracted to directory: " + outputFolder);
     }
