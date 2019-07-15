@@ -15,37 +15,28 @@
 package org.sonar.plugins.fsharp;
 
 import java.io.BufferedWriter;
-import org.sonar.api.batch.DependedUpon;
-import org.sonar.api.batch.fs.FileSystem;
-import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.issue.NoSonarFilter;
-import org.sonar.api.measures.CoreMetrics;
-import org.sonar.api.measures.FileLinesContext;
-import org.sonar.api.measures.FileLinesContextFactory;
-import org.sonar.api.utils.command.Command;
-import org.sonar.api.utils.command.CommandExecutor;
-import org.sonar.api.utils.command.StreamConsumer;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Map.Entry;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.sonar.api.batch.DependedUpon;
+import org.sonar.api.batch.fs.FileSystem;
+import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.rule.ActiveRule;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
@@ -55,14 +46,25 @@ import org.sonar.api.batch.sensor.highlighting.TypeOfText;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
 import org.sonar.api.config.Configuration;
+import org.sonar.api.issue.NoSonarFilter;
+import org.sonar.api.measures.CoreMetrics;
+import org.sonar.api.measures.FileLinesContext;
+import org.sonar.api.measures.FileLinesContextFactory;
 import org.sonar.api.rule.RuleKey;
+import org.sonar.api.utils.command.Command;
+import org.sonar.api.utils.command.CommandExecutor;
+import org.sonar.api.utils.command.StreamConsumer;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
+import org.sonar.plugins.fsharp.utils.OSInfo;
+import org.sonar.plugins.fsharp.utils.OSInfo.OS;
 
 @DependedUpon("NSonarQubeAnalysis")
 public class FSharpSensor implements Sensor {
 
   private static final Logger LOG = Loggers.get(FSharpSensor.class);
 
-  private static String LineSeparator = System.getProperty("line.separator");
+  private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
   private final FsSonarRunnerExtractor extractor;
   private final FileSystem fs;
@@ -89,7 +91,7 @@ public class FSharpSensor implements Sensor {
   }
 
   private void analyze(SensorContext context) {
-    StringBuilder sb = CreateConfiguration(context);
+    StringBuilder sb = createConfiguration(context);
     File analysisInput = toolInput();
     File analysisOutput = toolOutput();
 
@@ -100,7 +102,7 @@ public class FSharpSensor implements Sensor {
       File executableFile = extractor.executableFile(workdirRoot);
 
       Command command;
-      if (OsUtils.isWindows()) {
+      if (OSInfo.getOs() == OS.WINDOWS) {
         command = Command.create(executableFile.getAbsolutePath());
       } else {
         command = Command.create("mono").addArgument(executableFile.getAbsolutePath());
@@ -114,7 +116,7 @@ public class FSharpSensor implements Sensor {
     }
   }
 
-  private StringBuilder CreateConfiguration(SensorContext context) {
+  private StringBuilder createConfiguration(SensorContext context) {
     StringBuilder sb = new StringBuilder();
     appendLine(sb, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
     appendLine(sb, "<AnalysisInput>");
@@ -192,7 +194,7 @@ public class FSharpSensor implements Sensor {
       LOG.trace("-> AnalysisResultImporter.parse start");
 
       try {
-        reader = new InputStreamReader(new FileInputStream(file), "UTF-8");
+        reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
         stream = xmlFactory.createXMLStreamReader(reader);
 
         while (stream.hasNext()) {
@@ -211,7 +213,6 @@ public class FSharpSensor implements Sensor {
       }
 
       LOG.trace("<- AnalysisResultImporter.parse end");
-      return;
     }
 
     private void closeXmlStream() {
@@ -303,7 +304,7 @@ public class FSharpSensor implements Sensor {
           String tagName = stream.getLocalName();
 
           if ("Value".equals(tagName)) {
-            value = new String(Base64.getDecoder().decode(stream.getElementText()), Charset.forName("UTF-8"));
+            value = new String(Base64.getDecoder().decode(stream.getElementText()), StandardCharsets.UTF_8);
           } else if ("Line".equals(tagName)) {
             line = Integer.parseInt(stream.getElementText());
           } else if ("LeftColoumn".equals(tagName)) {
@@ -520,12 +521,10 @@ public class FSharpSensor implements Sensor {
           if (rule != null) {
             NewIssue newIssue = context.newIssue().forRule(ruleKey);
             NewIssueLocation location = newIssue.newLocation().on(inputFile);
-            if (line != null && line > 0)
-            {
+            if (line != null && line > 0) {
               location = location.at(inputFile.selectLine(line));
             }
-            if (message != null)
-            {
+            if (message != null) {
               location = location.message(message);
             }
 
@@ -556,7 +555,7 @@ public class FSharpSensor implements Sensor {
 
   private void appendLine(StringBuilder sb, String line) {
     sb.append(line);
-    sb.append(LineSeparator);
+    sb.append(LINE_SEPARATOR);
   }
 
   private static class LogInfoStreamConsumer implements StreamConsumer {

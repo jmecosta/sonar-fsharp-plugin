@@ -5,12 +5,12 @@
 
   <parent>
     <groupId>jmecsoftware.sonarqube.fsharp</groupId>
-    <artifactId>sonarqube-fsharp</artifactId>
+    <artifactId>sonar-communityfsharp-analyzer</artifactId>
     <version>0.0.0.1</version>
   </parent>
 
   <!-- it's recommended to follow the pattern "sonar-{key}-plugin", for example "sonar-php-plugin" -->
-  <artifactId>sonarqube-fsharp-plugin</artifactId>
+  <artifactId>sonar-communityfsharp-plugin</artifactId>
 
   <!-- this is important for sonar-packaging-maven-plugin -->
   <packaging>sonar-plugin</packaging>
