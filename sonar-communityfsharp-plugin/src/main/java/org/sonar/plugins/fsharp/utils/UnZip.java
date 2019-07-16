@@ -17,11 +17,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
@@ -38,32 +38,24 @@ public class UnZip {
 
   /**
    * Test for unzipping FsSonarRunner.zip archive on local development
-   *
-    * @return 0 - success, 1 zip file not found, 2 exception on unzip
-    */
-  public static int main() {
+   */
+  public static void main(String[] args) {
     String workingDirectory = System.getProperty("user.dir");
     String zipFile = workingDirectory + "/FsSonarRunner/target/FsSonarRunner-0.0.0.1.zip";
     String outputFolder = workingDirectory + "/FsSonarRunner/target/extracted";
 
-    if (!Paths.get(zipFile).toFile().exists())
-    {
-      System.err.println("Input zip files does not exist: " + zipFile);
-      return 1;
+    if (!Paths.get(zipFile).toFile().exists()) {
+      LOG.warn("Input zip files does not exist: " + zipFile);
+      return;
     }
 
     try {
       new UnZip().unZipIt(zipFile, outputFolder);
-      System.out.println("File extracted to directory: " + outputFolder);
-    }
-    catch (IOException ex)
-    {
-      System.err.println("catched exception on unzipping " + zipFile);
+      LOG.info("File extracted to directory: " + outputFolder);
+    } catch (IOException ex) {
+      LOG.error("catched exception on unzipping " + zipFile, ex);
       ex.printStackTrace();
-      return 2;
     }
-
-    return 0;
   }
 
   /**
@@ -124,7 +116,8 @@ public class UnZip {
 
   /**
    * create output directory is not exists
-   * @param parent parent folder in which the new folder should be created
+   *
+   * @param parent     parent folder in which the new folder should be created
    * @param folderName folder to create
    * @return handle to created folder
    * @throws IOException
