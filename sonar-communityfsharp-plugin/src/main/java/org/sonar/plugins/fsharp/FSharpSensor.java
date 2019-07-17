@@ -48,7 +48,6 @@ import org.sonar.api.batch.sensor.highlighting.NewHighlighting;
 import org.sonar.api.batch.sensor.highlighting.TypeOfText;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
-import org.sonar.api.config.Configuration;
 import org.sonar.api.issue.NoSonarFilter;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.FileLinesContext;
@@ -56,7 +55,6 @@ import org.sonar.api.measures.FileLinesContextFactory;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.utils.command.Command;
 import org.sonar.api.utils.command.CommandExecutor;
-import org.sonar.api.utils.command.StreamConsumer;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonar.plugins.fsharp.utils.OSInfo;
@@ -67,12 +65,14 @@ public class FSharpSensor implements Sensor {
 
   private static final Logger LOG = Loggers.get(FSharpSensor.class);
 
+  private static final String RULE_KEY = "RuleKey";
+
   private final FsSonarRunnerExtractor extractor;
   private final FileSystem fs;
   private final FileLinesContextFactory fileLinesContextFactory;
   private final NoSonarFilter noSonarFilter;
 
-  public FSharpSensor(Configuration settings, FsSonarRunnerExtractor extractor, FileSystem fs, FileLinesContextFactory fileLinesContextFactory,
+  public FSharpSensor(FsSonarRunnerExtractor extractor, FileSystem fs, FileLinesContextFactory fileLinesContextFactory,
     NoSonarFilter noSonarFilter) {
     this.extractor = extractor;
     this.fs = fs;
@@ -82,7 +82,7 @@ public class FSharpSensor implements Sensor {
 
   @Override
   public void describe(SensorDescriptor descriptor) {
-    descriptor.name("F#").onlyOnLanguage(FSharpPlugin.LANGUAGE_KEY);
+    descriptor.name(FSharpPlugin.LANGUAGE_NAME).onlyOnLanguage(FSharpPlugin.LANGUAGE_KEY);
   }
 
   @Override
@@ -111,7 +111,7 @@ public class FSharpSensor implements Sensor {
       command.addArgument("/i:" + analysisInput.getAbsolutePath())
           .addArgument("/o:" + analysisOutput.getAbsolutePath());
       LOG.debug(command.toCommandLine());
-      CommandExecutor.create().execute(command, new LogInfoStreamConsumer(), new LogErrorStreamConsumer(), Integer.MAX_VALUE);
+      CommandExecutor.create().execute(command, line -> LOG.info(line), line -> LOG.error(line), Integer.MAX_VALUE);
     } catch (IOException e) {
       LOG.error("Could not write settings to file '{0}'", e.getMessage());
     }
@@ -138,11 +138,11 @@ public class FSharpSensor implements Sensor {
     for (ActiveRule activeRule : rules) {
       appendLine(sb, 2, "<Rule>");
       Map<String, String> parameters = effectiveParameters(activeRule);
-      appendLine(sb, 3, "<Key>" + parameters.get("RuleKey") + "</Key>");
+      appendLine(sb, 3, "<Key>" + parameters.get(RULE_KEY) + "</Key>");
       if (!parameters.isEmpty()) {
         appendLine(sb, 3, "<Parameters>");
         for (Entry<String, String> parameter : parameters.entrySet()) {
-          if ("RuleKey".equals(parameter.getKey())) {
+          if (RULE_KEY.equals(parameter.getKey())) {
             continue;
           }
 
@@ -172,7 +172,7 @@ public class FSharpSensor implements Sensor {
     Map<String, String> builder = new HashMap<>();
 
     if (!"".equals(activeRule.templateRuleKey())) {
-      builder.put("RuleKey", activeRule.ruleKey().rule());
+      builder.put(RULE_KEY, activeRule.ruleKey().rule());
     }
 
     for (Map.Entry<String, String> param : activeRule.params().entrySet()) {
@@ -256,7 +256,7 @@ public class FSharpSensor implements Sensor {
           if ("Path".equals(tagName)) {
             String path = stream.getElementText();
             inputFile = fs.inputFile(fs.predicates().hasAbsolutePath(path));
-            LOG.trace("handleFileTag inputFile " + inputFile != null? inputFile.filename(): "<no input file>");
+            LOG.trace("handleFileTag inputFile " + inputFile != null ? inputFile.filename() : "<no input file>");
           } else if ("Metrics".equals(tagName)) {
             handleMetricsTag(inputFile);
           } else if ("Issues".equals(tagName)) {
@@ -570,24 +570,6 @@ public class FSharpSensor implements Sensor {
 
   private void appendLine(StringBuilder sb, int indent, String str) {
     sb.append(StringUtils.repeat("  ", indent)).append(str).append(System.lineSeparator());
-  }
-
-  private static class LogInfoStreamConsumer implements StreamConsumer {
-
-    @Override
-    public void consumeLine(String line) {
-      LOG.info(line);
-    }
-
-  }
-
-  private static class LogErrorStreamConsumer implements StreamConsumer {
-
-    @Override
-    public void consumeLine(String line) {
-      LOG.error(line);
-    }
-
   }
 
   private Iterable<InputFile> filesToAnalyze() {
