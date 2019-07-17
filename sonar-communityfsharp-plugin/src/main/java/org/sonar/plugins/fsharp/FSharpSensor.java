@@ -111,7 +111,7 @@ public class FSharpSensor implements Sensor {
       command.addArgument("/i:" + analysisInput.getAbsolutePath())
           .addArgument("/o:" + analysisOutput.getAbsolutePath());
       LOG.debug(command.toCommandLine());
-      CommandExecutor.create().execute(command, line -> LOG.info(line), line -> LOG.error(line), Integer.MAX_VALUE);
+      CommandExecutor.create().execute(command, LOG::info, LOG::error, Integer.MAX_VALUE);
     } catch (IOException e) {
       LOG.error("Could not write settings to file '{0}'", e.getMessage());
     }
