@@ -22,12 +22,10 @@ import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
-import org.sonar.api.batch.sensor.internal.SensorContextTester;
 import org.sonar.api.issue.NoSonarFilter;
 import org.sonar.api.measures.FileLinesContextFactory;
 
 public class FSharpSensorTest {
-
     @Test
     public void describe_languageAndKey_asExpected() {
         // Arrange
@@ -61,5 +59,7 @@ public class FSharpSensorTest {
 
         // Act
         sensor.execute(context);
+
+        // Assert
     }
 }

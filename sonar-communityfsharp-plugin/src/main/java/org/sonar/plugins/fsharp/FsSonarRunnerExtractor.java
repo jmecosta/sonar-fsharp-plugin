@@ -52,12 +52,8 @@ public class FsSonarRunnerExtractor {
       }
 
       file = unzipProjectCheckerFile(filePath, workDir);
-      if (!file.canExecute())
-      {
-        if (!file.setExecutable(true))
-        {
-          LOG.error("Could not set executable permission");
-        }
+      if (!file.canExecute() && !file.setExecutable(true)) {
+        LOG.error("Could not set executable permission");
       }
     }
 
