@@ -24,7 +24,7 @@ public class FSharpPluginTest {
 
   @Test
   public void addExtensions_expectedNumber() {
-    // Arramhe
+    // Arrange
     Plugin.Context context = new Plugin.Context(mock(SonarRuntime.class));
     FSharpPlugin plugin = new FSharpPlugin();
 
