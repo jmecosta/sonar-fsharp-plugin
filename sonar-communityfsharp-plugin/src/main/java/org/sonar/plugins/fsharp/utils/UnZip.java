@@ -54,7 +54,6 @@ public class UnZip {
       LOG.info("File extracted to directory: " + outputFolder);
     } catch (IOException ex) {
       LOG.error("catched exception on unzipping " + zipFile, ex);
-      ex.printStackTrace();
     }
   }
 

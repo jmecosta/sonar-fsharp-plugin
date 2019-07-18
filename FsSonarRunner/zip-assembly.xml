@@ -12,7 +12,6 @@
       <outputDirectory>\</outputDirectory>
       <includes>
         <include>win-x86/**</include>
-        <include>osx-x86/**</include>
         <include>linux-x86/**</include>
       </includes>
     </fileSet>

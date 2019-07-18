@@ -85,8 +85,15 @@ public class FSharpSensor implements Sensor {
 
   @Override
   public void execute(SensorContext context) {
-    analyze(context);
-    importResults(context);
+    try
+    {
+      analyze(context);
+      importResults(context);
+    }
+    catch (Exception ex)
+    {
+      LOG.error("SonarQube Community F# plugin analyzis failed", ex);
+    }
   }
 
   private void analyze(SensorContext context) {

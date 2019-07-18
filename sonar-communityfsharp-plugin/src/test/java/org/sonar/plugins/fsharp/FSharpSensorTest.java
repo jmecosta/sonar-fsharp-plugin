@@ -20,7 +20,9 @@ import static org.mockito.Mockito.mock;
 import org.junit.Test;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
+import org.sonar.api.batch.sensor.internal.SensorContextTester;
 import org.sonar.api.issue.NoSonarFilter;
 import org.sonar.api.measures.FileLinesContextFactory;
 
@@ -44,5 +46,20 @@ public class FSharpSensorTest {
         assertEquals(FSharpPlugin.LANGUAGE_NAME, descriptor.name());
         assertEquals(1, descriptor.languages().size());
         assertTrue("LANGUAGE_KEY not found", descriptor.languages().contains(FSharpPlugin.LANGUAGE_KEY));
+    }
+
+    @Test
+    public void execute_noContect_exceptionCatched() {
+        // Arrange
+        FsSonarRunnerExtractor extractor = mock(FsSonarRunnerExtractor.class);
+        FileSystem fs = mock(FileSystem.class);
+        FileLinesContextFactory fileLinesContextFactory = mock(FileLinesContextFactory.class);
+        NoSonarFilter noSonarFilter = new NoSonarFilter();
+        Sensor sensor = new FSharpSensor(extractor, fs, fileLinesContextFactory, noSonarFilter);
+
+        SensorContext context = mock(SensorContext.class); // SensorContextTester.create();
+
+        // Act
+        sensor.execute(context);
     }
 }

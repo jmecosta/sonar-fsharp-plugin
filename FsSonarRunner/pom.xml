@@ -57,27 +57,6 @@
             </configuration>
           </execution>
           <execution>
-            <id>dotnet-publish-osx</id>
-            <phase>package</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>dotnet</executable>
-              <workingDirectory>.</workingDirectory>
-              <arguments>
-                <argument>publish</argument>
-                <argument>--configuration</argument>
-                <argument>${configuration}</argument>
-                <argument>--output</argument>
-                <argument>publish/osx-x86</argument>
-                <argument>--runtime </argument>
-                <argument>osx-x64</argument>
-                <argument>FsSonarRunner</argument>
-              </arguments>
-            </configuration>
-          </execution>
-          <execution>
             <id>dotnet-publish-linux</id>
             <phase>package</phase>
             <goals>

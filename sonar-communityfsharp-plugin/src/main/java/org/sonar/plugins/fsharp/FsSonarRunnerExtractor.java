@@ -42,9 +42,6 @@ public class FsSonarRunnerExtractor {
       case WINDOWS:
         filePath = "win-x86" + File.separator + N_SONARQUBE_ANALYZER + ".exe";
         break;
-      case MAC:
-        filePath = "osx-x86" + File.separator + N_SONARQUBE_ANALYZER;
-        break;
       case LINUX:
         filePath = "linux-x86" + File.separator + N_SONARQUBE_ANALYZER;
         break;
@@ -57,7 +54,10 @@ public class FsSonarRunnerExtractor {
       file = unzipProjectCheckerFile(filePath, workDir);
       if (!file.canExecute())
       {
-        file.setExecutable(true);
+        if (!file.setExecutable(true))
+        {
+          LOG.error("Could not set executable permission");
+        }
       }
     }
 
