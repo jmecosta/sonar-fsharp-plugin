@@ -21,7 +21,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -33,6 +35,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
@@ -45,7 +48,6 @@ import org.sonar.api.batch.sensor.highlighting.NewHighlighting;
 import org.sonar.api.batch.sensor.highlighting.TypeOfText;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
-import org.sonar.api.config.Configuration;
 import org.sonar.api.issue.NoSonarFilter;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.FileLinesContext;
@@ -53,7 +55,6 @@ import org.sonar.api.measures.FileLinesContextFactory;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.utils.command.Command;
 import org.sonar.api.utils.command.CommandExecutor;
-import org.sonar.api.utils.command.StreamConsumer;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
@@ -62,14 +63,14 @@ public class FSharpSensor implements Sensor {
 
   private static final Logger LOG = Loggers.get(FSharpSensor.class);
 
-  private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+  private static final String RULE_KEY = "RuleKey";
 
   private final FsSonarRunnerExtractor extractor;
   private final FileSystem fs;
   private final FileLinesContextFactory fileLinesContextFactory;
   private final NoSonarFilter noSonarFilter;
 
-  public FSharpSensor(Configuration settings, FsSonarRunnerExtractor extractor, FileSystem fs, FileLinesContextFactory fileLinesContextFactory,
+  public FSharpSensor(FsSonarRunnerExtractor extractor, FileSystem fs, FileLinesContextFactory fileLinesContextFactory,
     NoSonarFilter noSonarFilter) {
     this.extractor = extractor;
     this.fs = fs;
@@ -79,7 +80,7 @@ public class FSharpSensor implements Sensor {
 
   @Override
   public void describe(SensorDescriptor descriptor) {
-    descriptor.name("F#").onlyOnLanguage(FSharpPlugin.LANGUAGE_KEY);
+    descriptor.name(FSharpPlugin.LANGUAGE_NAME).onlyOnLanguage(FSharpPlugin.LANGUAGE_KEY);
   }
 
   @Override
@@ -103,7 +104,7 @@ public class FSharpSensor implements Sensor {
       command.addArgument("/i:" + analysisInput.getAbsolutePath())
           .addArgument("/o:" + analysisOutput.getAbsolutePath());
       LOG.debug(command.toCommandLine());
-      CommandExecutor.create().execute(command, new LogInfoStreamConsumer(), new LogErrorStreamConsumer(), Integer.MAX_VALUE);
+      CommandExecutor.create().execute(command, LOG::info, LOG::error, Integer.MAX_VALUE);
     } catch (IOException e) {
       LOG.error("Could not write settings to file '{0}'", e.getMessage());
     }
@@ -111,46 +112,60 @@ public class FSharpSensor implements Sensor {
 
   private StringBuilder createConfiguration(SensorContext context) {
     StringBuilder sb = new StringBuilder();
-    appendLine(sb, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-    appendLine(sb, "<AnalysisInput>");
-    appendLine(sb, "  <Settings>");
-    appendLine(sb, "  </Settings>");
-    appendLine(sb, "  <Rules>");
-    for (ActiveRule activeRule : context.activeRules().findByRepository(FSharpPlugin.REPOSITORY_KEY)) {
-      appendLine(sb, "    <Rule>");
+    appendLine(sb, 0, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+    appendLine(sb, 0, "<AnalysisInput>");
+    appendSettings(sb);
+    appendRules(sb, context.activeRules().findByRepository(FSharpPlugin.REPOSITORY_KEY));
+    appendFiles(sb);
+    appendLine(sb, 0, "</AnalysisInput>");
+    return sb;
+  }
+
+  private void appendSettings(StringBuilder sb) {
+    appendLine(sb, 1, "<Settings>");
+    appendLine(sb, 1, "</Settings>");
+  }
+
+  private void appendRules(StringBuilder sb, Collection<ActiveRule> rules) {
+    appendLine(sb, 1, "<Rules>");
+    for (ActiveRule activeRule : rules) {
+      appendLine(sb, 2, "<Rule>");
       Map<String, String> parameters = effectiveParameters(activeRule);
-      appendLine(sb, "      <Key>" + parameters.get("RuleKey") + "</Key>");
+      appendLine(sb, 3, "<Key>" + parameters.get(RULE_KEY) + "</Key>");
       if (!parameters.isEmpty()) {
-        appendLine(sb, "      <Parameters>");
+        appendLine(sb, 3, "<Parameters>");
         for (Entry<String, String> parameter : parameters.entrySet()) {
-          if ("RuleKey".equals(parameter.getKey())) {
+          if (RULE_KEY.equals(parameter.getKey())) {
             continue;
           }
 
-          appendLine(sb, "        <Parameter>");
-          appendLine(sb, "          <Key>" + parameter.getKey() + "</Key>");
-          appendLine(sb, "          <Value>" + StringEscapeUtils.escapeXml(parameter.getValue()) + "</Value>");
-          appendLine(sb, "        </Parameter>");
+          appendLine(sb, 4, "<Parameter>");
+          appendLine(sb, 5, "<Key>" + parameter.getKey() + "</Key>");
+          appendLine(sb, 5, "<Value>" + StringEscapeUtils.escapeXml(parameter.getValue()) + "</Value>");
+          appendLine(sb, 4, "</Parameter>");
         }
-        appendLine(sb, "      </Parameters>");
+        appendLine(sb, 3, "</Parameters>");
       }
-      appendLine(sb, "    </Rule>");
+      appendLine(sb, 2, "</Rule>");
     }
-    appendLine(sb, "  </Rules>");
-    appendLine(sb, "  <Files>");
-    for (InputFile file : filesToAnalyze()) {
-      appendLine(sb, "    <File>" + file.uri() + "</File>");
-    }
-    appendLine(sb, "  </Files>");
-    appendLine(sb, "</AnalysisInput>");
-    return sb;
+    appendLine(sb, 1, "</Rules>");
+  }
+
+  private void appendFiles(StringBuilder sb) {
+    appendLine(sb, 1, "<Files>");
+    filesToAnalyze().forEach(f -> appendFile(sb, f));
+    appendLine(sb, 1, "</Files>");
+  }
+
+  private void appendFile(StringBuilder sb, InputFile file) {
+    appendLine(sb, 2, "<File>" + Paths.get(file.uri()).toAbsolutePath() + "</File>");
   }
 
   private static Map<String, String> effectiveParameters(ActiveRule activeRule) {
     Map<String, String> builder = new HashMap<>();
 
     if (!"".equals(activeRule.templateRuleKey())) {
-      builder.put("RuleKey", activeRule.ruleKey().rule());
+      builder.put(RULE_KEY, activeRule.ruleKey().rule());
     }
 
     for (Map.Entry<String, String> param : activeRule.params().entrySet()) {
@@ -546,27 +561,8 @@ public class FSharpSensor implements Sensor {
     }
   }
 
-  private void appendLine(StringBuilder sb, String line) {
-    sb.append(line);
-    sb.append(LINE_SEPARATOR);
-  }
-
-  private static class LogInfoStreamConsumer implements StreamConsumer {
-
-    @Override
-    public void consumeLine(String line) {
-      LOG.info(line);
-    }
-
-  }
-
-  private static class LogErrorStreamConsumer implements StreamConsumer {
-
-    @Override
-    public void consumeLine(String line) {
-      LOG.error(line);
-    }
-
+  private void appendLine(StringBuilder sb, int indent, String str) {
+    sb.append(StringUtils.repeat("  ", indent)).append(str).append(System.lineSeparator());
   }
 
   private Iterable<InputFile> filesToAnalyze() {
