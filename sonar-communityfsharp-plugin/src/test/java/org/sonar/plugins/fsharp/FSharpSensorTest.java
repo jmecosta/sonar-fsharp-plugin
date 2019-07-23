@@ -13,18 +13,26 @@
  */
 package org.sonar.plugins.fsharp;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
 import org.sonar.api.issue.NoSonarFilter;
 import org.sonar.api.measures.FileLinesContextFactory;
+import org.sonar.api.utils.log.LogTester;
+import org.sonar.api.utils.log.LoggerLevel;
 
 public class FSharpSensorTest {
+
+    @Rule
+    public LogTester logTester = new LogTester();
 
     @Test
     public void describe_languageAndKey_asExpected() {
@@ -44,5 +52,27 @@ public class FSharpSensorTest {
         assertEquals(FSharpPlugin.LANGUAGE_NAME, descriptor.name());
         assertEquals(1, descriptor.languages().size());
         assertTrue("LANGUAGE_KEY not found", descriptor.languages().contains(FSharpPlugin.LANGUAGE_KEY));
+    }
+
+    @Test
+    public void execute_noContect_exceptionCatched() {
+        // Arrange
+        FsSonarRunnerExtractor extractor = mock(FsSonarRunnerExtractor.class);
+        FileSystem fs = mock(FileSystem.class);
+        FileLinesContextFactory fileLinesContextFactory = mock(FileLinesContextFactory.class);
+        NoSonarFilter noSonarFilter = new NoSonarFilter();
+        Sensor sensor = new FSharpSensor(extractor, fs, fileLinesContextFactory, noSonarFilter);
+
+        SensorContext context = mock(SensorContext.class); // SensorContextTester.create();
+
+        logTester.setLevel(LoggerLevel.ERROR);
+        logTester.clear();
+
+        // Act
+        sensor.execute(context);
+
+        // Assert
+        assertThat(logTester.logs()).hasSize(1);
+        assertThat(logTester.logs()).contains("SonarQube Community F# plugin analyzis failed");
     }
 }

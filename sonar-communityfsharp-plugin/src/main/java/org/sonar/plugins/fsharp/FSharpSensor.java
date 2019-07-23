@@ -57,8 +57,6 @@ import org.sonar.api.utils.command.Command;
 import org.sonar.api.utils.command.CommandExecutor;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
-import org.sonar.plugins.fsharp.utils.OSInfo;
-import org.sonar.plugins.fsharp.utils.OSInfo.OS;
 
 @DependedUpon("NSonarQubeAnalysis")
 public class FSharpSensor implements Sensor {
@@ -87,8 +85,15 @@ public class FSharpSensor implements Sensor {
 
   @Override
   public void execute(SensorContext context) {
-    analyze(context);
-    importResults(context);
+    try
+    {
+      analyze(context);
+      importResults(context);
+    }
+    catch (Exception ex)
+    {
+      LOG.error("SonarQube Community F# plugin analyzis failed", ex);
+    }
   }
 
   private void analyze(SensorContext context) {
@@ -102,12 +107,7 @@ public class FSharpSensor implements Sensor {
 
       File executableFile = extractor.executableFile(workdirRoot);
 
-      Command command;
-      if (OSInfo.getOs() == OS.WINDOWS) {
-        command = Command.create(executableFile.getAbsolutePath());
-      } else {
-        command = Command.create("mono").addArgument(executableFile.getAbsolutePath());
-      }
+      Command command = Command.create(executableFile.getAbsolutePath());
       command.addArgument("/i:" + analysisInput.getAbsolutePath())
           .addArgument("/o:" + analysisOutput.getAbsolutePath());
       LOG.debug(command.toCommandLine());

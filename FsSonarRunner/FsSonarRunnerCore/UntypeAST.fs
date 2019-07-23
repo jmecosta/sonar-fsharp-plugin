@@ -3,7 +3,7 @@ namespace FsSonarRunnerCore
 
 module UntypedAstUtils =
     open FSharp.Compiler.Ast
-    open FSharp.Compiler
+    open FSharp.Compiler.Range
     open FSharp.Compiler.SourceCodeServices
 
     type TokenData() =
@@ -22,11 +22,6 @@ module UntypedAstUtils =
     let getDumpToken (content : string [])  =
         let sourceTok = FSharpSourceTokenizer([], None)
         let mutable tokens = List.empty
-
-        let chop (input : string) len =
-            Array.init (input.Length / len) (fun index ->
-            let start = index * len
-            input.[start..start + len - 1])
 
         let createTokenData(line : int, tok : FSharpTokenInfo, extractStr : bool) =
 
@@ -113,13 +108,13 @@ module UntypedAstUtils =
         let mutable functionNodesRanges = Set.empty
         let mutable functionNodes = List.Empty
 
-        let addToUniqueRange(range : Range.range) =
+        let addToUniqueRange (range: range) =
             let addToUniqueRangeStartLine startLine =
                 if not(uniqueLines.Contains(startLine)) then
                     uniqueLines <- uniqueLines.Add(startLine)
             addToUniqueRangeStartLine range.StartLine
 
-        let addToUniqueFunctions(range : Range.range, binding) =
+        let addToUniqueFunctions (range: range) binding =
             let addToUniqueFunctions startLine binding =
                 if not(functionNodesRanges.Contains(startLine)) then
                     functionNodesRanges <- functionNodesRanges.Add(startLine)
@@ -131,84 +126,84 @@ module UntypedAstUtils =
             // complexity increase
             | SynExpr.IfThenElse(cond, trueBranch, falseBranchOpt, _, _, _, range) ->
                 complexity <- complexity + 1
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr cond
                 visitExpr trueBranch
                 falseBranchOpt |> Option.iter visitExpr
 
             | SynExpr.LetOrUse (_, _, bindings, body, range) ->
                 functions <- functions + 1
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitBindindgs bindings
                 visitExpr body
 
             | SynExpr.LetOrUseBang (_, _, _, _, rhsExpr, body, range) ->
                 functions <- functions + 1
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr rhsExpr
                 visitExpr body
 
             | SynExpr.App (_,_, funcExpr, argExpr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr argExpr
                 visitExpr funcExpr
 
             | SynExpr.Lambda (_, _, _, expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.Record (_, _, fields, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 fields |> List.choose (fun (_, expr, _) -> expr) |> List.iter visitExpr
 
             | SynExpr.ArrayOrListOfSeqExpr (_, expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.CompExpr (_, _, expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             // complexity increase
             | SynExpr.ForEach (_, _, _, _, _, body, range) ->
                 complexity <- complexity + 1
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr body
 
             | SynExpr.YieldOrReturn (_, expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.YieldOrReturnFrom (_, expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.Do (expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.DoBang (expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.Downcast (expr, _, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             // complexity increase
             | SynExpr.For (_, _, _, _, _, expr, range) ->
                 complexity <- complexity + 1
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.Lazy (expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             // complexity increase
             | SynExpr.Match (_, expr, clauses, range) ->
                 complexity <- complexity + clauses.Length - 1
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
                 visitMatches clauses
 
@@ -219,145 +214,145 @@ module UntypedAstUtils =
                         ident.idText = "op_BooleanOr" -> complexity <- complexity + 1
 
             | SynExpr.MatchLambda (_, _, clauses, _, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitMatches clauses
 
             | SynExpr.ObjExpr (_, _, bindings, _, _ , range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitBindindgs bindings
 
             | SynExpr.Typed (expr, _, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.Paren (expr, _, _, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.Sequential (_, _, expr1, expr2, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr1
                 visitExpr expr2
 
             | SynExpr.LongIdentSet (_, expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.Tuple (_, exprs, _, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 for expr in exprs do
                     visitExpr expr
 
             | SynExpr.TryFinally (expr1, expr2, range, _, _) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr1
                 visitExpr expr2
 
             | SynExpr.TryWith (expr, range, clauses, range1, range2, _, _) ->
-                addToUniqueRange(range)
-                addToUniqueRange(range1)
-                addToUniqueRange(range2)
+                addToUniqueRange range
+                addToUniqueRange range1 
+                addToUniqueRange range2
                 visitExpr expr
                 visitMatches clauses
 
             | SynExpr.ArrayOrList(_, exprs, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 List.iter visitExpr exprs
 
             | SynExpr.New(_, _, expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             // complexity increase
             | SynExpr.While(_, expr1, expr2, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr1
                 visitExpr expr2
 
             | SynExpr.Assert(expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.TypeApp(expr, range, _, rangelist, rangeoption, range1, range2) ->
-                addToUniqueRange(range)
-                addToUniqueRange(range1)
-                addToUniqueRange(range2)
-                rangelist |> Seq.iter (fun elem -> addToUniqueRange(elem))
+                addToUniqueRange range
+                addToUniqueRange range1
+                addToUniqueRange range2
+                rangelist |> Seq.iter (fun elem -> addToUniqueRange elem)
                 match rangeoption with
-                | Some value -> addToUniqueRange(value)
+                | Some value -> addToUniqueRange value
                 | _ -> ()
                 visitExpr expr
 
             | SynExpr.DotSet(_, _, expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.DotIndexedSet(_, _, expr, range, range1, range2) ->
-                addToUniqueRange(range)
-                addToUniqueRange(range1)
-                addToUniqueRange(range2)
+                addToUniqueRange range
+                addToUniqueRange range1
+                addToUniqueRange range2
                 visitExpr expr
 
             | SynExpr.NamedIndexedPropertySet(_, _, expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.DotNamedIndexedPropertySet(_, _, _, expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.TypeTest(expr, _, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.Upcast(expr, _, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.InferredUpcast(expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.InferredDowncast(expr, range) ->
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
 
             | SynExpr.AddressOf(_, expr, range, range1) ->
-                addToUniqueRange(range)
-                addToUniqueRange(range1)
+                addToUniqueRange range
+                addToUniqueRange range1
                 visitExpr expr
 
-            | expr -> addToUniqueRange(expr.Range)
+            | expr -> addToUniqueRange expr.Range
 
         and visitBinding (Binding(_, _, _, _, _, _, _, _, _, body, range, _)) =
-            addToUniqueRange(range)
+            addToUniqueRange range
             visitExpr body
         and visitBindindgs = List.iter visitBinding
         and visitMatch (SynMatchClause.Clause (_, _, expr, range, _)) =
-            addToUniqueRange(range)
+            addToUniqueRange range
             visitExpr expr
         and visitMatches = List.iter visitMatch
 
-        let dataRange (defn : SynMemberDefn) =
+        let dataRange (_ : SynMemberDefn) =
             printfn "Not Supported member Report (information message)"
 
         let visitMember = function
             | SynMemberDefn.LetBindings (bindings, _, _, range) ->
                 functions <- functions + 1
-                addToUniqueFunctions(range, bindings)
-                addToUniqueRange(range)
+                addToUniqueFunctions range bindings
+                addToUniqueRange range
                 visitBindindgs bindings
             | SynMemberDefn.Member (binding, range) ->
                 functions <- functions + 1
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitBinding binding
             | SynMemberDefn.AutoProperty (_, _, _, _, _, _, _, _, expr, _, range) ->
                 autoProperties <- autoProperties + 1
-                addToUniqueRange(range)
+                addToUniqueRange range
                 visitExpr expr
             | SynMemberDefn.ImplicitCtor (_, _, _, _, range) ->
                 nmbClass <- nmbClass + 1
-                addToUniqueRange(range)
+                addToUniqueRange range
             // TODO: add remaining DU cases (#68)
             | defn -> dataRange defn
 
@@ -365,17 +360,17 @@ module UntypedAstUtils =
             let (SynTypeDefn.TypeDefn (_, repr, _, _)) = ty
 
             match repr with
-            | SynTypeDefnRepr.Simple (defns, range) ->
+            | SynTypeDefnRepr.Simple (defns, _) ->
                 match defns with
-                | SynTypeDefnSimpleRepr.Enum(defs, range) ->
+                | SynTypeDefnSimpleRepr.Enum(defs, _) ->
                     for en in defs do
-                        addToUniqueRange(en.Range)
+                        addToUniqueRange en.Range
 
                 | _ -> ()
 
             | SynTypeDefnRepr.ObjectModel (_, defns, _) ->
                 for d in defns do
-                    addToUniqueRange(d.Range)
+                    addToUniqueRange d.Range
                     visitMember d
 
             | SynTypeDefnRepr.Exception _ -> ()
@@ -383,29 +378,29 @@ module UntypedAstUtils =
         let rec visitDeclarations decls =
             for declaration in decls do
                 match declaration with
-                | SynModuleDecl.Exception (arg1, range) -> addToUniqueRange(range)
+                | SynModuleDecl.Exception (_, range) -> addToUniqueRange range
 
                 | SynModuleDecl.Let (_, bindings, range) ->
                     functions <- functions + 1
-                    addToUniqueFunctions(range, bindings)
-                    addToUniqueRange(range)
+                    addToUniqueFunctions range bindings
+                    addToUniqueRange range
                     visitBindindgs bindings
 
                 | SynModuleDecl.DoExpr (_, expr, _) ->
-                    addToUniqueRange(expr.Range)
+                    addToUniqueRange expr.Range 
                     visitExpr expr
 
-                | SynModuleDecl.Types (types, range) ->
+                | SynModuleDecl.Types (types, _) ->
                     for ty in types do
-                        addToUniqueRange(ty.Range)
+                        addToUniqueRange ty.Range
                         visitType ty
 
-                | SynModuleDecl.Open (_, range) -> addToUniqueRange(range)
+                | SynModuleDecl.Open (_, range) -> addToUniqueRange range
 
                 | SynModuleDecl.NestedModule (_, _, decls, _, _) ->
                     visitDeclarations decls
                 | SynModuleDecl.Attributes (_, range) ->
-                    addToUniqueRange(range)
+                    addToUniqueRange range
                 | _ -> printfn "Not Supported Declaration: %A" declaration
 
         let visitModulesAndNamespaces modulesOrNss =

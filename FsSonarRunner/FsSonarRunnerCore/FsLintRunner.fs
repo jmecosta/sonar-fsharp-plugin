@@ -78,7 +78,7 @@ type FsLintRunner(filePath : string, rules : SonarRules, configuration : Configu
     let reportLintWarning (warning:LintWarning.Warning) =
         let output = warning.Info + System.Environment.NewLine + LintWarning.getWarningWithLocation warning.Range warning.Input
         let rule = rules.GetRule(warning.Info)
-        if rule <> null then
+        if not (isNull rule) then
             let issue = SonarIssue(Rule = rule.Rule, Line = warning.Range.StartLine, Component = filePath, Message = warning.Info)
             issues  <- issues @ [issue]
         else
