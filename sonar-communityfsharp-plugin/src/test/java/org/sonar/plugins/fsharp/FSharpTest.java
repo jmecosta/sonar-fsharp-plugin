@@ -15,6 +15,7 @@ package org.sonar.plugins.fsharp;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang.StringUtils;
@@ -54,7 +55,7 @@ public class FSharpTest {
         boolean areEqual = fsharp1.equals(fsharp2);
 
         assertFalse(areEqual);
-        assertEquals(fsharp1.hashCode(), fsharp2.hashCode());
+        assertNotEquals(fsharp1.hashCode(), fsharp2.hashCode());
     }
 
     @Test
