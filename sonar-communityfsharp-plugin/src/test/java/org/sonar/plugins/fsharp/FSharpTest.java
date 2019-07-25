@@ -33,7 +33,7 @@ public class FSharpTest {
     }
 
     @Test
-    public void equals_true() {
+    public void hashcode_equals_true() {
         Configuration configuration = (new MapSettings()).asConfig();
         FSharp fsharp1 = new FSharp(configuration);
         FSharp fsharp2 = new FSharp(configuration);
@@ -41,10 +41,11 @@ public class FSharpTest {
         boolean areEqual = fsharp1.equals(fsharp2);
 
         assertTrue(areEqual);
+        assertEquals(fsharp1.hashCode(), fsharp2.hashCode());
     }
 
     @Test
-    public void equals_false() {
+    public void hashcode_equals_false() {
         Configuration configuration1 = (new MapSettings()).asConfig();
         Configuration configuration2 = (new MapSettings()).asConfig();
         FSharp fsharp1 = new FSharp(configuration1);
@@ -53,6 +54,7 @@ public class FSharpTest {
         boolean areEqual = fsharp1.equals(fsharp2);
 
         assertFalse(areEqual);
+        assertEquals(fsharp1.hashCode(), fsharp2.hashCode());
     }
 
     @Test

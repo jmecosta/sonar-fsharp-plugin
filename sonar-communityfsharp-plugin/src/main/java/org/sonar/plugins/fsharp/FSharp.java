@@ -33,11 +33,15 @@ public class FSharp extends AbstractLanguage {
     }
 
     FSharp fobj = (FSharp) obj;
-    if (configuration.equals(fobj.configuration)) { // added fields are tested
-      return true;
-    }
+    // added field is tested
+    return configuration.equals(fobj.configuration);
+  }
 
-    return false;
+  @Override
+  public int hashCode() {
+    int result = super.hashCode();
+    result = 31 * result + configuration.hashCode();
+    return result;
   }
 
   @Override
