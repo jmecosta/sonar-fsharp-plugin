@@ -19,6 +19,9 @@ import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.api.server.rule.RulesDefinition;
 
 public class FSharpSonarRulesDefinition implements RulesDefinition {
+  private static final String MAXIMUM_ALLOWED_VALUES_PARAMETER = "MaxItems";
+  private static final String MAXIMUM_ALLOWED_VALUES_DEXCRIPTION = "Maximum allowed values";
+
   @Override
   public void define(Context context) {
     NewRepository repository = context
@@ -99,21 +102,20 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
 
     // NumberOfItems
     NewRule tuples = createRule(repository, "RulesNumberOfItemsTupleError");
-    tuples.createParam("MaxItems").setDescription("Maximum allowed values")
+    tuples.createParam(MAXIMUM_ALLOWED_VALUES_PARAMETER).setDescription(MAXIMUM_ALLOWED_VALUES_DEXCRIPTION)
       .setType(RuleParamType.INTEGER).setDefaultValue("5");
     NewRule parameters = createRule(repository, "RulesNumberOfItemsClassMembersError");
-    parameters.createParam("MaxItems").setDescription("Maximum allowed values")
+    parameters.createParam(MAXIMUM_ALLOWED_VALUES_PARAMETER).setDescription(MAXIMUM_ALLOWED_VALUES_DEXCRIPTION)
       .setType(RuleParamType.INTEGER).setDefaultValue("5");
     NewRule members = createRule(repository, "RulesNumberOfItemsFunctionError");
-    members.createParam("MaxItems").setDescription("Maximum allowed values")
+    members.createParam(MAXIMUM_ALLOWED_VALUES_PARAMETER).setDescription(MAXIMUM_ALLOWED_VALUES_DEXCRIPTION)
       .setType(RuleParamType.INTEGER).setDefaultValue("5");
     NewRule booleanOperators = createRule(repository, "RulesNumberOfItemsBooleanConditionsError");
-    booleanOperators.createParam("MaxItems").setDescription("Maximum allowed values")
+    booleanOperators.createParam(MAXIMUM_ALLOWED_VALUES_PARAMETER).setDescription(MAXIMUM_ALLOWED_VALUES_DEXCRIPTION)
       .setType(RuleParamType.INTEGER).setDefaultValue("4");
 
     // RulesRedundantNewKeyword
     createRule(repository, "RulesRedundantNewKeyword");
-
 
     // lint errors
     repository.createRule("LintSourceError").setName("Parsing errors").setSeverity(Severity.INFO).setHtmlDescription("<p></p>");
@@ -122,8 +124,7 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
     repository.done();
   }
 
-  private static NewRule createRule(NewExtendedRepository repository, String ruleKey)
-  {
+  private static NewRule createRule(NewExtendedRepository repository, String ruleKey) {
     RuleProperty p = FSharpRuleProperties.ALL.get(ruleKey);
     return repository.createRule(ruleKey).setName(p.getName()).setSeverity(p.getSeverity()).setHtmlDescription(p.getHtmlDescription());
   }

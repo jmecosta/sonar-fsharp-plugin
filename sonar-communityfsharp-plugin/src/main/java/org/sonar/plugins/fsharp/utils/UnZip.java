@@ -28,9 +28,15 @@ import org.sonar.api.utils.log.Loggers;
 /**
  * Unzip file with subdirectories to a folder
  *
- * @see <a href="https://www.mkyong.com/java/how-to-decompress-files-from-a-zip-file/">How to decompress files from a ZIP file</a>, the original reference used
- * @see <a href="https://howtodoinjava.com/java/io/unzip-file-with-subdirectories/">Java – Unzip File with Sub-directories</a>
- * @see <a href="https://www.baeldung.com/java-compress-and-uncompress">Zipping and Unzipping in Java</a>, especially how to avoid vulnerability because of zip slip
+ * @see <a href=
+ *      "https://www.mkyong.com/java/how-to-decompress-files-from-a-zip-file/">How
+ *      to decompress files from a ZIP file</a>, the original reference used
+ * @see <a href=
+ *      "https://howtodoinjava.com/java/io/unzip-file-with-subdirectories/">Java
+ *      – Unzip File with Sub-directories</a>
+ * @see <a href="https://www.baeldung.com/java-compress-and-uncompress">Zipping
+ *      and Unzipping in Java</a>, especially how to avoid vulnerability because
+ *      of zip slip
  */
 public class UnZip {
   public static final Logger LOG = Loggers.get(UnZip.class);
@@ -90,14 +96,12 @@ public class UnZip {
 
           LOG.debug("file unzip: {}", newFile.getAbsolutePath());
 
-          FileOutputStream fos = new FileOutputStream(newFile);
-
-          int len;
-          while ((len = zis.read(buffer)) > 0) {
-            fos.write(buffer, 0, len);
+          try (FileOutputStream fos = new FileOutputStream(newFile)) {
+            int len;
+            while ((len = zis.read(buffer)) > 0) {
+              fos.write(buffer, 0, len);
+            }
           }
-
-          fos.close();
         }
 
         ze = zis.getNextEntry();

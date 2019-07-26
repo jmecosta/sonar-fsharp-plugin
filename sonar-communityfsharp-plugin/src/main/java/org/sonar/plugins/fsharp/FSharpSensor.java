@@ -590,13 +590,9 @@ public class FSharpSensor implements Sensor {
 
   public static void writeStringToFile(String path, String content) throws IOException {
     File file = new File(path);
-    BufferedWriter writer = null;
-    try {
-      writer = new BufferedWriter(new FileWriter(file));
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))
+    {
       writer.write(content);
-    } finally {
-      if (writer != null)
-        writer.close();
     }
   }
 }
