@@ -256,7 +256,8 @@ public class FSharpSensor implements Sensor {
           if ("Path".equals(tagName)) {
             String path = stream.getElementText();
             inputFile = fs.inputFile(fs.predicates().hasAbsolutePath(path));
-            LOG.trace("handleFileTag inputFile " + inputFile != null ? inputFile.filename() : "<no input file>");
+            String filename = inputFile != null ? inputFile.filename() : "<no input file>";
+            LOG.trace("handleFileTag inputFile " + filename);
           } else if ("Metrics".equals(tagName)) {
             handleMetricsTag(inputFile);
           } else if ("Issues".equals(tagName)) {
@@ -447,7 +448,7 @@ public class FSharpSensor implements Sensor {
     }
 
     private void handleNonBlankCommentsMetricTag(InputFile inputFile) throws XMLStreamException {
-      Integer value = 0;
+      int value = 0;
       FileLinesContext fileLinesContext = fileLinesContextFactory.createFor(inputFile);
 
       while (stream.hasNext()) {
@@ -475,7 +476,7 @@ public class FSharpSensor implements Sensor {
 
     private void handleLinesOfCodeMetricTag(InputFile inputFile) throws XMLStreamException {
       LOG.trace("-> handleLinesOfCodeMetricTag start");
-      Integer value = 0;
+      int value = 0;
       FileLinesContext fileLinesContext = fileLinesContextFactory.createFor(inputFile);
 
       while (stream.hasNext()) {
