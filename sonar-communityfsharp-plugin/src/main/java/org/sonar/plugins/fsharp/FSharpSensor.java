@@ -71,7 +71,7 @@ public class FSharpSensor implements Sensor {
   private final NoSonarFilter noSonarFilter;
 
   public FSharpSensor(FsSonarRunnerExtractor extractor, FileSystem fs, FileLinesContextFactory fileLinesContextFactory,
-    NoSonarFilter noSonarFilter) {
+      NoSonarFilter noSonarFilter) {
     this.extractor = extractor;
     this.fs = fs;
     this.fileLinesContextFactory = fileLinesContextFactory;
@@ -85,13 +85,10 @@ public class FSharpSensor implements Sensor {
 
   @Override
   public void execute(SensorContext context) {
-    try
-    {
+    try {
       analyze(context);
       importResults(context);
-    }
-    catch (Exception ex)
-    {
+    } catch (Exception ex) {
       LOG.error("SonarQube Community F# plugin analyzis failed", ex);
     }
   }
@@ -204,12 +201,16 @@ public class FSharpSensor implements Sensor {
     }
 
     public void parse(File file, SensorContext context) {
-      InputStreamReader reader = null;
-      XMLInputFactory xmlFactory = XMLInputFactory.newInstance();
       LOG.trace("-> AnalysisResultImporter.parse start");
 
-      try {
-        reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
+      XMLInputFactory xmlFactory = XMLInputFactory.newInstance();
+
+      // disable external entities
+      xmlFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, Boolean.FALSE);
+      xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, Boolean.FALSE);
+
+      try (FileInputStream fis = new FileInputStream(file);
+          InputStreamReader reader = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
         stream = xmlFactory.createXMLStreamReader(reader);
 
         while (stream.hasNext()) {
@@ -591,8 +592,7 @@ public class FSharpSensor implements Sensor {
 
   public static void writeStringToFile(String path, String content) throws IOException {
     File file = new File(path);
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))
-    {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
       writer.write(content);
     }
   }

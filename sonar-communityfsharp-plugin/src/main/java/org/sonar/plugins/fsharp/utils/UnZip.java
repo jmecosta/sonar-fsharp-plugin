@@ -73,12 +73,11 @@ public class UnZip {
 
     byte[] buffer = new byte[1024];
 
-    try {
+    try (
+        // get the zip file content
+        ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile))) {
       // create output directory is not exists
       File folder = newFolder(null, outputFolder);
-
-      // get the zip file content
-      ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
 
       // get the first zipped file list entry
       ZipEntry ze = zis.getNextEntry();
@@ -108,7 +107,6 @@ public class UnZip {
       }
 
       zis.closeEntry();
-      zis.close();
 
       LOG.debug("Unzip Done.");
     } catch (IOException ex) {
