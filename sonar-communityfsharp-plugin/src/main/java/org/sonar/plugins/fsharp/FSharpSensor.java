@@ -274,7 +274,8 @@ public class FSharpSensor implements Sensor {
       }
     }
 
-    private void handleCopyPasteTokensTag(NewCpdTokens cpdTokens, NewHighlighting highlights) throws XMLStreamException {
+    private void handleCopyPasteTokensTag(NewCpdTokens cpdTokens, NewHighlighting highlights)
+        throws XMLStreamException {
       LOG.trace("-> handleCopyPasteTokensTag start");
       while (stream.hasNext()) {
         int next = stream.next();
@@ -319,18 +320,28 @@ public class FSharpSensor implements Sensor {
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
+          if (tagName == null) {
+            LOG.error("token tag `null`");
+            throw new NullPointerException("token tag");
+          }
 
-          if ("Value".equals(tagName)) {
+          switch (tagName) {
+          case "Value":
             value = new String(Base64.getDecoder().decode(stream.getElementText()), StandardCharsets.UTF_8);
-          } else if ("Line".equals(tagName)) {
+            break;
+          case "Line":
             line = Integer.parseInt(stream.getElementText());
-          } else if ("LeftColoumn".equals(tagName)) {
+            break;
+          case "LeftColoumn":
             leftCol = Integer.parseInt(stream.getElementText());
-          } else if ("RightColoumn".equals(tagName)) {
+            break;
+          case "RightColoumn":
             rightCol = Integer.parseInt(stream.getElementText());
-          } else if ("HighLight".equals(tagName)) {
+            break;
+          case "HighLight":
             highlight = stream.getElementText();
-          } else {
+            break;
+          default:
             throw new IllegalArgumentException();
           }
         }
@@ -347,26 +358,44 @@ public class FSharpSensor implements Sensor {
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
+          if (tagName == null) {
+            LOG.error("metric tag `null`");
+            continue;
+          }
 
-          if ("Lines".equals(tagName)) {
+          switch (tagName) {
+          case "Lines":
             handleLinesMetricTag(inputFile);
-          } else if ("Classes".equals(tagName)) {
+            break;
+          case "Classes":
             handleClassesMetricTag(inputFile);
-          } else if ("Accessors".equals(tagName)) {
-          } else if ("Statements".equals(tagName)) {
+            break;
+          case "Accessors":
+            // no handling yet
+            break;
+          case "Statements":
             handleStatementsMetricTag(inputFile);
-          } else if ("Functions".equals(tagName)) {
+            break;
+          case "Functions":
             handleFunctionsMetricTag(inputFile);
-          } else if ("PublicApi".equals(tagName)) {
+            break;
+          case "PublicApi":
             handlePublicApiMetricTag(inputFile);
-          } else if ("PublicUndocumentedApi".equals(tagName)) {
+            break;
+          case "PublicUndocumentedApi":
             handlePublicUndocumentedApiMetricTag(inputFile);
-          } else if ("Complexity".equals(tagName)) {
+            break;
+          case "Complexity":
             handleComplexityMetricTag(inputFile);
-          } else if ("Comments".equals(tagName)) {
+            break;
+          case "Comments":
             handleCommentsMetricTag(inputFile);
-          } else if ("LinesOfCode".equals(tagName)) {
+            break;
+          case "LinesOfCode":
             handleLinesOfCodeMetricTag(inputFile);
+            break;
+          default:
+            LOG.info("metric tag {} not handled", tagName);
           }
         }
       }
@@ -557,13 +586,23 @@ public class FSharpSensor implements Sensor {
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
+          if (tagName == null) {
+            LOG.error("issue tag `null`");
+            continue;
+          }
 
-          if ("Id".equals(tagName)) {
+          switch (tagName) {
+          case "Id":
             id = stream.getElementText();
-          } else if ("Line".equals(tagName)) {
+            break;
+          case "Line":
             line = Integer.parseInt(stream.getElementText());
-          } else if ("Message".equals(tagName)) {
+            break;
+          case "Message":
             message = stream.getElementText();
+            break;
+          default:
+            LOG.info("issue tag {} not handled", tagName);
           }
         }
       }
