@@ -315,7 +315,11 @@ public class FSharpSensor implements Sensor {
         int next = stream.next();
 
         if (next == XMLStreamConstants.END_ELEMENT && "Token".equals(stream.getLocalName())) {
-          cpdTokens.addToken(line, leftCol, line, rightCol, value);
+          if (value != null) {
+            cpdTokens.addToken(line, leftCol, line, rightCol, value);
+          } else {
+            LOG.error("value is `null`");
+          }
 
           try {
             if (highlight != null) {
@@ -329,29 +333,29 @@ public class FSharpSensor implements Sensor {
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
-          if (tagName == null) {
+          if (tagName != null) {
+            switch (tagName) {
+            case "Value":
+              value = new String(Base64.getDecoder().decode(stream.getElementText()), StandardCharsets.UTF_8);
+              break;
+            case "Line":
+              line = Integer.parseInt(stream.getElementText());
+              break;
+            case "LeftColoumn":
+              leftCol = Integer.parseInt(stream.getElementText());
+              break;
+            case "RightColoumn":
+              rightCol = Integer.parseInt(stream.getElementText());
+              break;
+            case "HighLight":
+              highlight = stream.getElementText();
+              break;
+            default:
+              throw new IllegalArgumentException(tagName);
+            }
+          } else {
             LOG.error("token tag `null`");
             throw new NullPointerException("token tag");
-          }
-
-          switch (tagName) {
-          case "Value":
-            value = new String(Base64.getDecoder().decode(stream.getElementText()), StandardCharsets.UTF_8);
-            break;
-          case "Line":
-            line = Integer.parseInt(stream.getElementText());
-            break;
-          case "LeftColoumn":
-            leftCol = Integer.parseInt(stream.getElementText());
-            break;
-          case "RightColoumn":
-            rightCol = Integer.parseInt(stream.getElementText());
-            break;
-          case "HighLight":
-            highlight = stream.getElementText();
-            break;
-          default:
-            throw new IllegalArgumentException(tagName);
           }
         }
       }
@@ -571,52 +575,58 @@ public class FSharpSensor implements Sensor {
 
       LOG.trace("-> handleIssueTag start");
 
-      while (stream.hasNext()) {
+      boolean finished = false;
+      while (stream.hasNext() && !finished) {
         int next = stream.next();
 
         if (next == XMLStreamConstants.END_ELEMENT && "Issue".equals(stream.getLocalName())) {
-          RuleKey ruleKey = RuleKey.of(FSharpPlugin.REPOSITORY_KEY, id);
-          ActiveRule rule = context.activeRules().find(ruleKey);
-          if (rule != null) {
-            NewIssue newIssue = context.newIssue().forRule(ruleKey);
-            NewIssueLocation location = newIssue.newLocation().on(inputFile);
-            if (line != null && line > 0) {
-              location = location.at(inputFile.selectLine(line));
-            }
-            if (message != null) {
-              location = location.message(message);
-            }
+          if (id != null) {
 
-            newIssue.at(location);
-            newIssue.save();
+            RuleKey ruleKey = RuleKey.of(FSharpPlugin.REPOSITORY_KEY, id);
+            ActiveRule rule = context.activeRules().find(ruleKey);
+            if (rule != null) {
+              NewIssue newIssue = context.newIssue().forRule(ruleKey);
+              NewIssueLocation location = newIssue.newLocation().on(inputFile);
+              if (line != null && line > 0) {
+                location = location.at(inputFile.selectLine(line));
+              }
+              if (message != null) {
+                location = location.message(message);
+              }
 
-            LOG.info("Save Issue : " + inputFile + " Line " + line + "  message " + message);
+              newIssue.at(location);
+              newIssue.save();
+
+              LOG.info("Save Issue : " + inputFile + " Line " + line + "  message " + message);
+            } else {
+              LOG.error("Rule id is `null`");
+            }
           } else {
             LOG.error("Rule not active: " + id);
           }
 
           LOG.trace("<- handleIssueTag end");
-          break;
+          finished = true;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
-          if (tagName == null) {
+          if (tagName != null) {
+            switch (tagName) {
+            case "Id":
+              id = stream.getElementText();
+              break;
+            case "Line":
+              line = Integer.parseInt(stream.getElementText());
+              break;
+            case "Message":
+              message = stream.getElementText();
+              break;
+            default:
+              LOG.info("issue tag {} not handled", tagName);
+            }
+          } else {
             LOG.error("issue tag `null`");
-            continue;
           }
 
-          switch (tagName) {
-          case "Id":
-            id = stream.getElementText();
-            break;
-          case "Line":
-            line = Integer.parseInt(stream.getElementText());
-            break;
-          case "Message":
-            message = stream.getElementText();
-            break;
-          default:
-            LOG.info("issue tag {} not handled", tagName);
-          }
         }
       }
     }
