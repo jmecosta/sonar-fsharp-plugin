@@ -48,6 +48,7 @@ import org.sonar.api.batch.sensor.highlighting.NewHighlighting;
 import org.sonar.api.batch.sensor.highlighting.TypeOfText;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
+import org.sonar.api.internal.apachecommons.lang.NullArgumentException;
 import org.sonar.api.issue.NoSonarFilter;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.FileLinesContext;
@@ -264,14 +265,22 @@ public class FSharpSensor implements Sensor {
           } else if ("Issues".equals(tagName)) {
             handleIssuesTag(inputFile, context);
           } else if ("CopyPasteTokens".equals(tagName)) {
-            NewCpdTokens cpdTokens = context.newCpdTokens().onFile(inputFile);
-            NewHighlighting highlights = context.newHighlighting().onFile(inputFile);
-            handleCopyPasteTokensTag(cpdTokens, highlights);
-            cpdTokens.save();
-            highlights.save();
+            handleCopyPasteTokensTag(context, inputFile);
           }
         }
       }
+    }
+
+    private void handleCopyPasteTokensTag(SensorContext context, InputFile inputFile) throws XMLStreamException {
+      if (inputFile == null) {
+        new NullArgumentException("inputFile");
+      }
+
+      NewCpdTokens cpdTokens = context.newCpdTokens().onFile(inputFile);
+      NewHighlighting highlights = context.newHighlighting().onFile(inputFile);
+      handleCopyPasteTokensTag(cpdTokens, highlights);
+      cpdTokens.save();
+      highlights.save();
     }
 
     private void handleCopyPasteTokensTag(NewCpdTokens cpdTokens, NewHighlighting highlights)
@@ -289,7 +298,7 @@ public class FSharpSensor implements Sensor {
           if ("Token".equals(tagName)) {
             handleTokenTag(cpdTokens, highlights);
           } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(tagName);
           }
         }
       }
@@ -342,7 +351,7 @@ public class FSharpSensor implements Sensor {
             highlight = stream.getElementText();
             break;
           default:
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(tagName);
           }
         }
       }
@@ -357,47 +366,51 @@ public class FSharpSensor implements Sensor {
           LOG.trace("<- handleMetricsTag end");
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
-          String tagName = stream.getLocalName();
-          if (tagName == null) {
-            LOG.error("metric tag `null`");
-            continue;
-          }
-
-          switch (tagName) {
-          case "Lines":
-            handleLinesMetricTag(inputFile);
-            break;
-          case "Classes":
-            handleClassesMetricTag(inputFile);
-            break;
-          case "Accessors":
-            // no handling yet
-            break;
-          case "Statements":
-            handleStatementsMetricTag(inputFile);
-            break;
-          case "Functions":
-            handleFunctionsMetricTag(inputFile);
-            break;
-          case "PublicApi":
-            handlePublicApiMetricTag(inputFile);
-            break;
-          case "PublicUndocumentedApi":
-            handlePublicUndocumentedApiMetricTag(inputFile);
-            break;
-          case "Complexity":
-            handleComplexityMetricTag(inputFile);
-            break;
-          case "Comments":
-            handleCommentsMetricTag(inputFile);
-            break;
-          case "LinesOfCode":
-            handleLinesOfCodeMetricTag(inputFile);
-            break;
-          default:
-            LOG.info("metric tag {} not handled", tagName);
-          }
+          handleMetricsStartTag(inputFile);
         }
+      }
+    }
+
+    private void handleMetricsStartTag(InputFile inputFile) throws XMLStreamException {
+      String tagName = stream.getLocalName();
+      if (tagName == null) {
+        LOG.error("metric tag `null`");
+        return;
+      }
+
+      switch (tagName) {
+      case "Lines":
+        handleLinesMetricTag(inputFile);
+        break;
+      case "Classes":
+        handleClassesMetricTag(inputFile);
+        break;
+      case "Accessors":
+        // no handling yet
+        break;
+      case "Statements":
+        handleStatementsMetricTag(inputFile);
+        break;
+      case "Functions":
+        handleFunctionsMetricTag(inputFile);
+        break;
+      case "PublicApi":
+        handlePublicApiMetricTag(inputFile);
+        break;
+      case "PublicUndocumentedApi":
+        handlePublicUndocumentedApiMetricTag(inputFile);
+        break;
+      case "Complexity":
+        handleComplexityMetricTag(inputFile);
+        break;
+      case "Comments":
+        handleCommentsMetricTag(inputFile);
+        break;
+      case "LinesOfCode":
+        handleLinesOfCodeMetricTag(inputFile);
+        break;
+      default:
+        LOG.info("metric tag {} not handled", tagName);
       }
     }
 
@@ -469,7 +482,7 @@ public class FSharpSensor implements Sensor {
             int line = Integer.parseInt(stream.getElementText());
             builder.add(line);
           } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(tagName);
           }
         }
       }
@@ -495,7 +508,7 @@ public class FSharpSensor implements Sensor {
             int line = Integer.parseInt(stream.getElementText());
             fileLinesContext.setIntValue(CoreMetrics.COMMENT_LINES_DATA_KEY, line, 1);
           } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(tagName);
           }
         }
       }
@@ -524,7 +537,7 @@ public class FSharpSensor implements Sensor {
             int line = Integer.parseInt(stream.getElementText());
             fileLinesContext.setIntValue(CoreMetrics.NCLOC_DATA_KEY, line, 1);
           } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(tagName);
           }
         }
       }

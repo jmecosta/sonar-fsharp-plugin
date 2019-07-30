@@ -5,13 +5,7 @@
 #---------------------------------#
 
 # version format
-version: 2.0.0.{build}-ci
-
-for:
-- branches:
-    only:
-      - /v\d*\.\d*\.\d*/
-  version: 2.0.0.{build}
+version: 2.0.0.{build}
 
 #---------------------------------#
 #    environment configuration    #
