@@ -273,7 +273,7 @@ public class FSharpSensor implements Sensor {
 
     private void handleCopyPasteTokensTag(SensorContext context, InputFile inputFile) throws XMLStreamException {
       if (inputFile == null) {
-        new NullArgumentException("inputFile");
+        throw new NullArgumentException("inputFile");
       }
 
       NewCpdTokens cpdTokens = context.newCpdTokens().onFile(inputFile);
