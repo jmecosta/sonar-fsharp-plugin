@@ -73,16 +73,14 @@ public class UnZip {
 
     byte[] buffer = new byte[1024];
 
-    try (
-        // get the zip file content
-        ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile))) {
+    // get the zip file content
+    try (ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile))) {
       // create output directory is not exists
       File folder = newFolder(null, outputFolder);
 
       // get the first zipped file list entry
-      ZipEntry ze = zis.getNextEntry();
-      while (ze != null) {
-
+      ZipEntry ze;
+      while ((ze = zis.getNextEntry()) != null) {
         if (ze.isDirectory()) {
           // If directory then create a new directory in uncompressed folder
           String folderName = ze.getName();
@@ -102,8 +100,6 @@ public class UnZip {
             }
           }
         }
-
-        ze = zis.getNextEntry();
       }
 
       zis.closeEntry();
