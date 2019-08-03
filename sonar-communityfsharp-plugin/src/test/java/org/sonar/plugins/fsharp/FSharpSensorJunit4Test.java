@@ -13,35 +13,47 @@
  */
 package org.sonar.plugins.fsharp;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Rule;
+import org.junit.Test;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.sensor.Sensor;
-import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
+import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.issue.NoSonarFilter;
 import org.sonar.api.measures.FileLinesContextFactory;
+import org.sonar.api.utils.log.LogTester;
+import org.sonar.api.utils.log.LoggerLevel;
 
-public class FSharpSensorTest {
+@Deprecated
+// Rule Annotation not supported by JUnit5
+// http://javadocs.sonarsource.org/6.0/apidocs/org/sonar/api/utils/log/LogTester.html
+// org.sonar.api.utils.log.LogTester depends on Rule-API and used here
+// Could not be resolved with org.junit.vintage:junit-vintage-engine
+public class FSharpSensorJunit4Test {
+    @Rule
+    public LogTester logTester = new LogTester();
+
     @Test
-    public void describe_languageAndKey_asExpected() {
+    public void execute_noContect_exceptionCatched() {
         // Arrange
-        FsSonarRunnerExtractor extractor = new FsSonarRunnerExtractor();
+        FsSonarRunnerExtractor extractor = mock(FsSonarRunnerExtractor.class);
         FileSystem fs = mock(FileSystem.class);
         FileLinesContextFactory fileLinesContextFactory = mock(FileLinesContextFactory.class);
         NoSonarFilter noSonarFilter = new NoSonarFilter();
         Sensor sensor = new FSharpSensor(extractor, fs, fileLinesContextFactory, noSonarFilter);
 
-        DefaultSensorDescriptor descriptor = new DefaultSensorDescriptor();
+        SensorContext context = mock(SensorContext.class); // SensorContextTester.create();
+
+        logTester.setLevel(LoggerLevel.ERROR);
+        logTester.clear();
 
         // Act
-        sensor.describe(descriptor);
+        sensor.execute(context);
 
         // Assert
-        assertEquals(FSharpPlugin.LANGUAGE_NAME, descriptor.name());
-        assertEquals(1, descriptor.languages().size());
-        assertTrue(descriptor.languages().contains(FSharpPlugin.LANGUAGE_KEY), "LANGUAGE_KEY not found");
+        assertThat(logTester.logs()).hasSize(1);
+        assertThat(logTester.logs()).contains("SonarQube Community F# plugin analyzis failed");
     }
 }
