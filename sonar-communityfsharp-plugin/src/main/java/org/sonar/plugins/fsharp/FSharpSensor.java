@@ -48,7 +48,6 @@ import org.sonar.api.batch.sensor.highlighting.NewHighlighting;
 import org.sonar.api.batch.sensor.highlighting.TypeOfText;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
-import org.sonar.api.internal.apachecommons.lang.NullArgumentException;
 import org.sonar.api.issue.NoSonarFilter;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.FileLinesContext;
@@ -272,10 +271,6 @@ public class FSharpSensor implements Sensor {
     }
 
     private void handleCopyPasteTokensTag(SensorContext context, InputFile inputFile) throws XMLStreamException {
-      if (inputFile == null) {
-        throw new NullArgumentException("inputFile");
-      }
-
       NewCpdTokens cpdTokens = context.newCpdTokens().onFile(inputFile);
       NewHighlighting highlights = context.newHighlighting().onFile(inputFile);
       handleCopyPasteTokensTag(cpdTokens, highlights);
@@ -333,29 +328,29 @@ public class FSharpSensor implements Sensor {
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
-          if (tagName != null) {
-            switch (tagName) {
-            case "Value":
-              value = new String(Base64.getDecoder().decode(stream.getElementText()), StandardCharsets.UTF_8);
-              break;
-            case "Line":
-              line = Integer.parseInt(stream.getElementText());
-              break;
-            case "LeftColoumn":
-              leftCol = Integer.parseInt(stream.getElementText());
-              break;
-            case "RightColoumn":
-              rightCol = Integer.parseInt(stream.getElementText());
-              break;
-            case "HighLight":
-              highlight = stream.getElementText();
-              break;
-            default:
-              throw new IllegalArgumentException(tagName);
-            }
-          } else {
+          if (tagName == null) {
             LOG.error("token tag `null`");
             throw new NullPointerException("token tag");
+          }
+
+          switch (tagName) {
+          case "Value":
+            value = new String(Base64.getDecoder().decode(stream.getElementText()), StandardCharsets.UTF_8);
+            break;
+          case "Line":
+            line = Integer.parseInt(stream.getElementText());
+            break;
+          case "LeftColoumn":
+            leftCol = Integer.parseInt(stream.getElementText());
+            break;
+          case "RightColoumn":
+            rightCol = Integer.parseInt(stream.getElementText());
+            break;
+          case "HighLight":
+            highlight = stream.getElementText();
+            break;
+          default:
+            throw new IllegalArgumentException(tagName);
           }
         }
       }
