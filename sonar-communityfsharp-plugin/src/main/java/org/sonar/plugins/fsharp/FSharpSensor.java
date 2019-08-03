@@ -71,7 +71,7 @@ public class FSharpSensor implements Sensor {
   private final NoSonarFilter noSonarFilter;
 
   public FSharpSensor(FsSonarRunnerExtractor extractor, FileSystem fs, FileLinesContextFactory fileLinesContextFactory,
-    NoSonarFilter noSonarFilter) {
+      NoSonarFilter noSonarFilter) {
     this.extractor = extractor;
     this.fs = fs;
     this.fileLinesContextFactory = fileLinesContextFactory;
@@ -85,13 +85,10 @@ public class FSharpSensor implements Sensor {
 
   @Override
   public void execute(SensorContext context) {
-    try
-    {
+    try {
       analyze(context);
       importResults(context);
-    }
-    catch (Exception ex)
-    {
+    } catch (Exception ex) {
       LOG.error("SonarQube Community F# plugin analyzis failed", ex);
     }
   }
@@ -204,12 +201,16 @@ public class FSharpSensor implements Sensor {
     }
 
     public void parse(File file, SensorContext context) {
-      InputStreamReader reader = null;
-      XMLInputFactory xmlFactory = XMLInputFactory.newInstance();
       LOG.trace("-> AnalysisResultImporter.parse start");
 
-      try {
-        reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
+      XMLInputFactory xmlFactory = XMLInputFactory.newInstance();
+
+      // disable external entities
+      xmlFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, Boolean.FALSE);
+      xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, Boolean.FALSE);
+
+      try (FileInputStream fis = new FileInputStream(file);
+          InputStreamReader reader = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
         stream = xmlFactory.createXMLStreamReader(reader);
 
         while (stream.hasNext()) {
@@ -256,23 +257,29 @@ public class FSharpSensor implements Sensor {
           if ("Path".equals(tagName)) {
             String path = stream.getElementText();
             inputFile = fs.inputFile(fs.predicates().hasAbsolutePath(path));
-            LOG.trace("handleFileTag inputFile " + inputFile != null ? inputFile.filename() : "<no input file>");
+            String filename = inputFile != null ? inputFile.filename() : "<no input file>";
+            LOG.trace("handleFileTag inputFile " + filename);
           } else if ("Metrics".equals(tagName)) {
             handleMetricsTag(inputFile);
           } else if ("Issues".equals(tagName)) {
             handleIssuesTag(inputFile, context);
           } else if ("CopyPasteTokens".equals(tagName)) {
-            NewCpdTokens cpdTokens = context.newCpdTokens().onFile(inputFile);
-            NewHighlighting highlights = context.newHighlighting().onFile(inputFile);
-            handleCopyPasteTokensTag(cpdTokens, highlights);
-            cpdTokens.save();
-            highlights.save();
+            handleCopyPasteTokensTag(context, inputFile);
           }
         }
       }
     }
 
-    private void handleCopyPasteTokensTag(NewCpdTokens cpdTokens, NewHighlighting highlights) throws XMLStreamException {
+    private void handleCopyPasteTokensTag(SensorContext context, InputFile inputFile) throws XMLStreamException {
+      NewCpdTokens cpdTokens = context.newCpdTokens().onFile(inputFile);
+      NewHighlighting highlights = context.newHighlighting().onFile(inputFile);
+      handleCopyPasteTokensTag(cpdTokens, highlights);
+      cpdTokens.save();
+      highlights.save();
+    }
+
+    private void handleCopyPasteTokensTag(NewCpdTokens cpdTokens, NewHighlighting highlights)
+        throws XMLStreamException {
       LOG.trace("-> handleCopyPasteTokensTag start");
       while (stream.hasNext()) {
         int next = stream.next();
@@ -286,7 +293,7 @@ public class FSharpSensor implements Sensor {
           if ("Token".equals(tagName)) {
             handleTokenTag(cpdTokens, highlights);
           } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(tagName);
           }
         }
       }
@@ -303,7 +310,11 @@ public class FSharpSensor implements Sensor {
         int next = stream.next();
 
         if (next == XMLStreamConstants.END_ELEMENT && "Token".equals(stream.getLocalName())) {
-          cpdTokens.addToken(line, leftCol, line, rightCol, value);
+          if (value != null) {
+            cpdTokens.addToken(line, leftCol, line, rightCol, value);
+          } else {
+            LOG.error("value is `null`");
+          }
 
           try {
             if (highlight != null) {
@@ -317,19 +328,29 @@ public class FSharpSensor implements Sensor {
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
+          if (tagName == null) {
+            LOG.error("token tag `null`");
+            throw new NullPointerException("token tag");
+          }
 
-          if ("Value".equals(tagName)) {
+          switch (tagName) {
+          case "Value":
             value = new String(Base64.getDecoder().decode(stream.getElementText()), StandardCharsets.UTF_8);
-          } else if ("Line".equals(tagName)) {
+            break;
+          case "Line":
             line = Integer.parseInt(stream.getElementText());
-          } else if ("LeftColoumn".equals(tagName)) {
+            break;
+          case "LeftColoumn":
             leftCol = Integer.parseInt(stream.getElementText());
-          } else if ("RightColoumn".equals(tagName)) {
+            break;
+          case "RightColoumn":
             rightCol = Integer.parseInt(stream.getElementText());
-          } else if ("HighLight".equals(tagName)) {
+            break;
+          case "HighLight":
             highlight = stream.getElementText();
-          } else {
-            throw new IllegalArgumentException();
+            break;
+          default:
+            throw new IllegalArgumentException(tagName);
           }
         }
       }
@@ -344,29 +365,51 @@ public class FSharpSensor implements Sensor {
           LOG.trace("<- handleMetricsTag end");
           break;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
-          String tagName = stream.getLocalName();
-
-          if ("Lines".equals(tagName)) {
-            handleLinesMetricTag(inputFile);
-          } else if ("Classes".equals(tagName)) {
-            handleClassesMetricTag(inputFile);
-          } else if ("Accessors".equals(tagName)) {
-          } else if ("Statements".equals(tagName)) {
-            handleStatementsMetricTag(inputFile);
-          } else if ("Functions".equals(tagName)) {
-            handleFunctionsMetricTag(inputFile);
-          } else if ("PublicApi".equals(tagName)) {
-            handlePublicApiMetricTag(inputFile);
-          } else if ("PublicUndocumentedApi".equals(tagName)) {
-            handlePublicUndocumentedApiMetricTag(inputFile);
-          } else if ("Complexity".equals(tagName)) {
-            handleComplexityMetricTag(inputFile);
-          } else if ("Comments".equals(tagName)) {
-            handleCommentsMetricTag(inputFile);
-          } else if ("LinesOfCode".equals(tagName)) {
-            handleLinesOfCodeMetricTag(inputFile);
-          }
+          handleMetricsStartTag(inputFile);
         }
+      }
+    }
+
+    private void handleMetricsStartTag(InputFile inputFile) throws XMLStreamException {
+      String tagName = stream.getLocalName();
+      if (tagName == null) {
+        LOG.error("metric tag `null`");
+        return;
+      }
+
+      switch (tagName) {
+      case "Lines":
+        handleLinesMetricTag(inputFile);
+        break;
+      case "Classes":
+        handleClassesMetricTag(inputFile);
+        break;
+      case "Accessors":
+        // no handling yet
+        break;
+      case "Statements":
+        handleStatementsMetricTag(inputFile);
+        break;
+      case "Functions":
+        handleFunctionsMetricTag(inputFile);
+        break;
+      case "PublicApi":
+        handlePublicApiMetricTag(inputFile);
+        break;
+      case "PublicUndocumentedApi":
+        handlePublicUndocumentedApiMetricTag(inputFile);
+        break;
+      case "Complexity":
+        handleComplexityMetricTag(inputFile);
+        break;
+      case "Comments":
+        handleCommentsMetricTag(inputFile);
+        break;
+      case "LinesOfCode":
+        handleLinesOfCodeMetricTag(inputFile);
+        break;
+      default:
+        LOG.info("metric tag {} not handled", tagName);
       }
     }
 
@@ -438,7 +481,7 @@ public class FSharpSensor implements Sensor {
             int line = Integer.parseInt(stream.getElementText());
             builder.add(line);
           } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(tagName);
           }
         }
       }
@@ -447,7 +490,7 @@ public class FSharpSensor implements Sensor {
     }
 
     private void handleNonBlankCommentsMetricTag(InputFile inputFile) throws XMLStreamException {
-      Integer value = 0;
+      int value = 0;
       FileLinesContext fileLinesContext = fileLinesContextFactory.createFor(inputFile);
 
       while (stream.hasNext()) {
@@ -464,7 +507,7 @@ public class FSharpSensor implements Sensor {
             int line = Integer.parseInt(stream.getElementText());
             fileLinesContext.setIntValue(CoreMetrics.COMMENT_LINES_DATA_KEY, line, 1);
           } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(tagName);
           }
         }
       }
@@ -475,7 +518,7 @@ public class FSharpSensor implements Sensor {
 
     private void handleLinesOfCodeMetricTag(InputFile inputFile) throws XMLStreamException {
       LOG.trace("-> handleLinesOfCodeMetricTag start");
-      Integer value = 0;
+      int value = 0;
       FileLinesContext fileLinesContext = fileLinesContextFactory.createFor(inputFile);
 
       while (stream.hasNext()) {
@@ -493,7 +536,7 @@ public class FSharpSensor implements Sensor {
             int line = Integer.parseInt(stream.getElementText());
             fileLinesContext.setIntValue(CoreMetrics.NCLOC_DATA_KEY, line, 1);
           } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(tagName);
           }
         }
       }
@@ -527,42 +570,58 @@ public class FSharpSensor implements Sensor {
 
       LOG.trace("-> handleIssueTag start");
 
-      while (stream.hasNext()) {
+      boolean finished = false;
+      while (stream.hasNext() && !finished) {
         int next = stream.next();
 
         if (next == XMLStreamConstants.END_ELEMENT && "Issue".equals(stream.getLocalName())) {
-          RuleKey ruleKey = RuleKey.of(FSharpPlugin.REPOSITORY_KEY, id);
-          ActiveRule rule = context.activeRules().find(ruleKey);
-          if (rule != null) {
-            NewIssue newIssue = context.newIssue().forRule(ruleKey);
-            NewIssueLocation location = newIssue.newLocation().on(inputFile);
-            if (line != null && line > 0) {
-              location = location.at(inputFile.selectLine(line));
-            }
-            if (message != null) {
-              location = location.message(message);
-            }
+          if (id != null) {
 
-            newIssue.at(location);
-            newIssue.save();
+            RuleKey ruleKey = RuleKey.of(FSharpPlugin.REPOSITORY_KEY, id);
+            ActiveRule rule = context.activeRules().find(ruleKey);
+            if (rule != null) {
+              NewIssue newIssue = context.newIssue().forRule(ruleKey);
+              NewIssueLocation location = newIssue.newLocation().on(inputFile);
+              if (line != null && line > 0) {
+                location = location.at(inputFile.selectLine(line));
+              }
+              if (message != null) {
+                location = location.message(message);
+              }
 
-            LOG.info("Save Issue : " + inputFile + " Line " + line + "  message " + message);
+              newIssue.at(location);
+              newIssue.save();
+
+              LOG.info("Save Issue : " + inputFile + " Line " + line + "  message " + message);
+            } else {
+              LOG.error("Rule id is `null`");
+            }
           } else {
             LOG.error("Rule not active: " + id);
           }
 
           LOG.trace("<- handleIssueTag end");
-          break;
+          finished = true;
         } else if (next == XMLStreamConstants.START_ELEMENT) {
           String tagName = stream.getLocalName();
-
-          if ("Id".equals(tagName)) {
-            id = stream.getElementText();
-          } else if ("Line".equals(tagName)) {
-            line = Integer.parseInt(stream.getElementText());
-          } else if ("Message".equals(tagName)) {
-            message = stream.getElementText();
+          if (tagName != null) {
+            switch (tagName) {
+            case "Id":
+              id = stream.getElementText();
+              break;
+            case "Line":
+              line = Integer.parseInt(stream.getElementText());
+              break;
+            case "Message":
+              message = stream.getElementText();
+              break;
+            default:
+              LOG.info("issue tag {} not handled", tagName);
+            }
+          } else {
+            LOG.error("issue tag `null`");
           }
+
         }
       }
     }
@@ -590,13 +649,8 @@ public class FSharpSensor implements Sensor {
 
   public static void writeStringToFile(String path, String content) throws IOException {
     File file = new File(path);
-    BufferedWriter writer = null;
-    try {
-      writer = new BufferedWriter(new FileWriter(file));
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
       writer.write(content);
-    } finally {
-      if (writer != null)
-        writer.close();
     }
   }
 }

@@ -27,12 +27,30 @@ public class FSharp extends AbstractLanguage {
   }
 
   @Override
+  public boolean equals(Object obj) {
+    if (!super.equals(obj)) {
+      return false;
+    }
+
+    FSharp fobj = (FSharp) obj;
+    // added field is tested
+    return configuration.equals(fobj.configuration);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = super.hashCode();
+    result = 31 * result + configuration.hashCode();
+    return result;
+  }
+
+  @Override
   public String[] getFileSuffixes() {
     String[] suffixes = configuration.getStringArray(FSharpPlugin.FILE_SUFFIXES_KEY);
     if (suffixes.length == 0) {
       suffixes = StringUtils.split(FSharpPlugin.FILE_SUFFIXES_DEFVALUE, ",");
     }
+
     return suffixes;
   }
-
 }
