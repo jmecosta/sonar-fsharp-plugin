@@ -48,7 +48,7 @@ public class FSharpSonarRulesDefinitionTest {
   }
 
   @Test
-  @Disabled
+  @Disabled("not all FSharpLint rules can be configured today, see https://github.com/jmecsoftware/sonar-fsharp-plugin/issues/75")
   public void FSharpLint_numberOfRules() {
     // Arrange
     Context context = new Context();
