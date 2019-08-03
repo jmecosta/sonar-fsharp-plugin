@@ -14,12 +14,12 @@
 package org.sonar.plugins.fsharp;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
@@ -31,8 +31,8 @@ import org.sonar.api.utils.log.LoggerLevel;
 
 public class FSharpSensorTest {
 
-    @Rule
-    public LogTester logTester = new LogTester();
+    // @Rule
+    private final LogTester logTester = new LogTester();
 
     @Test
     public void describe_languageAndKey_asExpected() {
@@ -51,10 +51,11 @@ public class FSharpSensorTest {
         // Assert
         assertEquals(FSharpPlugin.LANGUAGE_NAME, descriptor.name());
         assertEquals(1, descriptor.languages().size());
-        assertTrue("LANGUAGE_KEY not found", descriptor.languages().contains(FSharpPlugin.LANGUAGE_KEY));
+        assertTrue(descriptor.languages().contains(FSharpPlugin.LANGUAGE_KEY), "LANGUAGE_KEY not found");
     }
 
     @Test
+    @Disabled("Rule Annotation not supported by JUnit5, http://javadocs.sonarsource.org/6.0/apidocs/org/sonar/api/utils/log/LogTester.html")
     public void execute_noContect_exceptionCatched() {
         // Arrange
         FsSonarRunnerExtractor extractor = mock(FsSonarRunnerExtractor.class);

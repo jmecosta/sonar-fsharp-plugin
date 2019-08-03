@@ -13,15 +13,14 @@
  */
 package org.sonar.plugins.fsharp;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.Plugin;
 import org.sonar.api.SonarRuntime;
 
 public class FSharpPluginTest {
-
   @Test
   public void addExtensions_expectedNumber() {
     // Arrange
