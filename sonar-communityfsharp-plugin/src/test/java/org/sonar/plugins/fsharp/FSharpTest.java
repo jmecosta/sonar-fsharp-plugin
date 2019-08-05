@@ -13,13 +13,13 @@
  */
 package org.sonar.plugins.fsharp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.lang.StringUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.config.internal.MapSettings;
 
@@ -29,8 +29,8 @@ public class FSharpTest {
         Configuration configuration = (new MapSettings()).asConfig();
         FSharp fsharp = new FSharp(configuration);
 
-        assertEquals("Language Key", FSharpPlugin.LANGUAGE_KEY, fsharp.getKey());
-        assertEquals("Language Name", FSharpPlugin.LANGUAGE_NAME, fsharp.getName());
+        assertEquals(FSharpPlugin.LANGUAGE_KEY, fsharp.getKey(), "Language Key");
+        assertEquals(FSharpPlugin.LANGUAGE_NAME, fsharp.getName(), "Language Name");
     }
 
     @Test
@@ -67,7 +67,7 @@ public class FSharpTest {
 
         assertEquals(3, suffixes.length);
         for (String suffix : suffixes) {
-            assertTrue("`" + suffix + "` not found", FSharpPlugin.FILE_SUFFIXES_DEFVALUE.contains(suffix));
+            assertTrue(FSharpPlugin.FILE_SUFFIXES_DEFVALUE.contains(suffix), "`" + suffix + "` not found");
         }
     }
 
@@ -84,7 +84,7 @@ public class FSharpTest {
 
         assertEquals(no_keys, suffixes.length);
         for (String suffix : suffixes) {
-            assertTrue("`" + suffix + "` not found", keys.contains(suffix));
+            assertTrue(keys.contains(suffix), "`" + suffix + "` not found");
         }
     }
 }

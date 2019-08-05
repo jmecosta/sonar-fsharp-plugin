@@ -13,10 +13,11 @@
  */
 package org.sonar.plugins.fsharp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.server.rule.RulesDefinition.Context;
 
 public class FSharpSonarRulesDefinitionTest {
@@ -46,7 +47,8 @@ public class FSharpSonarRulesDefinitionTest {
     assertNotNull(context.repository(FSharpPlugin.REPOSITORY_KEY));
   }
 
-  // @Test
+  @Test
+  @Disabled("not all FSharpLint rules can be configured today, see https://github.com/jmecsoftware/sonar-fsharp-plugin/issues/75")
   public void FSharpLint_numberOfRules() {
     // Arrange
     Context context = new Context();
