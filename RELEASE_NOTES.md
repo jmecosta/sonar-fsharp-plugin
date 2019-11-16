@@ -1,6 +1,11 @@
 # Release Notes
 
-## v2.0 Quality Gate
+## v2.1 .NET Core 3.0
+
+- Update to self-contained netcoreapp3.0
+- smaller jar based on assembly linking of .NET Core 3.0
+
+## v2.0 .NET Core 2.2 and Quality Gate
 
 - BREAKING: rename plugin to `sonar-communityfsharp-plugin` to match SonarQube marketplace requirement
 - Add analysis of Quality Gate at Sonarcloud.io (no F# analyzed)

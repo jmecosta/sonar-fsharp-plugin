@@ -6,6 +6,7 @@
     <!-- see https://docs.microsoft.com/en-us/dotnet/core/rid-catalog for RIds -->
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <ProjectGuid>504f4169-b41d-431f-b31e-e72e0fe2495c</ProjectGuid>
+    <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
 
   <ItemGroup>
