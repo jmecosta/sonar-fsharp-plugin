@@ -22,4 +22,4 @@ type TestLintRunner() =
         let lintRunner = FsLintRunner(fileToAnalyse, SonarRules(), FSharpLint.Framework.Configuration.defaultConfiguration)
         let issues = lintRunner.ExecuteAnalysis()
         issues |> List.iter (fun m -> printfn "%O" m)
-        Assert.That(lintRunner.ExecuteAnalysis().Length, Is.EqualTo(7))
+        Assert.That(issues.Length, Is.EqualTo(7))
