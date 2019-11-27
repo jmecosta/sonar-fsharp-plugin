@@ -14,7 +14,7 @@ Download latest snapshot from Appveyor: <https://ci.appveyor.com/project/jorgeco
 - Metrics: LOC, number of classes, number of methods
 - Code duplication detection
 - FSharpLint Support
-- Runs under .NET Core 2.2 on Windows and Linux
+- Runs under .NET Core 3.0 on Windows and Linux
 
 ## Configuration
 
