@@ -121,3 +121,7 @@ type FsLintRunner(filePath : string, rules : theSonarRules, configuration : Conf
             runLintOnFile lintParams filePath |> outputLintResult
 
         issues
+
+
+
+
