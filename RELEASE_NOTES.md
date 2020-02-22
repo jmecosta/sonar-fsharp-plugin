@@ -4,6 +4,8 @@
 
 - Update to self-contained netcoreapp3.0
 - smaller jar based on assembly linking of .NET Core 3.0
+- Update to FSharpLint.Core 0.13.1
+- Update SonarQube API to 7.9.2 (latest LTS of SonarQube)
 
 ## v2.0 .NET Core 2.2 and Quality Gate
 
