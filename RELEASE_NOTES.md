@@ -1,11 +1,15 @@
 # Release Notes
 
+## v3.0 .NET Core 3.1 and SonarQube 7.9 LTS
+
+- Update SonarQube API to 7.9.2 (latest SonarQube 7.9 LTS is now minimum server requirement)
+- Update to self-contained netcoreapp3.1
+- Update to FSharpLint.Core 0.13.1
+
 ## v2.1 .NET Core 3.0
 
 - Update to self-contained netcoreapp3.0
 - smaller jar based on assembly linking of .NET Core 3.0
-- Update to FSharpLint.Core 0.13.1
-- Update SonarQube API to 7.9.2 (latest LTS of SonarQube)
 
 ## v2.0 .NET Core 2.2 and Quality Gate
 

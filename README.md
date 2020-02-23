@@ -14,7 +14,7 @@ Download latest snapshot from Appveyor: <https://ci.appveyor.com/project/jorgeco
 - Metrics: LOC, number of classes, number of methods
 - Code duplication detection
 - FSharpLint Support
-- Runs under .NET Core 3.0 on Windows and Linux
+- Runs under .NET Core 3.1 on Windows and Linux
 
 ## Configuration
 
@@ -22,7 +22,7 @@ Download latest snapshot from Appveyor: <https://ci.appveyor.com/project/jorgeco
 
 - Minimal supported version of SonarQube: 7.9.2 LTS
 - Working on SonarQube 8.0
-- Analyzer uses .NET Core 3.0, the corresponding depencies of .NET Core
+- Analyzer uses .NET Core 3.1, the corresponding depencies of .NET Core
   needs to be installed (especially on Linux). .NET Core is not
   required to be installed, as the application is _self-contained_.
 - Operating system (64 bit only): Windows, Linux.
