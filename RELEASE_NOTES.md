@@ -1,5 +1,10 @@
 # Release Notes
 
+## v2.1.1 .NET Core 3.1
+
+- As EOL of .NET Core 3.0 is reached today, a small maintenance update
+- Update to self-contained netcoreapp3.1
+
 ## v2.1 .NET Core 3.0
 
 - Update to self-contained netcoreapp3.0
