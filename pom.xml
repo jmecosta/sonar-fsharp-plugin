@@ -12,7 +12,7 @@
   <parent>
     <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
-    <version>52</version>
+    <version>53</version>
   </parent>
   <modules>
     <module>FsSonarRunner</module>
@@ -20,7 +20,7 @@
   </modules>
   <properties>
     <configuration>Debug</configuration>
-    <jacoco.version>0.8.4</jacoco.version>
+    <jacoco.version>0.8.5</jacoco.version>
   </properties>
 
   <!-- Build Settings -->
@@ -30,7 +30,7 @@
         <plugin>
           <groupId>org.sonarsource.scanner.maven</groupId>
           <artifactId>sonar-maven-plugin</artifactId>
-          <version>3.6.0.1398</version>
+          <version>3.7.0.1746</version>
           <executions>
             <execution>
               <phase>verify</phase>
