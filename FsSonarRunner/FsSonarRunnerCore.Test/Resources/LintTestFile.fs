@@ -85,28 +85,23 @@ type FsLintRunner(filePath : string, rules : theSonarRules, configuration : Conf
         else
             notsupportedlines <- notsupportedlines @ [output]
 
-    let runLintOnFile pathToFile =
-        let parseInfo =
-            {
-                CancellationToken = None
-                ReceivedWarning = Some reportLintWarning
-                Configuration = Some configuration
-                ReportLinterProgress = None
-            }
-
-        lintFile parseInfo pathToFile
+    let runLintOnFile lintParams pathToFile =
+        lintFile lintParams pathToFile
 
     let outputLintResult = function
         | LintResult.Success(_) -> printfn "Lint Ok"
         | LintResult.Failure(error) -> printfn "Lint Nok %s" (error.ToString())
 
     member this.ExecuteAnalysis() =
-        issues <- List.Empty     
+        let lintParams =
+            { CancellationToken = None
+              ReceivedWarning = Some reportLintWarning
+              Configuration = Some configuration
+              ReportLinterProgress = None
+              ReleaseConfiguration = None }
+
+        issues <- List.Empty
         if File.Exists(filePath) then
-            runLintOnFile filePath |> outputLintResult
+            runLintOnFile lintParams filePath |> outputLintResult
 
         issues
-
-
-
-
