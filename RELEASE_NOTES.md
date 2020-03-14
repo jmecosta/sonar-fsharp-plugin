@@ -1,5 +1,9 @@
 # Release Notes
 
+## v3.0.2
+
+- Supports multiple arguments `/d`, `/f` and `/i` for files to analyze
+
 ## v3.0.1 FSharpLint.Core 0.13.0
 
 - Update to last FSharpLint working with XML configuration.

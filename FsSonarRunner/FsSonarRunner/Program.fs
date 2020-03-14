@@ -47,41 +47,50 @@ let main argv =
     elif arguments.ContainsKey("version") then
         printfn "%s" (ProductVersion())
     elif arguments.ContainsKey("f") then
-        let input = arguments.["f"] |> Seq.head
         try
             let metrics = SQAnalyser()
-            metrics.RunAnalyses(input, File.ReadAllText(input), "")
+
+            arguments.["f"] 
+            |> Seq.iter (fun input ->
+                metrics.RunAnalyses(input, File.ReadAllText(input), "")
+            )
+
             writeMetrics metrics
         with
         | ex -> printf "    Failed: %A" ex
     elif arguments.ContainsKey("i") then
         try
-            let input = arguments.["i"] |> Seq.head
-            let options = XmlHelper.InputXml.Parse(File.ReadAllText(input))
-
             let metrics = SQAnalyser()
-            let handleFileToAnalyse(file) =
-                if File.Exists(file) then
-                    metrics.RunAnalyses(file, File.ReadAllText(file), input)
-                else
-                    printf "    [FsSonarRunner] [Error]: %s not found \r\n" file
 
-            options.Files
-            |> Seq.iter handleFileToAnalyse
+            arguments.["i"]
+            |> Seq.iter (fun input ->
+                let options = XmlHelper.InputXml.Parse(File.ReadAllText(input))
+
+                let handleFileToAnalyse(file) =
+                    if File.Exists(file) then
+                        metrics.RunAnalyses(file, File.ReadAllText(file), input)
+                    else
+                        printf "    [FsSonarRunner] [Error]: %s not found \r\n" file
+
+                options.Files
+                |> Seq.iter handleFileToAnalyse
+            )
 
             writeMetrics metrics
         with
         | ex -> printf "    Failed: %A" ex
     elif arguments.ContainsKey("d") then
         try
-            let directory = arguments.["d"] |> Seq.head
-            let fsfiles = Directory.GetFiles(directory, "*.fs", SearchOption.AllDirectories)
-            let fsxfiles = Directory.GetFiles(directory, "*.fsx", SearchOption.AllDirectories)
-
             let metrics = SQAnalyser()
 
-            Array.append fsfiles fsxfiles
-            |> Seq.iter (fun c -> metrics.RunAnalyses(c, File.ReadAllText(c), ""))
+            arguments.["d"] 
+            |> Seq.iter (fun directory ->
+                let fsfiles = Directory.GetFiles(directory, "*.fs", SearchOption.AllDirectories)
+                let fsxfiles = Directory.GetFiles(directory, "*.fsx", SearchOption.AllDirectories)
+
+                Array.append fsfiles fsxfiles
+                |> Seq.iter (fun c -> metrics.RunAnalyses(c, File.ReadAllText(c), ""))
+            )
 
             writeMetrics metrics
         with

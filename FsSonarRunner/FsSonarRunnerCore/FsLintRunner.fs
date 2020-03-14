@@ -103,7 +103,9 @@ type FsLintRunner(filePath : string, rules : SonarRules, configuration : Configu
     let runLintOnFile lintParams pathToFile =
         lintFile lintParams pathToFile
 
-    let outputLintResult = function
+    let outputLintResult filepath = 
+        printf "%s: " (filePath.Trim())
+        function
         | LintResult.Success(_) -> printfn "Lint Ok"
         | LintResult.Failure(error) -> printfn "Lint Nok %s" (error.ToString())
 
@@ -117,6 +119,6 @@ type FsLintRunner(filePath : string, rules : SonarRules, configuration : Configu
 
         issues <- List.Empty
         if File.Exists(filePath) then
-            runLintOnFile lintParams filePath |> outputLintResult
+            runLintOnFile lintParams filePath |> outputLintResult filePath
 
         issues
