@@ -31,10 +31,11 @@ Download latest snapshot from Appveyor: <https://ci.appveyor.com/project/jorgeco
 ### Installation
 
 - Download the JAR plugin file from releases and copy it to the
-_extensions/plugins/_ directory of your SonarQube installation.
+_extensions/downloads/_ directory of your SonarQube installation.
   - Delete any  previous plugin `sonarqube-fsharp-plugin-*.jar` or
   `sonar-communityfsharp-plugin-*.jar` from plugins directory.
 - Restart SonarQube server.
+The plugin will be moved to the directory _extensions/plugins/_ and the previous plugin version will be removed.
 The file _logs/sonar.log_ will contain a log line indicating the loaded
 plugin or any errors. The installed F# plugin will also be shown
 on the Marketplace of your SonarQube installation.

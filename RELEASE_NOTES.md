@@ -1,8 +1,8 @@
 # Release Notes
 
-## v3.0.1
+## v3.0.1 FSharpLint.Core 0.13.0
 
-- Update to FSharpLint.Core 0.13.0
+- Update to last FSharpLint working with XML configuration.
 
 ## v3.0.0 SonarQube 7.9 LTS
 
