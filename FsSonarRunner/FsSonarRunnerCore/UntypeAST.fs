@@ -250,7 +250,7 @@ module UntypedAstUtils =
 
             | SynExpr.TryWith (expr, range, clauses, range1, range2, _, _) ->
                 addToUniqueRange range
-                addToUniqueRange range1 
+                addToUniqueRange range1
                 addToUniqueRange range2
                 visitExpr expr
                 visitMatches clauses
@@ -277,7 +277,7 @@ module UntypedAstUtils =
                 addToUniqueRange range
                 addToUniqueRange range1
                 addToUniqueRange range2
-                rangelist |> Seq.iter (fun elem -> addToUniqueRange elem)
+                rangelist |> Seq.iter addToUniqueRange
                 match rangeoption with
                 | Some value -> addToUniqueRange value
                 | _ -> ()
@@ -387,7 +387,7 @@ module UntypedAstUtils =
                     visitBindindgs bindings
 
                 | SynModuleDecl.DoExpr (_, expr, _) ->
-                    addToUniqueRange expr.Range 
+                    addToUniqueRange expr.Range
                     visitExpr expr
 
                 | SynModuleDecl.Types (types, _) ->

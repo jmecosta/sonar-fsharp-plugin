@@ -1,8 +1,12 @@
 # Release Notes
 
+## v3.0.1 FSharpLint.Core 0.13.0
+
+- Update to last FSharpLint working with XML configuration.
+
 ## v3.0.0 SonarQube 7.9 LTS
 
-- Update SonarQube API to 7.9.2 (latest SonarQube 7.9 LTS is now minimum server requirement)
+- Update SonarQube API to 7.9 (latest SonarQube 7.9 LTS is now minimum server requirement)
 - Update to FSharpLint.Core 0.12.10
 
 ## v2.1.1 .NET Core 3.1
