@@ -103,8 +103,8 @@ type FsLintRunner(filePath : string, rules : SonarRules, configuration : Configu
     let runLintOnFile lintParams pathToFile =
         lintFile lintParams pathToFile
 
-    let outputLintResult filepath = 
-        printf "%s: " (filePath.Trim())
+    let outputLintResult (pathToFile: string) = 
+        printf "%s: " (pathToFile.Trim())
         function
         | LintResult.Success(_) -> printfn "Lint Ok"
         | LintResult.Failure(error) -> printfn "Lint Nok %s" (error.ToString())
