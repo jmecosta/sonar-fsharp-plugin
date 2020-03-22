@@ -5,7 +5,7 @@
 #---------------------------------#
 
 # version format
-version: 3.0.2.{build}
+version: 3.1.0.{build}
 
 #---------------------------------#
 #    environment configuration    #

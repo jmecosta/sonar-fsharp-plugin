@@ -2,7 +2,7 @@
 
 open System
 
-open FSharpLint.Application.XmlConfiguration.Configuration
+open FSharpLint.Framework.Configuration
 
 open FSharp.Data
 
@@ -48,21 +48,26 @@ type InputConfigution = XmlProvider<"""
 </AnalysisInput>
 """>
 
-let GetEnaFlagForParam(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
-    try
-        let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
-        let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
-        Enabled(enabledis.Value.Number.Value <> 0)
-    with
-    | _ -> Enabled(false)
+//let GetEnaFlagForParam(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
+//    try
+//        let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
+//        let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
+//        Enabled(enabledis.Value.Number.Value <> 0)
+//    with
+//    | _ -> Enabled(false)
 
-let GetEnaFlagForRule(config : InputConfigution.AnalysisInput, ruleId : string) =
+let GetEnaFlagForRule(config : InputConfigution.AnalysisInput, ruleId : string): bool =
     try
         config.Rules
         |> Seq.exists (fun c -> c.Key.Equals(ruleId))
-        |> Enabled
     with
-    | _ -> Enabled(false)
+    | _ -> false
+
+let EnableRuleIfExist(config : InputConfigution.AnalysisInput, ruleId : string): RuleConfig<'Config> option =
+    GetEnaFlagForRule(config, ruleId)
+    |> function
+            | true -> Some { enabled= true; config= None}
+            | false -> None
 
 let GetValueForInt(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : int) =
     try
@@ -98,8 +103,8 @@ let GetValueForEnum(config : InputConfigution.AnalysisInput, ruleId : string, pa
     with
     | _ -> Enum.Parse(enumType, defaultValue) :?> 'T
 
-let parseHints (hints: string list) : Hints =
-    { Hints = hints }
+//let parseHints (hints: string list) : Hints =
+//    { Hints = hints }
 
 let GetValueForBool(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : bool) =
     try

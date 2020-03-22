@@ -2,30 +2,27 @@
 
 open System
 open System.IO
-open FSharpLint.Application.XmlConfiguration
-open FSharpLint.Application.XmlConfiguration.Configuration
+open FSharpLint.Framework.Configuration
 
-let CreateALintXmlConfiguration(path : string) =
+let CreateALintConfiguration(path : string): Configuration =
     if not(String.IsNullOrEmpty(path)) && File.Exists(path) then
         let sonarConfig = ConfHelper.InputConfigution.Parse(File.ReadAllText(path))
 
         let configuration = {
-            IgnoreFiles = None
-            Analysers = Map(Seq.concat [
-                            (Map.toSeq (SourceLengthConfig.SonarConfiguration(sonarConfig)))
-                            (Map.toSeq (BindingConfig.SonarConfiguration(sonarConfig)))
-                            (Map.toSeq (NumberOfItemsConfig.SonarConfiguration(sonarConfig)))
-                            (Map.toSeq (NestedStatementsConfig.SonarConfiguration(sonarConfig)))
-                            (Map.toSeq (TypographyConfig.SonarConfiguration(sonarConfig)))
-                            (Map.toSeq (FunctionReimplementationConfig.SonarConfiguration(sonarConfig)))
-                            (Map.toSeq (RaiseWithTooManyArgumentsConfig.SonarConfiguration(sonarConfig)))
-                            (Map.toSeq (HintsConfig.SonarConfiguration(sonarConfig)))
-                            (Map.toSeq (RedundantNewKeywordConfig.SonarConfiguration(sonarConfig)))
-                        ])
+            ignoreFiles = IgnoreFilesConfig.SonarConfiguration(sonarConfig)
+            formatting = FormattingConfig.SonarConfiguration(sonarConfig)
+            conventions = ConventionsConfig.SonarConfiguration(sonarConfig)
+            typography = TypographyConfig.SonarConfiguration(sonarConfig)
+            hints = HintsConfig.SonarConfiguration(sonarConfig)
         }
         configuration
     else
-        Configuration.defaultConfiguration
+        defaultConfiguration
 
-let CreateALintConfiguration(path : string) =
-    convertToConfig (CreateALintXmlConfiguration path)
+
+        
+        //("FailwithWithSingleArgument",
+        //    {
+        //        Settings = Map.ofList
+        //            [ ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesFailwithWithSingleArgument")) ]
+        //    })

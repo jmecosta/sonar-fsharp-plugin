@@ -1,48 +1,12 @@
 ﻿module RaiseWithTooManyArgumentsConfig
 
-open FSharpLint.Application.XmlConfiguration.Configuration
+open FSharpLint.Framework.Configuration
 
-let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
-    Map.ofList
-        [
-            ("RaiseWithTooManyArguments",
-                {
-                    Rules = Map.ofList
-                        [
-                            ("FailwithWithSingleArgument",
-                                {
-                                    Settings = Map.ofList
-                                        [ ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesFailwithWithSingleArgument")) ]
-                                })
-                            ("RaiseWithSingleArgument",
-                                {
-                                    Settings = Map.ofList
-                                        [ ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesRaiseWithSingleArgument")) ]
-                                })
-                            ("NullArgWithSingleArgument",
-                                {
-                                    Settings = Map.ofList
-                                        [ ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesNullArgWithSingleArgument")) ]
-                                })
-                            ("InvalidOpWithSingleArgument",
-                                {
-                                    Settings = Map.ofList
-                                        [ ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesInvalidOpWithSingleArgument")) ]
-                                })
-                            ("InvalidArgWithTwoArguments",
-                                {
-                                    Settings = Map.ofList
-                                        [ ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesInvalidArgWithTwoArguments")) ]
-                                })
-                            ("FailwithfWithArgumentsMatchingFormatString",
-                                {
-                                    Settings = Map.ofList
-                                        [ ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesFailwithfWithArgumentsMatchingFormatString")) ]
-                                })
-                        ]
-                    Settings = Map.ofList
-                        [
-                            ("Enabled", Enabled(true))
-                        ]
-                });
-    ]
+let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) : RaiseWithTooManyArgsConfig option =
+    Some {
+        raiseWithSingleArgument = ConfHelper.EnableRuleIfExist(config, "RulesRaiseWithSingleArgument") // FL0017
+        nullArgWithSingleArgument = ConfHelper.EnableRuleIfExist(config, "RulesNullArgWithSingleArgument") // FL0018
+        invalidOpWithSingleArgument = ConfHelper.EnableRuleIfExist(config, "RulesInvalidOpWithSingleArgument") // FL0019
+        invalidArgWithTwoArguments = ConfHelper.EnableRuleIfExist(config, "RulesInvalidArgWithTwoArguments") // FL0020
+        failwithfWithArgumentsMatchingFormatString = ConfHelper.EnableRuleIfExist(config, "RulesFailwithfWithArgumentsMatchingFormatString") // FL0021
+    }

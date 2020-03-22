@@ -73,7 +73,7 @@ type SonarIssue() =
     member val Component : string = "" with get, set
     member val Message : string = "" with get, set
 
-type FsLintRunner(filePath : string, rules : SonarRules, configuration : ConfigurationManager.Configuration) =
+type FsLintRunner(filePath : string, rules : SonarRules, configuration : Configuration.Configuration) =
     let mutable notsupportedlines = List.Empty
     let mutable issues = List.empty
 
@@ -113,7 +113,7 @@ type FsLintRunner(filePath : string, rules : SonarRules, configuration : Configu
         let lintParams =
             { CancellationToken = None
               ReceivedWarning = Some reportWarningLine
-              Configuration = Some configuration
+              Configuration = Configuration configuration
               ReportLinterProgress = None
               ReleaseConfiguration = None }
 
