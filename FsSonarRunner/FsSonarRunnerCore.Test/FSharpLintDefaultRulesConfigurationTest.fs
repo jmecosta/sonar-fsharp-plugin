@@ -8,7 +8,6 @@ open FsSonarRunnerCore
  *)
 [<TestFixture>]
 type FSharpLintDefaultRulesConfigurationTest() =
-    let rules = SonarRules()
     let config = InputConfigHandler.CreateALintConfiguration("")
 
     [<Test>]
