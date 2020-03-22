@@ -50,7 +50,7 @@ let main argv =
         try
             let metrics = SQAnalyser()
 
-            arguments.["f"] 
+            arguments.["f"]
             |> Seq.iter (fun input ->
                 metrics.RunAnalyses(input, File.ReadAllText(input), "")
             )
@@ -83,7 +83,7 @@ let main argv =
         try
             let metrics = SQAnalyser()
 
-            arguments.["d"] 
+            arguments.["d"]
             |> Seq.iter (fun directory ->
                 let fsfiles = Directory.GetFiles(directory, "*.fs", SearchOption.AllDirectories)
                 let fsxfiles = Directory.GetFiles(directory, "*.fsx", SearchOption.AllDirectories)

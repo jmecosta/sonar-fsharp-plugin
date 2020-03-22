@@ -58,8 +58,9 @@ let GetEnaFlagForParam(config : InputConfigution.AnalysisInput, ruleId : string,
 
 let GetEnaFlagForRule(config : InputConfigution.AnalysisInput, ruleId : string) =
     try
-        config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId)) |> ignore
-        Enabled(true)
+        config.Rules
+        |> Seq.exists (fun c -> c.Key.Equals(ruleId))
+        |> Enabled
     with
     | _ -> Enabled(false)
 
