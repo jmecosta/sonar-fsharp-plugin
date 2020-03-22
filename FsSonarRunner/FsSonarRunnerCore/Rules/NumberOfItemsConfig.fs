@@ -1,50 +1,20 @@
 ﻿module NumberOfItemsConfig
 
-open FSharpLint.Application.XmlConfiguration.Configuration
+open FSharpLint.Framework.Configuration
+open FSharpLint.Rules
 
-let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) =
-    Map.ofList
-        [
-            ("NumberOfItems",
-                {
-                    Rules = Map.ofList
-                        [
-                            ("MaxNumberOfFunctionParameters",
-                                {
-                                    Settings = Map.ofList
-                                        [
-                                            ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesNumberOfItemsFunctionError"))
-                                            ("MaxItems", MaxItems(ConfHelper.GetValueForInt(config, "RulesNumberOfItemsFunctionError", "MaxItems", 5)))
-                                        ]
-                                })
-                            ("MaxNumberOfItemsInTuple",
-                                {
-                                    Settings = Map.ofList
-                                        [
-                                            ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesNumberOfItemsTupleError"))
-                                            ("MaxItems", MaxItems(ConfHelper.GetValueForInt(config, "RulesNumberOfItemsTupleError", "MaxItems", 5)))
-                                        ]
-                                })
-                            ("MaxNumberOfMembers",
-                                {
-                                    Settings = Map.ofList
-                                        [
-                                            ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesNumberOfItemsClassMembersError"))
-                                            ("MaxItems", MaxItems(ConfHelper.GetValueForInt(config, "RulesNumberOfItemsClassMembersError", "MaxItems", 5)))
-                                        ]
-                                })
-                            ("MaxNumberOfBooleanOperatorsInCondition",
-                                {
-                                    Settings = Map.ofList
-                                        [
-                                            ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesNumberOfItemsBooleanConditionsError"))
-                                            ("MaxItems", MaxItems(ConfHelper.GetValueForInt(config, "RulesNumberOfItemsBooleanConditionsError", "MaxItems", 4)))
-                                        ]
-                                })
-                        ]
-                    Settings = Map.ofList
-                        [
-                            ("Enabled", Enabled(true))
-                        ]
-                });
-    ]
+let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) : NumberOfItemsConfig option =
+    let EnableNumberOfItemsRule (ruleId : string, defaultValue: int): RuleConfig<Helper.NumberOfItems.Config> option =
+        match ConfHelper.GetEnaFlagForRule(config, ruleId)  with
+        | true ->
+            Some {
+                enabled = true;
+                config = Some { maxItems = ConfHelper.GetValueForInt(config, ruleId, "MaxItems", defaultValue) } }
+        | false-> None
+
+    Some {
+        maxNumberOfItemsInTuple = EnableNumberOfItemsRule("RulesNumberOfItemsTupleError", 5) // FL0051
+        maxNumberOfFunctionParameters = EnableNumberOfItemsRule("RulesNumberOfItemsFunctionError", 5) // FL0052
+        maxNumberOfMembers = EnableNumberOfItemsRule("RulesNumberOfItemsClassMembersError", 5) // FL0053
+        maxNumberOfBooleanOperatorsInCondition = EnableNumberOfItemsRule("RulesNumberOfItemsBooleanConditionsError", 4) // FL0054
+    }

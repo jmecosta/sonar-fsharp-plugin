@@ -137,7 +137,7 @@ module UntypedAstUtils =
                 visitBindindgs bindings
                 visitExpr body
 
-            | SynExpr.LetOrUseBang (_, _, _, _, rhsExpr, body, range) ->
+            | SynExpr.LetOrUseBang (_, _, _, _, rhsExpr, _, body, range) ->
                 functions <- functions + 1
                 addToUniqueRange range
                 visitExpr rhsExpr
