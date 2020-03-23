@@ -19,10 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="FSharpLintDefaultRulesConfigurationTest.fs" />
     <Compile Include="Resources\LintTestFile.fs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
+    <Compile Include="FSharpLintDefaultRulesConfigurationTest.fs" />
+    <Compile Include="ConfHelperTests.fs" />
     <Compile Include="Helper.fs" />
     <Compile Include="TestTypes.fs" />
     <Compile Include="TestLineOfCode.fs" />

@@ -2,6 +2,7 @@
 
 open FSharpLint.Framework.Configuration
 
+(** Rules FL0055-FL0058 *)
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): BindingConfig option =
     Some {
         favourIgnoreOverLetWild = ConfHelper.EnableRuleIfExist(config, "RulesFavourIgnoreOverLetWildError") // FL0055

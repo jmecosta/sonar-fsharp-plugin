@@ -3,14 +3,15 @@
 open FSharpLint.Framework.Configuration
 open FSharpLint.Rules
 
+(** Rules FL0051-FL0054 *)
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) : NumberOfItemsConfig option =
     let EnableNumberOfItemsRule (ruleId : string, defaultValue: int): RuleConfig<Helper.NumberOfItems.Config> option =
         match ConfHelper.GetEnaFlagForRule(config, ruleId)  with
+        | false-> None
         | true ->
             Some {
                 enabled = true;
                 config = Some { maxItems = ConfHelper.GetValueForInt(config, ruleId, "MaxItems", defaultValue) } }
-        | false-> None
 
     Some {
         maxNumberOfItemsInTuple = EnableNumberOfItemsRule("RulesNumberOfItemsTupleError", 5) // FL0051

@@ -66,7 +66,7 @@ let GetEnaFlagForRule(config : InputConfigution.AnalysisInput, ruleId : string):
 let EnableRuleIfExist(config : InputConfigution.AnalysisInput, ruleId : string): RuleConfig<'Config> option =
     GetEnaFlagForRule(config, ruleId)
     |> function
-            | true -> Some { enabled= true; config= None}
+            | true -> Some { enabled = true; config = None}
             | false -> None
 
 let GetValueForInt(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : int) =
@@ -77,31 +77,31 @@ let GetValueForInt(config : InputConfigution.AnalysisInput, ruleId : string, par
     with
     | _ -> defaultValue
 
-let GetValueForStringOrStringList(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
-    let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
-    let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
-    enabledis.Value.String.Value
+//let GetValueForStringOrStringList(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
+//    let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
+//    let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
+//    enabledis.Value.String.Value
 
-let GetValueForStringList(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : string List) =
-    try
-        let stringList = GetValueForStringOrStringList(config, ruleId, paramName)
-        stringList.Split(';') |> Array.toList
-    with
-    | _ -> defaultValue
+//let GetValueForStringList(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : string List) =
+//    try
+//        let stringList = GetValueForStringOrStringList(config, ruleId, paramName)
+//        stringList.Split(';') |> Array.toList
+//    with
+//    | _ -> defaultValue
 
-let GetValueForString(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : string) =
-    try
-        GetValueForStringOrStringList(config, ruleId, paramName)
-    with
-    | _ -> defaultValue
+//let GetValueForString(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : string) =
+//    try
+//        GetValueForStringOrStringList(config, ruleId, paramName)
+//    with
+//    | _ -> defaultValue
 
-let GetValueForEnum(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : string, enumType : 'T) =
+let GetValueForEnum<'T>(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : string) =
     try
         let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
         let param = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
-        Enum.Parse(enumType, param.Value.String.Value) :?> 'T
+        Enum.Parse(typeof<'T>, param.Value.String.Value) :?> 'T
     with
-    | _ -> Enum.Parse(enumType, defaultValue) :?> 'T
+    | _ -> Enum.Parse(typeof<'T>, defaultValue) :?> 'T
 
 //let parseHints (hints: string list) : Hints =
 //    { Hints = hints }

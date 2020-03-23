@@ -3,6 +3,7 @@
 open FSharpLint.Framework.Configuration
 open FSharpLint.Rules
 
+(** Rules FL0059-FL0064 *)
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): TypographyConfig option =
     let maxCharactersOnLineConfig : RuleConfig<MaxCharactersOnLine.Config> option =
         let ruleId = "RulesTypographyLineLengthError"
@@ -41,10 +42,10 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Typo
             }
 
     Some {
-       indentation = None
+       indentation = ConfHelper.EnableRuleIfExist(config, "RulesTypographyIndentation") // FL0059
        maxCharactersOnLine = maxCharactersOnLineConfig // FL0060
        trailingWhitespaceOnLine = trailingWhitespaceOnLineConfig // FL0061
        maxLinesInFile = maxLinesInFileConfig // FL0062
-       trailingNewLineInFile  = ConfHelper.EnableRuleIfExist(config, "RulesTypographyTrailingLineError") // FL0063
+       trailingNewLineInFile = ConfHelper.EnableRuleIfExist(config, "RulesTypographyTrailingLineError") // FL0063
        noTabCharacters= ConfHelper.EnableRuleIfExist(config, "RulesTypographyTabCharacterError") // FL0064
     }
