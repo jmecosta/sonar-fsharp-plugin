@@ -2,6 +2,7 @@
 
 open FSharpLint.Framework.Configuration
 
+(** Rules FL0017-FL0021 *)
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) : RaiseWithTooManyArgsConfig option =
     Some {
         raiseWithSingleArgument = ConfHelper.EnableRuleIfExist(config, "RulesRaiseWithSingleArgument") // FL0017

@@ -10,13 +10,12 @@
     <Compile Include="Rules\IgnoreFilesConfig.fs" />
     <Compile Include="Rules\FormattingConfig.fs" />
     <Compile Include="Rules\RaiseWithTooManyArgumentsConfig.fs" />
+    <Compile Include="Rules\SourceLengthConfig.fs" />
     <Compile Include="Rules\NumberOfItemsConfig.fs" />
     <Compile Include="Rules\BindingConfig.fs" />
     <Compile Include="Rules\ConventionsConfig.fs" />
     <Compile Include="Rules\TypographyConfig.fs" />
     <Compile Include="Rules\HintsConfig.fs" />
-    <Compile Include="Rules\NestedStatementsConfig.fs" />
-    <Compile Include="Rules\SourceLengthConfig.fs" />
     <Compile Include="InputConfigHandler.fs" />
     <Compile Include="ComplexityDistributions.fs" />
     <Compile Include="UntypeAST.fs" />

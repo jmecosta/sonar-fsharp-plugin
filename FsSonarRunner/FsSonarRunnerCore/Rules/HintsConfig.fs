@@ -3,7 +3,14 @@
 open FSharpLint.Framework.Configuration
 
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): HintConfig option =
-    None
+    // TODO
+    let addHints : string[] = [||]
+    let ignoreHints : string[] = [||]
+    Some  {
+        add = Some addHints
+        ignore = Some ignoreHints
+    }
+    
 
 
     //let hints =
