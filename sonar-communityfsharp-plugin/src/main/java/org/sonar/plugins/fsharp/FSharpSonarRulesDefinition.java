@@ -36,7 +36,7 @@ public class FSharpSonarRulesDefinition implements RulesDefinition {
       .setType(RuleParamType.INTEGER).setDefaultValue("1000");
     NewRule lineLength = createRule(repository, "RulesTypographyLineLengthError");
     lineLength.createParam("Length").setDescription("The maximum authorized line length")
-      .setType(RuleParamType.INTEGER).setDefaultValue("200");
+      .setType(RuleParamType.INTEGER).setDefaultValue("120");
     NewRule trailingWhiteSpace = createRule(repository, "RulesTypographyTrailingWhitespaceError");
     trailingWhiteSpace.createParam("NumberOfSpacesAllowed").setDescription("Number of spaces allowed")
       .setType(RuleParamType.INTEGER).setDefaultValue("4");

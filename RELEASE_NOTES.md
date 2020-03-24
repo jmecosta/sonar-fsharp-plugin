@@ -3,6 +3,7 @@
 ## v3.1.0 FSharpLint.Core 0.13.3
 
 - Switch to FSharpLint new (Json) configuration
+- Fix configuration of rule _MaxCharactersOnLine (FL0060)_
 
 ## v3.0.2
 
