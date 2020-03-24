@@ -33,4 +33,3 @@ type CreatesCorrectXml() =
         Assert.That(results.Files.[0].Metrics.Complexity, Is.EqualTo(0))
         Assert.That(results.Files.[0].Metrics.FileComplexityDistribution, Is.EqualTo("0=1;5=0;10=0;20=0;30=0;60=0;90=0"))
         File.Delete(tmpFile)
-

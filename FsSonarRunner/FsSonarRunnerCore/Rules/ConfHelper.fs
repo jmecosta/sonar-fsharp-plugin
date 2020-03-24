@@ -48,23 +48,15 @@ type InputConfigution = XmlProvider<"""
 </AnalysisInput>
 """>
 
-//let GetEnaFlagForParam(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
-//    try
-//        let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
-//        let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
-//        Enabled(enabledis.Value.Number.Value <> 0)
-//    with
-//    | _ -> Enabled(false)
-
-let GetEnaFlagForRule(config : InputConfigution.AnalysisInput, ruleId : string): bool =
+let RuleExists(config : InputConfigution.AnalysisInput, ruleId : string): bool =
     try
         config.Rules
         |> Seq.exists (fun c -> c.Key.Equals(ruleId))
     with
     | _ -> false
 
-let EnableRuleIfExist(config : InputConfigution.AnalysisInput, ruleId : string): RuleConfig<'Config> option =
-    GetEnaFlagForRule(config, ruleId)
+let EnableRule(config : InputConfigution.AnalysisInput, ruleId : string): RuleConfig<'Config> option =
+    RuleExists(config, ruleId)
     |> function
         | true -> Some { enabled = true; config = None}
         | false -> None
@@ -76,12 +68,19 @@ let GetValueForIntOption(config : InputConfigution.AnalysisInput, ruleId : strin
         Some enabledis.Value.Number.Value
     with
     | _ -> None
-    
 
 let GetValueForInt(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : int) =
     match GetValueForIntOption(config, ruleId, paramName) with
     | Some x -> x
     | None -> defaultValue
+
+let GetValueForStringOption(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
+    try
+        let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
+        let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
+        Some enabledis.Value.String.Value
+    with
+    | _ -> None
 
 //let GetValueForStringOrStringList(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
 //    let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
@@ -109,10 +108,11 @@ let GetValueForEnumOption<'T>(config : InputConfigution.AnalysisInput, ruleId : 
     with
     | _ -> None
 
-let GetValueForEnum<'T>(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : string) =
+let GetValueForEnum<'T>(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, thisIsAnNewDefaultValue : 'T) =
+    let defaultValue = thisIsAnNewDefaultValue
     match GetValueForEnumOption(config, ruleId, paramName) with
     | Some x -> x
-    | None -> Enum.Parse(typeof<'T>, defaultValue) :?> 'T
+    | None -> defaultValue
 
 //let parseHints (hints: string list) : Hints =
 //    { Hints = hints }
