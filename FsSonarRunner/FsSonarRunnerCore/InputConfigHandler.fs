@@ -19,11 +19,3 @@ let CreateALintConfiguration(path : string): Configuration =
         configuration
     else
         defaultConfiguration
-
-
-        // TODO FL0016
-        //("FailwithWithSingleArgument",
-        //    {
-        //        Settings = Map.ofList
-        //            [ ("Enabled", ConfHelper.GetEnaFlagForRule(config, "RulesFailwithWithSingleArgument")) ]
-        //    })

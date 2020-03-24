@@ -4,54 +4,54 @@ open FSharpLint.Framework.Configuration
 open FSharpLint.Rules
 
 [<Literal>]
-let FunctionLength = 100
+let LambdaFunctionLength = 7 // FL0022
 
 [<Literal>]
-let LambdaFunctionLength = 7
+let MatchLambdaFunctionLength = 100 // FL0023
 
 [<Literal>]
-let MatchLambdaFunctionLength = 100
+let ValueLength = 100 // FL0024
 
 [<Literal>]
-let ValueLength = 100
+let FunctionLength = 100 // FL0025
 
 [<Literal>]
-let ConstructorLength = 100
+let MemberLength = 100 // FL0026
 
 [<Literal>]
-let MemberLength = 100
+let ConstructorLength = 100 // FL0027
 
 [<Literal>]
-let PropertyLength = 100
+let PropertyLength = 70 // FL0028
 
 [<Literal>]
-let ClassLength = 500
+let ModuleLength = 1000 // FL0029
 
 [<Literal>]
-let UnionLength = 500
+let RecordLength = 500 // FL0030
 
 [<Literal>]
-let RecordLength = 500
+let EnumLength = 500 // FL0031
 
 [<Literal>]
-let EnumLength = 500
+let UnionLength = 500 // FL0032
 
 [<Literal>]
-let ModuleLength = 1000
+let ClassLength = 500 // FL0033
 
 (** Rules FL0022-FL0033 *)
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) : SourceLengthConfig option =
     let ruleId = "RulesSourceLengthError"
+
     let EnableNumberOfItemsRule (paramName : string, defaultValue: int): RuleConfig<Helper.SourceLength.Config> option =
-        //ConfHelper.GetValueForIntOption(config, ruleId, paramName)
-        //|> Option.bind (fun x -> Some {enabled = x<>0; config = Some { maxLines = x}})
-        match ConfHelper.GetEnaFlagForRule(config, ruleId)  with
+        match ConfHelper.RuleExists(config, ruleId)  with
         | false-> None
-        | true ->            
+        | true ->
+            let maxLines = ConfHelper.GetValueForInt(config, ruleId, paramName, defaultValue)
             Some {
-                enabled = true; // TODO nur wenn Parameter <> 0
-                config = Some { maxLines = ConfHelper.GetValueForInt(config, ruleId, "MaxLines", defaultValue) } }
-    Some { 
+                enabled = maxLines > 0 // only enable if line number is positive
+                config = Some { maxLines = maxLines } }
+    Some {
         maxLinesInLambdaFunction = EnableNumberOfItemsRule("MaxLinesInLambdaFunction", LambdaFunctionLength); // FL0022
         maxLinesInMatchLambdaFunction = EnableNumberOfItemsRule("MaxLinesInMatchLambdaFunction", MatchLambdaFunctionLength); // FL0023
         maxLinesInValue = EnableNumberOfItemsRule("MaxLinesInValue", ValueLength); // FL0024

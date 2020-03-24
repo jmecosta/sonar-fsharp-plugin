@@ -10,8 +10,6 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Hint
         add = Some addHints
         ignore = Some ignoreHints
     }
-    
-
 
     //let hints =
     //    let strintData = System.Net.WebUtility.HtmlDecode(ConfHelper.GetValueForString(config, "RulesHintRefactor", "Hints", ""))

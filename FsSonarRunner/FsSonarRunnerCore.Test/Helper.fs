@@ -21,7 +21,7 @@ let getAstBySourceText(file : string, input : ISourceText) =
 
     parseFileResults.ParseTree
 
-let getAstByContent(file : string, input : string) = 
+let getAstByContent(file : string, input : string) =
     getAstBySourceText(file, SourceText.ofString input)
 
 let getAstByFile(file : string) =

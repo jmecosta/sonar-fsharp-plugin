@@ -3,7 +3,7 @@
 open NUnit.Framework
 open FsSonarRunnerCore
 
-type TestEnum = 
+type TestEnum =
     | TestValue0 = 0
     | TestValue1 = 1
     | TestValue2 = 2
@@ -13,7 +13,7 @@ type TestEnum =
 [<TestFixture>]
 type ConfHelperTests() =
     let configValue = TestEnum.TestValue1
-    let config = 
+    let config =
         sprintf "<AnalysisInput>
             <Rules>
                 <Rule>
