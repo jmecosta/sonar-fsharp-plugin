@@ -43,7 +43,7 @@ let ClassLength = 500 // FL0033
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) : SourceLengthConfig option =
     let ruleId = "RulesSourceLengthError"
 
-    let EnableNumberOfItemsRule (paramName : string, defaultValue: int): RuleConfig<Helper.SourceLength.Config> option =
+    let enableNumberOfItemsRule(paramName : string, defaultValue: int): RuleConfig<Helper.SourceLength.Config> option =
         match ConfHelper.RuleExists(config, ruleId)  with
         | false-> None
         | true ->
@@ -52,16 +52,16 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) : Sou
                 enabled = maxLines > 0 // only enable if line number is positive
                 config = Some { maxLines = maxLines } }
     Some {
-        maxLinesInLambdaFunction = EnableNumberOfItemsRule("MaxLinesInLambdaFunction", LambdaFunctionLength); // FL0022
-        maxLinesInMatchLambdaFunction = EnableNumberOfItemsRule("MaxLinesInMatchLambdaFunction", MatchLambdaFunctionLength); // FL0023
-        maxLinesInValue = EnableNumberOfItemsRule("MaxLinesInValue", ValueLength); // FL0024
-        maxLinesInFunction = EnableNumberOfItemsRule("MaxLinesInFunction", FunctionLength); // FL0025
-        maxLinesInMember = EnableNumberOfItemsRule("MaxLinesInMember", MemberLength); // FL0026
-        maxLinesInConstructor = EnableNumberOfItemsRule("MaxLinesInConstructor", ConstructorLength); // FL0027
-        maxLinesInProperty = EnableNumberOfItemsRule("MaxLinesInProperty", PropertyLength); // FL0028
-        maxLinesInModule = EnableNumberOfItemsRule("MaxLinesInModule", ModuleLength); // FL0029
-        maxLinesInRecord = EnableNumberOfItemsRule("MaxLinesInRecord", RecordLength); // FL0030
-        maxLinesInEnum = EnableNumberOfItemsRule("MaxLinesInEnum", EnumLength); // FL0031
-        maxLinesInUnion = EnableNumberOfItemsRule("MaxLinesInUnion", UnionLength); // FL0032
-        maxLinesInClass = EnableNumberOfItemsRule("MaxLinesInClass", ClassLength) // FL0033
+        maxLinesInLambdaFunction = enableNumberOfItemsRule("MaxLinesInLambdaFunction", LambdaFunctionLength); // FL0022
+        maxLinesInMatchLambdaFunction = enableNumberOfItemsRule("MaxLinesInMatchLambdaFunction", MatchLambdaFunctionLength); // FL0023
+        maxLinesInValue = enableNumberOfItemsRule("MaxLinesInValue", ValueLength); // FL0024
+        maxLinesInFunction = enableNumberOfItemsRule("MaxLinesInFunction", FunctionLength); // FL0025
+        maxLinesInMember = enableNumberOfItemsRule("MaxLinesInMember", MemberLength); // FL0026
+        maxLinesInConstructor = enableNumberOfItemsRule("MaxLinesInConstructor", ConstructorLength); // FL0027
+        maxLinesInProperty = enableNumberOfItemsRule("MaxLinesInProperty", PropertyLength); // FL0028
+        maxLinesInModule = enableNumberOfItemsRule("MaxLinesInModule", ModuleLength); // FL0029
+        maxLinesInRecord = enableNumberOfItemsRule("MaxLinesInRecord", RecordLength); // FL0030
+        maxLinesInEnum = enableNumberOfItemsRule("MaxLinesInEnum", EnumLength); // FL0031
+        maxLinesInUnion = enableNumberOfItemsRule("MaxLinesInUnion", UnionLength); // FL0032
+        maxLinesInClass = enableNumberOfItemsRule("MaxLinesInClass", ClassLength) // FL0033
     }

@@ -20,14 +20,14 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Conv
                 config = Some { depth = ConfHelper.GetValueForInt(config, ruleId, "Depth", NestedStatementsDepth) }
             }
 
-    let PascalCase = Some NamingCase.PascalCase
-    let CamelCase = Some NamingCase.CamelCase
+    let pascalCase = Some NamingCase.PascalCase
+    let camelCase = Some NamingCase.CamelCase
 
-    let NoUnderscores = Some NamingUnderscores.None
-    let AllowPrefix = Some NamingUnderscores.AllowAny
+    let noUnderscores = Some NamingUnderscores.None
+    let allowPrefix = Some NamingUnderscores.AllowAny
 
     let namesConfig : NamesConfig option =
-        let EnableNumberOfItemsRule(ruleId: string, naming: NamingCase option, underscores: NamingUnderscores option, prefix: string option, suffix: string option) : RuleConfig<NamingConfig> option =
+        let enableNumberOfItemsRule(ruleId: string, naming: NamingCase option, underscores: NamingUnderscores option, prefix: string option, suffix: string option) : RuleConfig<NamingConfig> option =
             match ConfHelper.RuleExists(config, ruleId)  with
             | false -> None
             | true ->
@@ -42,21 +42,21 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Conv
                 }
 
         Some {
-            interfaceNames = EnableNumberOfItemsRule("InterfaceNames", PascalCase, NoUnderscores, Some "I", None); // FL0036
-            exceptionNames = EnableNumberOfItemsRule("ExceptionNames", PascalCase, NoUnderscores, None, Some "Exception"); // FL0037
-            typeNames = EnableNumberOfItemsRule("TypeNames", PascalCase, NoUnderscores, None, None); // FL0038
-            recordFieldNames = EnableNumberOfItemsRule("RecordFieldNames", PascalCase, NoUnderscores, None, None); // FL0039
-            enumCasesNames = EnableNumberOfItemsRule("EnumCasesNames", PascalCase, NoUnderscores, None, None); // FL0040
-            unionCasesNames = EnableNumberOfItemsRule("UnionCasesNames", PascalCase, NoUnderscores, None, None); // FL0041
-            moduleNames = EnableNumberOfItemsRule("ModuleNames", PascalCase, NoUnderscores, None, None); // FL0042
-            literalNames = EnableNumberOfItemsRule("LiteralNames", PascalCase, NoUnderscores, None, None); // FL0043
-            namespaceNames = EnableNumberOfItemsRule("NamespaceNames", PascalCase, NoUnderscores, None, None); // FL0044
-            memberNames = EnableNumberOfItemsRule("MemberNames", PascalCase, AllowPrefix, None, None); // FL0045
-            parameterNames = EnableNumberOfItemsRule("ParameterNames", CamelCase, AllowPrefix, None, None); // FL0046
-            measureTypeNames = EnableNumberOfItemsRule("MeasureTypeNames", None, NoUnderscores, None, None); // FL0047
-            activePatternNames = EnableNumberOfItemsRule("ActivePatternNames", PascalCase, NoUnderscores, None, None); // FL0048
-            publicValuesNames = EnableNumberOfItemsRule("PublicValuesNames", None, AllowPrefix, None, None); // FL0049
-            nonPublicValuesNames = EnableNumberOfItemsRule("NonPublicValuesNames", CamelCase, AllowPrefix, None, None); // FL0050
+            interfaceNames = enableNumberOfItemsRule("InterfaceNames", pascalCase, noUnderscores, Some "I", None); // FL0036
+            exceptionNames = enableNumberOfItemsRule("ExceptionNames", pascalCase, noUnderscores, None, Some "Exception"); // FL0037
+            typeNames = enableNumberOfItemsRule("TypeNames", pascalCase, noUnderscores, None, None); // FL0038
+            recordFieldNames = enableNumberOfItemsRule("RecordFieldNames", pascalCase, noUnderscores, None, None); // FL0039
+            enumCasesNames = enableNumberOfItemsRule("EnumCasesNames", pascalCase, noUnderscores, None, None); // FL0040
+            unionCasesNames = enableNumberOfItemsRule("UnionCasesNames", pascalCase, noUnderscores, None, None); // FL0041
+            moduleNames = enableNumberOfItemsRule("ModuleNames", pascalCase, noUnderscores, None, None); // FL0042
+            literalNames = enableNumberOfItemsRule("LiteralNames", pascalCase, noUnderscores, None, None); // FL0043
+            namespaceNames = enableNumberOfItemsRule("NamespaceNames", pascalCase, noUnderscores, None, None); // FL0044
+            memberNames = enableNumberOfItemsRule("MemberNames", pascalCase, allowPrefix, None, None); // FL0045
+            parameterNames = enableNumberOfItemsRule("ParameterNames", camelCase, allowPrefix, None, None); // FL0046
+            measureTypeNames = enableNumberOfItemsRule("MeasureTypeNames", None, noUnderscores, None, None); // FL0047
+            activePatternNames = enableNumberOfItemsRule("ActivePatternNames", pascalCase, noUnderscores, None, None); // FL0048
+            publicValuesNames = enableNumberOfItemsRule("PublicValuesNames", None, allowPrefix, None, None); // FL0049
+            nonPublicValuesNames = enableNumberOfItemsRule("NonPublicValuesNames", camelCase, allowPrefix, None, None); // FL0050
         }
 
     Some {
