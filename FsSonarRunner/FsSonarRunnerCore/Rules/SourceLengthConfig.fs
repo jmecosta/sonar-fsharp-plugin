@@ -43,6 +43,8 @@ let ModuleLength = 1000
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) : SourceLengthConfig option =
     let ruleId = "RulesSourceLengthError"
     let EnableNumberOfItemsRule (paramName : string, defaultValue: int): RuleConfig<Helper.SourceLength.Config> option =
+        //ConfHelper.GetValueForIntOption(config, ruleId, paramName)
+        //|> Option.bind (fun x -> Some {enabled = x<>0; config = Some { maxLines = x}})
         match ConfHelper.GetEnaFlagForRule(config, ruleId)  with
         | false-> None
         | true ->            
@@ -55,7 +57,7 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) : Sou
         maxLinesInValue = EnableNumberOfItemsRule("MaxLinesInValue", ValueLength); // FL0024
         maxLinesInFunction = EnableNumberOfItemsRule("MaxLinesInFunction", FunctionLength); // FL0025
         maxLinesInMember = EnableNumberOfItemsRule("MaxLinesInMember", MemberLength); // FL0026
-        maxLinesInConstructor = EnableNumberOfItemsRule("MaxLinesInMatchLambdaFunction", MatchLambdaFunctionLength); // FL0027
+        maxLinesInConstructor = EnableNumberOfItemsRule("MaxLinesInConstructor", ConstructorLength); // FL0027
         maxLinesInProperty = EnableNumberOfItemsRule("MaxLinesInProperty", PropertyLength); // FL0028
         maxLinesInModule = EnableNumberOfItemsRule("MaxLinesInModule", ModuleLength); // FL0029
         maxLinesInRecord = EnableNumberOfItemsRule("MaxLinesInRecord", RecordLength); // FL0030

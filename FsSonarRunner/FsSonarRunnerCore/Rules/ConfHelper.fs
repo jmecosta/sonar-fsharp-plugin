@@ -66,16 +66,22 @@ let GetEnaFlagForRule(config : InputConfigution.AnalysisInput, ruleId : string):
 let EnableRuleIfExist(config : InputConfigution.AnalysisInput, ruleId : string): RuleConfig<'Config> option =
     GetEnaFlagForRule(config, ruleId)
     |> function
-            | true -> Some { enabled = true; config = None}
-            | false -> None
+        | true -> Some { enabled = true; config = None}
+        | false -> None
 
-let GetValueForInt(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : int) =
+let GetValueForIntOption(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
     try
         let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
         let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
-        enabledis.Value.Number.Value
+        Some enabledis.Value.Number.Value
     with
-    | _ -> defaultValue
+    | _ -> None
+    
+
+let GetValueForInt(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : int) =
+    match GetValueForIntOption(config, ruleId, paramName) with
+    | Some x -> x
+    | None -> defaultValue
 
 //let GetValueForStringOrStringList(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
 //    let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
@@ -95,13 +101,18 @@ let GetValueForInt(config : InputConfigution.AnalysisInput, ruleId : string, par
 //    with
 //    | _ -> defaultValue
 
-let GetValueForEnum<'T>(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : string) =
+let GetValueForEnumOption<'T>(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
     try
         let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
         let param = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
-        Enum.Parse(typeof<'T>, param.Value.String.Value) :?> 'T
+        Some (Enum.Parse(typeof<'T>, param.Value.String.Value) :?> 'T)
     with
-    | _ -> Enum.Parse(typeof<'T>, defaultValue) :?> 'T
+    | _ -> None
+
+let GetValueForEnum<'T>(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : string) =
+    match GetValueForEnumOption(config, ruleId, paramName) with
+    | Some x -> x
+    | None -> Enum.Parse(typeof<'T>, defaultValue) :?> 'T
 
 //let parseHints (hints: string list) : Hints =
 //    { Hints = hints }
