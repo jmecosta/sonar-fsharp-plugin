@@ -13,7 +13,7 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Typo
             Some {
                 enabled = true;
                 config = Some {
-                    maxCharactersOnLine = ConfHelper.GetValueForInt(config, ruleId, "Length", 200);
+                    maxCharactersOnLine = ConfHelper.GetValueForInt(config, ruleId, "Length", 120);
                 }
             }
 
