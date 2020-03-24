@@ -17,7 +17,8 @@ let MaxNumberOfBooleanOperatorsInCondition = 4 // FL0054
 
 (** Rules FL0051-FL0054 *)
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) : NumberOfItemsConfig option =
-    let EnableNumberOfItemsRule (ruleId : string, defaultValue: int): RuleConfig<Helper.NumberOfItems.Config> option =
+
+    let enableNumberOfItemsRule (ruleId : string, defaultValue: int): RuleConfig<Helper.NumberOfItems.Config> option =
         match ConfHelper.RuleExists(config, ruleId)  with
         | false-> None
         | true ->
@@ -26,8 +27,8 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) : Num
                 config = Some { maxItems = ConfHelper.GetValueForInt(config, ruleId, "MaxItems", defaultValue) } }
 
     Some {
-        maxNumberOfItemsInTuple = EnableNumberOfItemsRule("RulesNumberOfItemsTupleError", MaxNumberOfItemsInTuple) // FL0051
-        maxNumberOfFunctionParameters = EnableNumberOfItemsRule("RulesNumberOfItemsFunctionError", MaxNumberOfFunctionParameters) // FL0052
-        maxNumberOfMembers = EnableNumberOfItemsRule("RulesNumberOfItemsClassMembersError", MaxNumberOfMembers) // FL0053
-        maxNumberOfBooleanOperatorsInCondition = EnableNumberOfItemsRule("RulesNumberOfItemsBooleanConditionsError", MaxNumberOfBooleanOperatorsInCondition) // FL0054
+        maxNumberOfItemsInTuple = enableNumberOfItemsRule("RulesNumberOfItemsTupleError", MaxNumberOfItemsInTuple) // FL0051
+        maxNumberOfFunctionParameters = enableNumberOfItemsRule("RulesNumberOfItemsFunctionError", MaxNumberOfFunctionParameters) // FL0052
+        maxNumberOfMembers = enableNumberOfItemsRule("RulesNumberOfItemsClassMembersError", MaxNumberOfMembers) // FL0053
+        maxNumberOfBooleanOperatorsInCondition = enableNumberOfItemsRule("RulesNumberOfItemsBooleanConditionsError", MaxNumberOfBooleanOperatorsInCondition) // FL0054
     }
