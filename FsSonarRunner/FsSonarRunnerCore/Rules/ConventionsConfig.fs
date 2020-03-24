@@ -17,24 +17,37 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Conv
             }
 
     let namesConfig : NamesConfig option = 
-        // TODO
-        let EnableNumberOfItemsRule() : RuleConfig<NamingConfig> option = None
+        let EnableNumberOfItemsRule(ruleId: string) : RuleConfig<NamingConfig> option =
+            match ConfHelper.GetEnaFlagForRule(config, ruleId)  with
+            | false -> None
+            | true ->
+                Some {
+                    enabled = true;
+                    config = Some {
+                        naming = ConfHelper.GetValueForEnumOption(config, ruleId, "Naming");
+                        underscores = ConfHelper.GetValueForEnumOption(config, ruleId, "Underscores");
+                        // TODO
+                        prefix = None; // ConfHelper.GetValueForString(config, ruleId, "Prefix");
+                        suffix = None // ConfHelper.GetValueForString(config, ruleId, "Suffix");
+                    }
+                }
+
         Some { 
-            interfaceNames = EnableNumberOfItemsRule(); // FL0036
-            exceptionNames = EnableNumberOfItemsRule(); // FL0037
-            typeNames = EnableNumberOfItemsRule(); // FL0038
-            recordFieldNames = EnableNumberOfItemsRule(); // FL0039
-            enumCasesNames = EnableNumberOfItemsRule(); // FL0040
-            unionCasesNames = EnableNumberOfItemsRule(); // FL0041
-            moduleNames = EnableNumberOfItemsRule(); // FL0042
-            literalNames = EnableNumberOfItemsRule(); // FL0043
-            namespaceNames = EnableNumberOfItemsRule(); // FL0044
-            memberNames = EnableNumberOfItemsRule(); // FL0045
-            parameterNames = EnableNumberOfItemsRule(); // FL0046
-            measureTypeNames = EnableNumberOfItemsRule(); // FL0047
-            activePatternNames = EnableNumberOfItemsRule(); // FL0048
-            publicValuesNames = EnableNumberOfItemsRule(); // FL0049
-            nonPublicValuesNames = EnableNumberOfItemsRule(); // FL0050
+            interfaceNames = EnableNumberOfItemsRule("InterfaceNames"); // FL0036
+            exceptionNames = EnableNumberOfItemsRule("ExceptionNames"); // FL0037
+            typeNames = EnableNumberOfItemsRule("TypeNames"); // FL0038
+            recordFieldNames = EnableNumberOfItemsRule("RecordFieldNames"); // FL0039
+            enumCasesNames = EnableNumberOfItemsRule("EnumCasesNames"); // FL0040
+            unionCasesNames = EnableNumberOfItemsRule("UnionCasesNames"); // FL0041
+            moduleNames = EnableNumberOfItemsRule("ModuleNames"); // FL0042
+            literalNames = EnableNumberOfItemsRule("LiteralNames"); // FL0043
+            namespaceNames = EnableNumberOfItemsRule("NamespaceNames"); // FL0044
+            memberNames = EnableNumberOfItemsRule("MemberNames"); // FL0045
+            parameterNames = EnableNumberOfItemsRule("ParameterNames"); // FL0046
+            measureTypeNames = EnableNumberOfItemsRule("MeasureTypeNames"); // FL0047
+            activePatternNames = EnableNumberOfItemsRule("ActivePatternNames"); // FL0048
+            publicValuesNames = EnableNumberOfItemsRule("PublicValuesNames"); // FL0049
+            nonPublicValuesNames = EnableNumberOfItemsRule("NonPublicValuesNames"); // FL0050
         }
 
     Some {
