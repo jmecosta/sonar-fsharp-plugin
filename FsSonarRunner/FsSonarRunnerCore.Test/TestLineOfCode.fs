@@ -88,6 +88,7 @@ type CorrectlyExtracsLineInformation() =
 
     [<Test>]
     member this.ShouldCountAllLinesInBigFile() =
+        // DO NOT FIX ISSUES - this code is for testing the analyser
         let content = """ namespace FsSonarRunnerCore
 
 open FSharp.Compiler.Ast
@@ -129,6 +130,7 @@ type Metrics() =
         // generate lines
         resourceMetric.GetLines <- FsSonarRunnerCore.UntypedAstUtils.GetLines(parseTree)
 
+
         // ensure we are able to run multiple parsers at same time
         lock resourcesLocker (fun () -> resources <- resources @ [resourceMetric] )
 
@@ -150,10 +152,13 @@ type Metrics() =
                 xmlOut.WriteElementString("Line", sprintf "%i" line)
             xmlOut.WriteEndElement() // 5
 
+
             // close element metrics
             xmlOut.WriteEndElement() // 4
 
             xmlOut.WriteEndElement() // 3
+
+
 
         xmlOut.WriteEndElement() // 2
         xmlOut.WriteEndElement() // 1

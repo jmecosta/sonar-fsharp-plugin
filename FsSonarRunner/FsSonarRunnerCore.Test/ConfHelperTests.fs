@@ -35,20 +35,20 @@ type ConfHelperTests() =
 
     [<Test>]
     member this.GetValueForEnum_NoRule_defaultValue() =
-        let actual: TestEnum = ConfHelper.GetValueForEnum(config, "NoEnumTestRule", "EnumTestParam",  defaultValue.ToString())
+        let actual: TestEnum = ConfHelper.GetValueForEnum(config, "NoEnumTestRule", "EnumTestParam",  defaultValue)
         Assert.AreEqual(defaultValue, actual)
 
     [<Test>]
     member this.GetValueForEnum_NoParameter_defaultValue() =
-        let actual: TestEnum = ConfHelper.GetValueForEnum(config, "EnumTestRule", "NoEnumTestParam",  defaultValue.ToString())
+        let actual: TestEnum = ConfHelper.GetValueForEnum(config, "EnumTestRule", "NoEnumTestParam",  defaultValue)
         Assert.AreEqual(defaultValue, actual)
 
     [<Test>]
     member this.GetValueForEnum_WithoutParameter_defaultValue() =
-        let actual: TestEnum = ConfHelper.GetValueForEnum(config, "RuleWithoutParameter", "NoEnumTestParam",  defaultValue.ToString())
+        let actual: TestEnum = ConfHelper.GetValueForEnum(config, "RuleWithoutParameter", "NoEnumTestParam",  defaultValue)
         Assert.AreEqual(defaultValue, actual)
 
     [<Test>]
     member this.GetValueForEnum_RuleAndParameter_parsedValue() =
-        let actual: TestEnum = ConfHelper.GetValueForEnum(config, "EnumTestRule", "EnumTestParam",  defaultValue.ToString())
+        let actual: TestEnum = ConfHelper.GetValueForEnum(config, "EnumTestRule", "EnumTestParam",  defaultValue)
         Assert.AreEqual(configValue, actual)

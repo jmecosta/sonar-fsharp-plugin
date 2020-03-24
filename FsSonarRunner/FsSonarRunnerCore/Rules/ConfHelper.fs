@@ -82,23 +82,11 @@ let GetValueForStringOption(config : InputConfigution.AnalysisInput, ruleId : st
     with
     | _ -> None
 
-//let GetValueForStringOrStringList(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
-//    let rule = config.Rules |> Seq.find (fun c -> c.Key.Equals(ruleId))
-//    let enabledis = rule.Parameters.Value.Parameters |> Seq.find (fun c -> c.Key.Equals(paramName))
-//    enabledis.Value.String.Value
-
-//let GetValueForStringList(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : string List) =
-//    try
-//        let stringList = GetValueForStringOrStringList(config, ruleId, paramName)
-//        stringList.Split(';') |> Array.toList
-//    with
-//    | _ -> defaultValue
-
-//let GetValueForString(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : string) =
-//    try
-//        GetValueForStringOrStringList(config, ruleId, paramName)
-//    with
-//    | _ -> defaultValue
+let GetValueForStringArray(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, separator: char[]) : string[] =
+    GetValueForStringOption(config, ruleId, paramName)
+    |> Option.defaultValue ""
+    |> System.Net.WebUtility.HtmlDecode
+    |> fun x -> x.Split(separator)
 
 let GetValueForEnumOption<'T>(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
     try
@@ -113,9 +101,6 @@ let GetValueForEnum<'T>(config : InputConfigution.AnalysisInput, ruleId : string
     match GetValueForEnumOption(config, ruleId, paramName) with
     | Some x -> x
     | None -> defaultValue
-
-//let parseHints (hints: string list) : Hints =
-//    { Hints = hints }
 
 let GetValueForBool(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string, defaultValue : bool) =
     try
