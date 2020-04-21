@@ -16,8 +16,8 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Conv
         | false -> None
         | true ->
             Some {
-                enabled = true;
-                config = Some { depth = ConfHelper.GetValueForInt(config, ruleId, "Depth", NestedStatementsDepth) }
+                Enabled = true;
+                Config = Some { Depth = ConfHelper.GetValueForInt(config, ruleId, "Depth", NestedStatementsDepth) }
             }
 
     let pascalCase = Some NamingCase.PascalCase
@@ -32,12 +32,12 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Conv
             | false -> None
             | true ->
                 Some {
-                    enabled = true;
-                    config = Some {
-                        naming = ConfHelper.GetValueForEnumOption(config, ruleId, "Naming") |> Option.orElse naming;
-                        underscores = ConfHelper.GetValueForEnumOption(config, ruleId, "Underscores") |> Option.orElse underscores;
-                        prefix = ConfHelper.GetValueForStringOption(config, ruleId, "Prefix") |> Option.orElse prefix
-                        suffix = ConfHelper.GetValueForStringOption(config, ruleId, "Suffix") |> Option.orElse suffix
+                    Enabled = true;
+                    Config = Some {
+                        Naming = ConfHelper.GetValueForEnumOption(config, ruleId, "Naming") |> Option.orElse naming;
+                        Underscores = ConfHelper.GetValueForEnumOption(config, ruleId, "Underscores") |> Option.orElse underscores;
+                        Prefix = ConfHelper.GetValueForStringOption(config, ruleId, "Prefix") |> Option.orElse prefix
+                        Suffix = ConfHelper.GetValueForStringOption(config, ruleId, "Suffix") |> Option.orElse suffix
                     }
                 }
 

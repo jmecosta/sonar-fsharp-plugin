@@ -23,8 +23,8 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) : Num
         | false-> None
         | true ->
             Some {
-                enabled = true;
-                config = Some { maxItems = ConfHelper.GetValueForInt(config, ruleId, "MaxItems", defaultValue) } }
+                Enabled = true;
+                Config = Some { MaxItems = ConfHelper.GetValueForInt(config, ruleId, "MaxItems", defaultValue) } }
 
     Some {
         maxNumberOfItemsInTuple = enableNumberOfItemsRule("RulesNumberOfItemsTupleError", MaxNumberOfItemsInTuple) // FL0051

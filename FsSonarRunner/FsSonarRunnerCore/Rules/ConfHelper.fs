@@ -58,7 +58,7 @@ let RuleExists(config : InputConfigution.AnalysisInput, ruleId : string): bool =
 let EnableRule(config : InputConfigution.AnalysisInput, ruleId : string): RuleConfig<'Config> option =
     RuleExists(config, ruleId)
     |> function
-        | true -> Some { enabled = true; config = None}
+        | true -> Some { Enabled = true; Config = None}
         | false -> None
 
 let GetValueForIntOption(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =

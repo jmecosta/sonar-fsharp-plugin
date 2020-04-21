@@ -69,3 +69,6 @@ packages/
 /FsSonarRunner/compile_commands.json
 **/.vs/**
 **/.vscode/**
+
+.fake
+.ionide

@@ -49,8 +49,8 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) : Sou
         | true ->
             let maxLines = ConfHelper.GetValueForInt(config, ruleId, paramName, defaultValue)
             Some {
-                enabled = maxLines > 0 // only enable if line number is positive
-                config = Some { maxLines = maxLines } }
+                Enabled = maxLines > 0 // only enable if line number is positive
+                Config = Some { MaxLines = maxLines } }
     Some {
         maxLinesInLambdaFunction = enableNumberOfItemsRule("MaxLinesInLambdaFunction", LambdaFunctionLength); // FL0022
         maxLinesInMatchLambdaFunction = enableNumberOfItemsRule("MaxLinesInMatchLambdaFunction", MatchLambdaFunctionLength); // FL0023

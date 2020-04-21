@@ -24,9 +24,9 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Typo
         | false -> None
         | true ->
             Some {
-                enabled = true;
-                config = Some {
-                    maxCharactersOnLine = ConfHelper.GetValueForInt(config, ruleId, "Length", MaxCharactersOnLine);
+                Enabled = true;
+                Config = Some {
+                    MaxCharactersOnLine = ConfHelper.GetValueForInt(config, ruleId, "Length", MaxCharactersOnLine);
                 }
             }
 
@@ -36,11 +36,11 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Typo
         | false -> None
         | true ->
             Some {
-                enabled = true;
-                config = Some {
-                    numberOfSpacesAllowed = ConfHelper.GetValueForInt(config, ruleId, "NumberOfSpacesAllowed", NumberOfSpacesAllowed);
-                    oneSpaceAllowedAfterOperator = ConfHelper.GetValueForBool(config, ruleId, "OneSpaceAllowedAfterOperator", OneSpaceAllowedAfterOperator);
-                    ignoreBlankLines = ConfHelper.GetValueForBool(config, ruleId, "IgnoreBlankLines", IgnoreBlankLines)
+                Enabled = true;
+                Config = Some {
+                    NumberOfSpacesAllowed = ConfHelper.GetValueForInt(config, ruleId, "NumberOfSpacesAllowed", NumberOfSpacesAllowed);
+                    OneSpaceAllowedAfterOperator = ConfHelper.GetValueForBool(config, ruleId, "OneSpaceAllowedAfterOperator", OneSpaceAllowedAfterOperator);
+                    IgnoreBlankLines = ConfHelper.GetValueForBool(config, ruleId, "IgnoreBlankLines", IgnoreBlankLines)
                 }
             }
 
@@ -50,8 +50,8 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Typo
         | false -> None
         | true ->
             Some {
-                enabled = true;
-                config = Some {maxLinesInFile = ConfHelper.GetValueForInt(config, ruleId, "Lines", MaxLinesInFile);}
+                Enabled = true;
+                Config = Some {MaxLinesInFile = ConfHelper.GetValueForInt(config, ruleId, "Lines", MaxLinesInFile);}
             }
 
     Some {
