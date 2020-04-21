@@ -2,7 +2,7 @@
 namespace FsSonarRunnerCore
 
 module UntypedAstUtils =
-    open FSharp.Compiler.Ast
+    open FSharp.Compiler.SyntaxTree
     open FSharp.Compiler.Range
     open FSharp.Compiler.SourceCodeServices
 

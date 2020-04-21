@@ -15,8 +15,8 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Form
         | false -> None
         | true ->
             Some {
-                enabled = true;
-                config = Some { typedItemStyle = ConfHelper.GetValueForEnum(config, ruleId, "TypedItemStyle", TypedItemStyle) }
+                Enabled = true;
+                Config = Some { TypedItemStyle = ConfHelper.GetValueForEnum(config, ruleId, "TypedItemStyle", TypedItemStyle) }
             }
 
     let tupleFormattingConfig = Some {

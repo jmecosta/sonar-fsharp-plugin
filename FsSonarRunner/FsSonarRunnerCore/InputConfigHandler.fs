@@ -10,12 +10,13 @@ let CreateALintConfiguration(path : string): Configuration =
 
         // TODO FSharpLint > 0.13.3 grouped configs deprecation: formatting, conventons, typography
         let configuration = {
-            ignoreFiles = IgnoreFilesConfig.SonarConfiguration(sonarConfig)
-            formatting = FormattingConfig.SonarConfiguration(sonarConfig)
-            conventions = ConventionsConfig.SonarConfiguration(sonarConfig)
-            typography = TypographyConfig.SonarConfiguration(sonarConfig)
-            hints = HintsConfig.SonarConfiguration(sonarConfig)
-        }
+            Configuration.Zero with
+                ignoreFiles = IgnoreFilesConfig.SonarConfiguration(sonarConfig)
+                formatting = FormattingConfig.SonarConfiguration(sonarConfig)
+                conventions = ConventionsConfig.SonarConfiguration(sonarConfig)
+                typography = TypographyConfig.SonarConfiguration(sonarConfig)
+                Hints = HintsConfig.SonarConfiguration(sonarConfig)
+            }
         configuration
     else
         defaultConfiguration

@@ -17,31 +17,35 @@ type FSharpLintDefaultRulesConfigurationTest() =
         | None -> Assert.Fail("is None")
 
     [<Test>]
-    member this.NumberOfFormattingConfig() =
-        match config.formatting with
-        | Some c -> Assert.AreEqual(0, c.Flatten().Length)
-        | _ -> Assert.Fail("is None")
+    member this.OldConfigIsNone() =
+        Assert.AreEqual(None, config.formatting, "formatting")
+        Assert.AreEqual(None, config.conventions, "conventions")
+        Assert.AreEqual(None, config.typography, "typography")
 
     [<Test>]
-    member this.NumberOfConventionsConfig() =
-        match config.conventions with
-        | Some c -> Assert.AreEqual(26, c.Flatten().Length)
-        | _ -> Assert.Fail("is None")
+    member this.GlobalConfigTest() =
+        Assert.IsTrue(Option.isSome(config.Global))
+        let globalConfig = config.Global.Value
+        let numIndentationSpaces = Option.defaultValue 0 (globalConfig.numIndentationSpaces)
+        Assert.AreEqual(4, numIndentationSpaces)
 
     [<Test>]
-    member this.NumberOfTypographyConfig() =
-        match config.typography with
-        | Some c -> Assert.AreEqual(1, c.Flatten().Length)
-        | _ -> Assert.Fail("is None")
+    member this.NumberOfEnabledRules() =
+        let enabledRules = FSharpLint.Framework.Configuration.flattenConfig config
+        Assert.AreEqual(28, enabledRules.AstNodeRules.Length, "AstNodeRules")
+        Assert.AreEqual(1, enabledRules.DeprecatedRules.Length, "DeprecatedRules") // Hints
+        Assert.AreEqual(0, enabledRules.LineRules.GenericLineRules.Length, "GenericLineRules")
+        Assert.AreEqual(0, enabledRules.LineRules.IndentationRule |> Option.toArray |> Array.length, "IndentationRule")
+        Assert.AreEqual(1, enabledRules.LineRules.NoTabCharactersRule|> Option.toArray |> Array.length, "NoTabCharactersRule")
 
     [<Test>]
     member this.NumberOfHintConfig() =
-        match config.hints with
+        match config.Hints with
         | Some h ->
             match h.add with
             | Some a -> Assert.AreEqual(108, a.Length)
             | None -> Assert.Fail("hints.add is None")
             match h.ignore with
             | Some i -> Assert.AreEqual(0, i.Length)
-            | None -> Assert.Fail("hints.ignore is None")
+            | None -> Assert.Pass("hints.ignore is None")
         | _ -> Assert.Fail("hints is None")
