@@ -15,7 +15,7 @@
   <!-- this is important for sonar-packaging-maven-plugin -->
   <packaging>sonar-plugin</packaging>
 
-  <name>Sonar F# Plugin :: Core</name>
+  <name>Sonar Community F# Plugin :: Core</name>
   <description>Enable analysis and reporting on F# projects.</description>
 
   <url>https://github.com/jmecsoftware/sonar-fsharp-plugin/</url>
@@ -26,7 +26,7 @@
 
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
-    <junit.jupiter.version>5.6.0</junit.jupiter.version>
+    <junit.jupiter.version>5.6.2</junit.jupiter.version>
      <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
@@ -98,7 +98,7 @@
           <pluginClass>org.sonar.plugins.fsharp.FSharpPlugin</pluginClass>
 
           <!-- advanced properties can be set here. See paragraph "Advanced Build Properties". -->
-          <pluginName>Sonar F#</pluginName>
+          <pluginName>Sonar Community F#</pluginName>
           <pluginDescription>Code Analyzer for F#</pluginDescription>
         </configuration>
       </plugin>
@@ -161,7 +161,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.15.0</version>
+      <version>3.16.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>

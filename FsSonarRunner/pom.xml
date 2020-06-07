@@ -12,7 +12,7 @@
   <artifactId>FsSonarRunner</artifactId>
   <packaging>pom</packaging>
 
-  <name>Sonar F# Plugin :: FsSonarRunner</name>
+  <name>Sonar Community F# Plugin :: FsSonarRunner</name>
 
   <build>
     <plugins>
