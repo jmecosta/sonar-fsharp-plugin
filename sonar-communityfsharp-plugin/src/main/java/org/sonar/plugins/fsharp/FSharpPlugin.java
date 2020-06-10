@@ -30,16 +30,16 @@ import org.sonar.api.Plugin;
 })
 public class FSharpPlugin implements Plugin {
 
-  public static final String LANGUAGE_KEY = "fs";
-  public static final String LANGUAGE_NAME = "F#";
+  static final String LANGUAGE_KEY = "fs";
+  static final String LANGUAGE_NAME = "F#";
+
+  static final String REPOSITORY_KEY = "fsharplint";
+  static final String REPOSITORY_NAME = "SonarQube";
 
   public static final String FILE_SUFFIXES_KEY = "sonar.fs.file.suffixes";
   public static final String FILE_SUFFIXES_DEFVALUE = ".fs,.fsx,.fsi";
 
   public static final String FSHARP_WAY_PROFILE = "Sonar way";
-
-  public static final String REPOSITORY_KEY = "fsharplint";
-  public static final String REPOSITORY_NAME = "SonarQube";
 
   @Override
   public void define(Context context) {

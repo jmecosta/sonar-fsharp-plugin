@@ -27,7 +27,7 @@
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
     <junit.jupiter.version>5.6.2</junit.jupiter.version>
-     <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <dependencyManagement>
