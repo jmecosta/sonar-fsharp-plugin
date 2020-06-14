@@ -23,9 +23,9 @@ import org.junit.jupiter.api.Test;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.config.internal.MapSettings;
 
-public class FSharpTest {
+class FSharpTest {
     @Test
-    public void baseClassConstructorCall() {
+    void baseClassConstructorCall() {
         Configuration configuration = (new MapSettings()).asConfig();
         FSharp fsharp = new FSharp(configuration);
 
@@ -34,7 +34,7 @@ public class FSharpTest {
     }
 
     @Test
-    public void hashcode_equals_true() {
+    void hashcode_equals_true() {
         Configuration configuration = (new MapSettings()).asConfig();
         FSharp fsharp1 = new FSharp(configuration);
         FSharp fsharp2 = new FSharp(configuration);
@@ -46,7 +46,7 @@ public class FSharpTest {
     }
 
     @Test
-    public void hashcode_equals_false() {
+    void hashcode_equals_false() {
         Configuration configuration1 = (new MapSettings()).asConfig();
         Configuration configuration2 = (new MapSettings()).asConfig();
         FSharp fsharp1 = new FSharp(configuration1);
@@ -59,7 +59,7 @@ public class FSharpTest {
     }
 
     @Test
-    public void fileSuffixes_default() {
+    void fileSuffixes_default() {
         Configuration configuration = (new MapSettings()).asConfig();
         FSharp fsharp = new FSharp(configuration);
 
@@ -72,7 +72,7 @@ public class FSharpTest {
     }
 
     @Test
-    public void fileSuffixes_userDefined() {
+    void fileSuffixes_userDefined() {
         String keys = ".fs,.fsx";
         int no_keys = 1 + StringUtils.countMatches(keys, ",");
         MapSettings settings = new MapSettings();

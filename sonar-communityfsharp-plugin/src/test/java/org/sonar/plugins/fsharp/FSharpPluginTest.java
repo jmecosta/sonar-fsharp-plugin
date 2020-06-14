@@ -20,9 +20,9 @@ import org.junit.jupiter.api.Test;
 import org.sonar.api.Plugin;
 import org.sonar.api.SonarRuntime;
 
-public class FSharpPluginTest {
+class FSharpPluginTest {
   @Test
-  public void addExtensions_expectedNumber() {
+  void addExtensions_expectedNumber() {
     // Arrange
     Plugin.Context context = new Plugin.Context(mock(SonarRuntime.class));
     FSharpPlugin plugin = new FSharpPlugin();

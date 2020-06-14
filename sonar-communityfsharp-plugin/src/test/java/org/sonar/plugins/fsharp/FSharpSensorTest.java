@@ -24,9 +24,9 @@ import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
 import org.sonar.api.issue.NoSonarFilter;
 import org.sonar.api.measures.FileLinesContextFactory;
 
-public class FSharpSensorTest {
+class FSharpSensorTest {
     @Test
-    public void describe_languageAndKey_asExpected() {
+    void describe_languageAndKey_asExpected() {
         // Arrange
         FsSonarRunnerExtractor extractor = new FsSonarRunnerExtractor();
         FileSystem fs = mock(FileSystem.class);
