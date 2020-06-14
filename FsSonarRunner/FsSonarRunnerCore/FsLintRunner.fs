@@ -114,8 +114,7 @@ type FsLintRunner(filePath : string, rules : SonarRules, configuration : Configu
             { CancellationToken = None
               ReceivedWarning = Some reportWarningLine
               Configuration = Configuration configuration
-              ReportLinterProgress = None
-              ReleaseConfiguration = None }
+              ReportLinterProgress = None }
 
         issues <- List.Empty
         if File.Exists(filePath) then
