@@ -20,11 +20,9 @@ cache:
 
 # scripts that run after cloning repository
 install:
-  - echo %JAVA_HOME%
   - cmd: SET JDK_HOME=C:\Program Files\Java\jdk11
   - cmd: SET JAVA_HOME=C:\Program Files\Java\jdk11
   - cmd: mvn versions:set -DnewVersion=%APPVEYOR_BUILD_VERSION%
-  - cmd: echo %PATH%
 
 # .NET Core project files patching
 dotnet_csproj:
