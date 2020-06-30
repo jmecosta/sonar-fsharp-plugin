@@ -503,9 +503,6 @@ public class FSharpSensor implements Sensor {
 
           if ("Line".equals(tagName)) {
             value++;
-
-            int line = Integer.parseInt(stream.getElementText());
-            fileLinesContext.setIntValue(CoreMetrics.COMMENT_LINES_DATA_KEY, line, 1);
           } else {
             throw new IllegalArgumentException(tagName);
           }
