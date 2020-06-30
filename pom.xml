@@ -21,7 +21,6 @@
   <properties>
     <configuration>Debug</configuration>
     <jacoco.version>0.8.5</jacoco.version>
-    <java.version>11</java.version>
   </properties>
 
   <!-- Build Settings -->
