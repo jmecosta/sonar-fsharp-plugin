@@ -92,6 +92,8 @@ after_test:
 artifacts:
   - path: 'sonar-communityfsharp-plugin/target/*.jar'
     name: sonar-communityfsharp-plugin
+  - path: 'FsSonarRunner/FsSonarRunnerCore/bin/Release/*.nupkg'
+    name: FsSonarRunnerCore
 
 #---------------------------------#
 #     deployment configuration    #
