@@ -30,9 +30,9 @@ dotnet_csproj:
   file: '**\*.csproj;**\*.props;**\*.fsproj;**\*.xml'
   version: '{version}'
   package_version: '{version}'
-  assembly_version: '{version}.0'
-  file_version: '{version}.0'
-  informational_version: '{version}.0'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
 
 #---------------------------------#
 #       build configuration       #
