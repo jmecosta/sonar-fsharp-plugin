@@ -44,8 +44,6 @@ type ResXml = XmlProvider<"""
         <PublicApi>0</PublicApi>
         <PublicUndocumentedApi>0</PublicUndocumentedApi>
         <Complexity>0</Complexity>
-        <FileComplexityDistribution>0=1;5=0;10=0;20=0;30=0;60=0;90=0</FileComplexityDistribution>
-        <FunctionComplexityDistribution>1=0;2=0;4=0;6=0;8=0;10=0;12=0</FunctionComplexityDistribution>
         <Comments>
           <NoSonar />
           <NonBlank>
