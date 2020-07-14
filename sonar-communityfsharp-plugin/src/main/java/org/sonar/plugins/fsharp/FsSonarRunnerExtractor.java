@@ -13,20 +13,17 @@
  */
 package org.sonar.plugins.fsharp;
 
-import org.sonar.api.batch.InstantiationStrategy;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import org.sonar.api.batch.ScannerSide;
+import org.sonar.api.scanner.ScannerSide;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonar.plugins.fsharp.utils.OSInfo;
 import org.sonar.plugins.fsharp.utils.UnZip;
 
 // addapted from https://github.com/SonarSource/sonar-csharp
-@InstantiationStrategy(InstantiationStrategy.PER_BATCH)
 @ScannerSide()
 public class FsSonarRunnerExtractor {
   public static final Logger LOG = Loggers.get(FsSonarRunnerExtractor.class);

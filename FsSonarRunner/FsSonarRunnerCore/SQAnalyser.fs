@@ -13,8 +13,6 @@ type SonarResoureMetrics(path : string) =
     member val Accessors : int = -1 with get, set
     member val Functions : int = -1 with get, set
     member val Complexity : int = -1 with get, set
-    member val FileComplexityDist : string = "" with get, set
-    member val FunctionComplexityDist : string = "" with get, set
     member val Issues : SonarIssue List = List.empty with get, set
     member val CopyPastTokens : UntypedAstUtils.TokenData List = List.empty with get, set
 
@@ -49,8 +47,6 @@ type SQAnalyser() =
         resourceMetric.Accessors <- autoProperties
         resourceMetric.Functions <- functions
         resourceMetric.Complexity <- complexity
-        resourceMetric.FileComplexityDist <- fileComplexityDist
-        resourceMetric.FunctionComplexityDist <- functionComplexityDist
 
         // generate lines
         resourceMetric.Lines <- FsSonarRunnerCore.UntypedAstUtils.GetLines(parseTree)
@@ -104,8 +100,6 @@ type SQAnalyser() =
             xmlOut.WriteElementString("Accessors", sprintf "%i" resource.Accessors)
             xmlOut.WriteElementString("Functions", sprintf "%i" resource.Functions)
             xmlOut.WriteElementString("Complexity", sprintf "%i" resource.Complexity)
-            xmlOut.WriteElementString("FileComplexityDistribution", sprintf "%s" resource.FileComplexityDist)
-            xmlOut.WriteElementString("FunctionComplexityDistribution", sprintf "%s" resource.FunctionComplexityDist)
 
             xmlOut.WriteStartElement("LinesOfCode") // 5
             for line in resource.LinesOfCode do
