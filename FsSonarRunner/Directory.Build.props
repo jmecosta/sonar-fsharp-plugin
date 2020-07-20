@@ -3,7 +3,15 @@
     <Copyright>Copyright © 2020</Copyright>
     <Product>Sonar Community F# Plugin</Product>
     <Description>The plugin enables analysis of F# within SonarQube.</Description>
-    <Version>0.0.0.1</Version>
+    <Version>0.0.1</Version>
     <Company>jmecsoftware</Company>
+    <Authors>jmecosta;milbrandt</Authors>
+    <Owners>jmecosta</Owners>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/jmecsoftware/sonar-fsharp-plugin</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/jmecsoftware/sonar-fsharp-plugin/blob/master/RELEASE_NOTES.md</PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/jmecsoftware/sonar-fsharp-plugin.git</RepositoryUrl>
+    <!-- see https://docs.microsoft.com/de-de/nuget/reference/nuspec and
+      https://docs.microsoft.com/de-de/dotnet/core/tools/csproj#nuget-metadata-properties for Nuget package metadata -->
   </PropertyGroup>
 </Project>

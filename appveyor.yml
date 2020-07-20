@@ -5,7 +5,7 @@
 #---------------------------------#
 
 # version format
-version: 3.1.0.{build}
+version: 3.1.{build}
 
 #---------------------------------#
 #    environment configuration    #
@@ -92,6 +92,8 @@ after_test:
 artifacts:
   - path: 'sonar-communityfsharp-plugin/target/*.jar'
     name: sonar-communityfsharp-plugin
+  - path: 'FsSonarRunner/FsSonarRunnerCore/bin/Release/*.nupkg'
+    name: FsSonarRunnerCore
 
 #---------------------------------#
 #     deployment configuration    #
