@@ -2,7 +2,7 @@
 
 ## v 3.1.x
 
-- BREAKING: Version numbering changed to Sematic ersioning 2.0 https://semver.org/ to expose FsSonarRunner as Nuget package
+- BREAKING: Version numbering changed to Sematic Versioning 2.0 https://semver.org/ to expose FsSonarRunner as Nuget package
 - Build Nuget package of FsSonarRunnerCore
 - Remove use of API which was in SonarQube 7.9 already deprecated (be ready for SonarQube 9.x)
 - Update of FSharpLint t0 0.16.5
