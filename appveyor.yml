@@ -5,7 +5,7 @@
 #---------------------------------#
 
 # version format
-version: 3.1.{build}
+version: 4.0.{build}
 
 #---------------------------------#
 #    environment configuration    #
@@ -101,11 +101,11 @@ artifacts:
 deploy:
   provider: NuGet
   on:
-    branch: master  
+    branch: master
   api_key:
     secure: K543ay4YetoE5FnmT4u5qd7J/5qi/C7THCrXY3A5BkKvVgjRSO96Kz6EsgB0Rui3
   skip_symbols: true
-      
+
 #---------------------------------#
 #        global handlers          #
 #---------------------------------#

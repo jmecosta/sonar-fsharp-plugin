@@ -1,6 +1,10 @@
 # Release Notes
 
-## v 3.1.x
+## v 4.0.x
+
+- BREAKING F# part as .NET 5.0 library (including nuget package)
+
+## v 3.1.384
 
 - BREAKING: Version numbering changed to Sematic Versioning 2.0 https://semver.org/ to expose FsSonarRunner as Nuget package
 - Build Nuget package of FsSonarRunnerCore
