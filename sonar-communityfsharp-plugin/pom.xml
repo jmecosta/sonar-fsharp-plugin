@@ -26,7 +26,7 @@
 
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
-    <junit.jupiter.version>5.6.2</junit.jupiter.version>
+    <junit.jupiter.version>5.7.0</junit.jupiter.version>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
@@ -44,7 +44,7 @@
         <groupId>org.sonarsource.sonarqube</groupId>
         <artifactId>sonar-plugin-api</artifactId>
         <!-- minimal version of SonarQube to support. -->
-        <version>7.9</version>
+        <version>7.9.5</version>
         <!-- mandatory scope -->
         <scope>provided</scope>
       </dependency>
@@ -169,13 +169,13 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.16.1</version>
+      <version>3.18.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>3.3.3</version>
+      <version>3.6.28</version>
       <scope>test</scope>
     </dependency>
     <dependency>
