@@ -26,6 +26,7 @@ Download latest snapshot from Appveyor: <https://ci.appveyor.com/project/jorgeco
 - Analyzer uses .NET 5.0, the corresponding depencies of .NET
   needs to be installed (especially on Linux). .NET Core is not
   required to be installed, as the application is _self-contained_.
+- NuGet packages still available also as .NET Standard 2.0/2.1 library.
 - Operating system (64 bit only): Windows, Linux.
 
 ### Installation

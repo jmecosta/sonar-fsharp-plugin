@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Copyright>Copyright © 2020</Copyright>
+    <Copyright>Copyright © 2021</Copyright>
     <Product>Sonar Community F# Plugin</Product>
     <Description>The plugin enables analysis of F# within SonarQube.</Description>
     <Version>0.0.1</Version>

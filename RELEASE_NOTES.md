@@ -1,8 +1,8 @@
 # Release Notes
 
-## v 4.0.x
+## v 3.2.x
 
-- BREAKING F# part as .NET 5.0 library (including nuget package)
+- F# part as .NET 5.0 library (including nuget package), Nuget as netstandard2.0,  netstandard2.1 and net50
 
 ## v 3.1.384
 
