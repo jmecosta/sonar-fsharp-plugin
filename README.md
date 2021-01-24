@@ -10,6 +10,10 @@ The plugin enables analysis of F# within SonarQube.
 
 Download latest snapshot from Appveyor: <https://ci.appveyor.com/project/jorgecosta/sonar-fsharp-plugin-wxq94/build/artifacts>
 
+## NuGet package
+
+[FsSonarRunner](https://www.nuget.org/packages/FsSonarRunnerCore/) is also available as NuGet package. [![NuGet Status](http://img.shields.io/nuget/v/FsSonarRunnerCore.svg?style=flat)](https://www.nuget.org/packages/dotnet-fsharplint/)
+
 ## Description / Features
 
 - Metrics: LOC, number of classes, number of methods
