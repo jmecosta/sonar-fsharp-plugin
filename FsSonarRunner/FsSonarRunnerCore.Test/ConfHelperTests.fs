@@ -1,7 +1,6 @@
 ﻿namespace FsSonarRunnerCore.Test
 
 open NUnit.Framework
-open FsSonarRunnerCore
 
 type TestEnum =
     | TestValue0 = 0
@@ -36,19 +35,19 @@ type ConfHelperTests() =
     [<Test>]
     member this.``GetValueForEnum returns `defaultValue` when `ruleId` not found``() =
         let actual: TestEnum = ConfHelper.GetValueForEnum(config, "NoEnumTestRule", "EnumTestParam",  defaultValue)
-        Assert.AreEqual(defaultValue, actual)
+        Assert.That(actual, Is.EqualTo(defaultValue))
 
     [<Test>]
     member this.``GetValueForEnum returns `defaultValue` when `paramName` not found``() =
         let actual: TestEnum = ConfHelper.GetValueForEnum(config, "EnumTestRule", "NoEnumTestParam",  defaultValue)
-        Assert.AreEqual(defaultValue, actual)
+        Assert.That(actual, Is.EqualTo(defaultValue))
 
     [<Test>]
     member this.``GetValueForEnum returns `defaultValue` when `ruleId` has no parameters``() =
         let actual: TestEnum = ConfHelper.GetValueForEnum(config, "RuleWithoutParameter", "NoEnumTestParam",  defaultValue)
-        Assert.AreEqual(defaultValue, actual)
+        Assert.That(actual, Is.EqualTo(defaultValue))
 
     [<Test>]
     member this.``GetValueForEnum returns parsed value``() =
         let actual: TestEnum = ConfHelper.GetValueForEnum(config, "EnumTestRule", "EnumTestParam",  defaultValue)
-        Assert.AreEqual(configValue, actual)
+        Assert.That(actual, Is.EqualTo(configValue))

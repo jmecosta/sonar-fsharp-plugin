@@ -1,4 +1,4 @@
-﻿module BindingConfig
+module BindingConfig
 
 open FSharpLint.Framework.Configuration
 
@@ -9,4 +9,6 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Bind
         wildcardNamedWithAsPattern = ConfHelper.EnableRule(config, "RulesWildcardNamedWithAsPattern") // FL0056
         uselessBinding = ConfHelper.EnableRule(config, "RulesUselessBindingError") // FL0057
         tupleOfWildcards = ConfHelper.EnableRule(config, "RulesTupleOfWildcardsError") // FL0058
+        favourTypedIgnore = ConfHelper.EnableRule(config, "RulesFavourTypedIgnore") // FL0070
+        favourAsKeyword = ConfHelper.EnableRule(config, "RulesFavourAsKeyword") // FL0086
     }

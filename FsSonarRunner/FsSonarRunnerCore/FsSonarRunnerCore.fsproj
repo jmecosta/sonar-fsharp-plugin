@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net50;netstandard2.0;netstandard2.1</TargetFrameworks>
     <ProjectGuid>584f069c-db4c-4561-9402-5b9b703f15a8</ProjectGuid>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
@@ -25,13 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FSharp.Data" Version="3.3.3" />
-    <PackageReference Include="FSharpLint.Core" Version="0.16.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="4.6.2" />
-    <PackageReference Update="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Update="FSharp.Core" Version="9.0.201" />
+    <PackageReference Include="FSharp.Data" Version="6.6.0" />
+    <PackageReference Include="FSharpLint.Core" Version="0.26.2" />
   </ItemGroup>
 
 </Project>

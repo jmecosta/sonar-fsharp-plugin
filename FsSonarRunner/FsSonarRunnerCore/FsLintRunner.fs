@@ -1,8 +1,9 @@
 ﻿namespace FsSonarRunnerCore
 
-open FSharpLint.Framework.Ast
+open FSharp.Compiler.Text
 open FSharpLint.Application
 open FSharpLint.Framework
+open FSharpLint.Framework.Configuration
 open System
 open System.Resources
 open System.Reflection
@@ -33,11 +34,14 @@ type SonarRules() =
 
         let createProfileRule(lem:DictionaryEntry) =
             try
-                if (lem.Key :?> string).StartsWith("Rules") ||
-                   (lem.Key :?> string).Equals("LintError")  ||
-                   (lem.Key :?> string).Equals("LintSourceError") then
-                    let rule = FsLintRule(lem.Key :?> string, lem.Value :?> string)
-                    rules <- rules @ [rule]
+                match lem.Key, lem.Value with
+                | (:? string as k), (:? string as v) ->
+                    if k.StartsWith("Rules") ||
+                       k.Equals("LintError")  ||
+                       k.Equals("LintSourceError") then
+                            let rule = FsLintRule(k, v)
+                            rules <- rules @ [rule]
+                | _ -> ()
             with
             | _ -> ()
 
@@ -73,15 +77,15 @@ type SonarIssue() =
     member val Component : string = "" with get, set
     member val Message : string = "" with get, set
 
-type FsLintRunner(filePath : string, rules : SonarRules, configuration : Configuration.Configuration) =
+type FsLintRunner(filePath : string, rules : SonarRules, configuration : Configuration) =
     let mutable notsupportedlines = List.Empty
     let mutable issues = List.empty
 
-    let getErrorMessage (range:FSharp.Compiler.Range.range) =
+    let getErrorMessage (range: range) =
         let error = Resources.GetString("LintSourceError")
         String.Format(error, range.StartLine, range.StartColumn)
 
-    let highlightErrorText (range:FSharp.Compiler.Range.range) (errorLine:string) =
+    let highlightErrorText (range: range) (errorLine:string) =
         let highlightColumnLine =
             if String.length errorLine = 0 then "^"
             else
@@ -95,7 +99,9 @@ type FsLintRunner(filePath : string, rules : SonarRules, configuration : Configu
         let str = warning.Details.Message + Environment.NewLine + highlightedErrorText + Environment.NewLine + warning.ErrorText
         let rule = rules.GetRule(warning.Details.Message)
         if not (isNull rule) then
-            let issue = SonarIssue(Rule = rule.Rule, Line = warning.Details.Range.StartLine, Component = filePath, Message = warning.Details.Message)
+            let deets = warning.Details
+            let range = deets.Range
+            let issue = SonarIssue(Rule = rule.Rule, Line = range.StartLine, Component = filePath, Message = deets.Message)
             issues  <- issues @ [issue]
         else
             notsupportedlines <- notsupportedlines @ [str]

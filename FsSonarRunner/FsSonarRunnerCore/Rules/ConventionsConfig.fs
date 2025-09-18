@@ -7,6 +7,9 @@ open FSharpLint.Rules
 [<Literal>]
 let NestedStatementsDepth = 8
 
+[<Literal>]
+let MaxComplexity = 40
+
 (** Rules FL0013-FL0058 *)
 let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): ConventionsConfig option =
 
@@ -57,7 +60,30 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Conv
             activePatternNames = enableNumberOfItemsRule("ActivePatternNames", pascalCase, noUnderscores, None, None); // FL0048
             publicValuesNames = enableNumberOfItemsRule("PublicValuesNames", None, allowPrefix, None, None); // FL0049
             nonPublicValuesNames = enableNumberOfItemsRule("NonPublicValuesNames", camelCase, allowPrefix, None, None); // FL0050
+            privateValuesNames = enableNumberOfItemsRule("PrivateValuesNames", camelCase, allowPrefix, None, None); // FL0067
+            internalValuesNames = enableNumberOfItemsRule("InternalValuesNames", camelCase, allowPrefix, None, None); // FL0068
+            genericTypesNames = enableNumberOfItemsRule("FunctionNames", pascalCase, noUnderscores, None, None); // FL0080
         }
+
+    let cyclomaticComplexityConfig : RuleConfig<CyclomaticComplexity.Config> option =
+        let ruleId = "RulesCyclomaticComplexityError"
+        match ConfHelper.RuleExists(config, ruleId)  with
+        | false -> None
+        | true ->
+            Some {
+                Enabled = true;
+                Config = Some { MaxComplexity = ConfHelper.GetValueForInt(config, ruleId, "MaxComplexity", MaxComplexity) }
+            }
+
+    let symbolConfig : RuleConfig<FavourConsistentThis.Config> option =
+        let ruleId = "RulesFavourConsistentThis"
+        match ConfHelper.RuleExists(config, ruleId)  with
+        | false -> None
+        | true ->
+            Some {
+                Enabled = true;
+                Config = Some { Symbol = ConfHelper.GetValueForStringOption(config, ruleId, "Symbol") |> Option.defaultValue "this" }
+            }
 
     Some {
         recursiveAsyncFunction = ConfHelper.EnableRule(config, "RulesConventionsRecursiveAsyncFunctionError") // FL0013
@@ -73,4 +99,17 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput): Conv
 
         // TODO missing in FSharpLint 0.13.3, see https://github.com/fsprojects/FSharpLint/issues/393
         // failwithWithSingleArgument = ConfHelper.EnableRule(config, "RulesFailwithWithSingleArgument") // FL0016
+
+        cyclomaticComplexity = cyclomaticComplexityConfig // FL0071
+        favourReRaise = ConfHelper.EnableRule(config, "RulesFavourReRaise") // FL0073
+        favourConsistentThis = symbolConfig // FL0074
+        avoidTooShortNames = ConfHelper.EnableRule(config, "RulesAvoidTooShortNamesError") // FL0075
+        favourStaticEmptyFields = ConfHelper.EnableRule(config, "RulesFavourStaticEmptyFields") // FL0076
+        avoidSinglePipeOperator = ConfHelper.EnableRule(config, "RulesAvoidSinglePipeOperator") // FL0077
+        asyncExceptionWithoutReturn = ConfHelper.EnableRule(config, "RulesAsyncExceptionWithoutReturn") // FL0078
+        suggestUseAutoProperty = ConfHelper.EnableRule(config, "RulesSuggestUseAutoProperty") // FL0079
+        usedUnderscorePrefixedElements = ConfHelper.EnableRule(config, "RulesUsedUnderscorePrefixedElements") // FL0082
+        unneededRecKeyword = ConfHelper.EnableRule(config, "RulesUnneededRecKeyword") // FL0083
+        favourNonMutablePropertyInitialization = ConfHelper.EnableRule(config, "RulesFavourNonMutablePropertyInitializationError") // FL0084
+        ensureTailCallDiagnosticsInRecursiveFunctions = ConfHelper.EnableRule(config, "RulesEnsureTailCallDiagnosticsInRecursiveFunctions") // FL0085
     }

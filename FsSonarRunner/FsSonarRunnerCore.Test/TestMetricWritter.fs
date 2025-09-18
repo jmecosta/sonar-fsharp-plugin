@@ -26,7 +26,7 @@ type CreatesCorrectXml() =
 
         let results = Helper.ResXml.Parse(File.ReadAllText(tmpFile))
         Assert.That(results.Files.[0].Path, Is.EqualTo("/file.fs"))
-        Assert.That(results.Files.[0].Metrics.LinesOfCodes.Length, Is.EqualTo(7))
+        Assert.That(results.Files.[0].Metrics.LinesOfCodes.Length, Is.EqualTo(8))
         Assert.That(results.Files.[0].Metrics.Classes, Is.EqualTo(1))
         Assert.That(results.Files.[0].Metrics.Accessors, Is.EqualTo(5))
         Assert.That(results.Files.[0].Metrics.Functions, Is.EqualTo(1))

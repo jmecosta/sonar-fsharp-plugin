@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Copyright>Copyright © 2021</Copyright>
+    <Copyright>Copyright © $([System.DateTime]::UtcNow.Year)</Copyright>
     <Product>Sonar Community F# Plugin</Product>
     <Description>The plugin enables analysis of F# within SonarQube.</Description>
     <Version>0.0.1</Version>
@@ -14,4 +14,18 @@
     <!-- see https://docs.microsoft.com/de-de/nuget/reference/nuspec and
       https://docs.microsoft.com/de-de/dotnet/core/tools/csproj#nuget-metadata-properties for Nuget package metadata -->
   </PropertyGroup>
+
+  <!-- Build defaults -->
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <WarningLevel>5</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AnalysisLevel>latest-all</AnalysisLevel>
+    <!-- Can't trim since FSharpLint.Core is still using Reflection-based serialization -->
+    <!-- <PublishTrimmed>true</PublishTrimmed> -->
+  </PropertyGroup>
+
 </Project>

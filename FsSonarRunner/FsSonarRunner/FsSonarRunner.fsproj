@@ -2,11 +2,9 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net50</TargetFramework>
     <!-- see https://docs.microsoft.com/en-us/dotnet/core/rid-catalog for RIds -->
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <ProjectGuid>504f4169-b41d-431f-b31e-e72e0fe2495c</ProjectGuid>
-    <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,15 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FSharp.Data" Version="3.3.3" />
+    <PackageReference Update="FSharp.Core" Version="9.0.201" />
+    <PackageReference Include="FSharp.Data" Version="6.6.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FsSonarRunnerCore\FsSonarRunnerCore.fsproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="4.6.2" />
-    <PackageReference Update="System.ValueTuple" Version="4.5.0" />
-  </ItemGroup>
 </Project>

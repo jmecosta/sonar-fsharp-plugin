@@ -52,6 +52,7 @@
                 <argument>publish/win-x86</argument>
                 <argument>--runtime </argument>
                 <argument>win-x64</argument>
+                <argument>--self-contained</argument>
                 <argument>FsSonarRunner</argument>
               </arguments>
             </configuration>
@@ -73,6 +74,7 @@
                 <argument>publish/linux-x86</argument>
                 <argument>--runtime </argument>
                 <argument>linux-x64</argument>
+                <argument>--self-contained</argument>
                 <argument>FsSonarRunner</argument>
               </arguments>
             </configuration>

@@ -1,7 +1,6 @@
 ﻿namespace FsSonarRunnerCore.Test
 
 open NUnit.Framework
-open FsSonarRunnerCore
 
 (**
  * These tests may fail if the default configuration of FSharpLint changes
@@ -13,39 +12,39 @@ type FSharpLintDefaultRulesConfigurationTest() =
     [<Test>]
     member this.NumberOfIgnoreFiles() =
         match config.ignoreFiles with
-        | Some f -> Assert.AreEqual(1, f.Length)
+        | Some f -> Assert.That(f.Length, Is.EqualTo(1))
         | None -> Assert.Fail("is None")
 
     [<Test>]
     member this.OldConfigIsNone() =
-        Assert.AreEqual(None, config.formatting, "formatting")
-        Assert.AreEqual(None, config.conventions, "conventions")
-        Assert.AreEqual(None, config.typography, "typography")
+        Assert.That(config.formatting, Is.EqualTo(None))
+        Assert.That(config.conventions, Is.EqualTo(None))
+        Assert.That(config.typography, Is.EqualTo(None))
 
     [<Test>]
     member this.GlobalConfigTest() =
-        Assert.IsTrue(Option.isSome(config.Global))
+        Assert.That(Option.isSome(config.Global), Is.True)
         let globalConfig = config.Global.Value
         let numIndentationSpaces = Option.defaultValue 0 (globalConfig.numIndentationSpaces)
-        Assert.AreEqual(4, numIndentationSpaces)
+        Assert.That(numIndentationSpaces, Is.EqualTo(4))
 
     [<Test>]
     member this.NumberOfEnabledRules() =
         let enabledRules = FSharpLint.Framework.Configuration.flattenConfig config
-        Assert.AreEqual(28, enabledRules.AstNodeRules.Length, "AstNodeRules")
-        Assert.AreEqual(1, enabledRules.DeprecatedRules.Length, "DeprecatedRules") // Hints
-        Assert.AreEqual(0, enabledRules.LineRules.GenericLineRules.Length, "GenericLineRules")
-        Assert.AreEqual(0, enabledRules.LineRules.IndentationRule |> Option.toArray |> Array.length, "IndentationRule")
-        Assert.AreEqual(1, enabledRules.LineRules.NoTabCharactersRule|> Option.toArray |> Array.length, "NoTabCharactersRule")
+        Assert.That(enabledRules.AstNodeRules.Length, Is.EqualTo(36))
+        Assert.That(enabledRules.DeprecatedRules.Length, Is.EqualTo(1)) // Hints
+        Assert.That(enabledRules.LineRules.GenericLineRules.Length, Is.EqualTo(0))
+        Assert.That(enabledRules.LineRules.IndentationRule |> Option.toArray |> Array.length, Is.EqualTo(0))
+        Assert.That(enabledRules.LineRules.NoTabCharactersRule |> Option.toArray |> Array.length, Is.EqualTo(1))
 
     [<Test>]
     member this.NumberOfHintConfig() =
         match config.Hints with
         | Some h ->
             match h.add with
-            | Some a -> Assert.AreEqual(108, a.Length)
+            | Some a -> Assert.That(a.Length, Is.EqualTo(109))
             | None -> Assert.Fail("hints.add is None")
             match h.ignore with
-            | Some i -> Assert.AreEqual(0, i.Length)
+            | Some i -> Assert.That(i.Length, Is.EqualTo(0))
             | None -> Assert.Pass("hints.ignore is None")
         | _ -> Assert.Fail("hints is None")

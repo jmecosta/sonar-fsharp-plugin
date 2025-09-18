@@ -86,7 +86,7 @@ let GetValueForStringArray(config : InputConfigution.AnalysisInput, ruleId : str
     GetValueForStringOption(config, ruleId, paramName)
     |> Option.defaultValue ""
     |> System.Net.WebUtility.HtmlDecode
-    |> fun x -> x.Split(separator)
+    |> function null -> [||] | x -> x.Split(separator)
 
 let GetValueForEnumOption<'T>(config : InputConfigution.AnalysisInput, ruleId : string, paramName : string) =
     try
