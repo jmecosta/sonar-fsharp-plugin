@@ -55,7 +55,7 @@ type CorrectlyExtracsLineInformation() =
         let ast = Helper.getAstByContent("/file.fs", content)
 
         let loc, nmbclasses, autoprops, functions, complexity, fileComplexityDist, functionComplexityDist = FsSonarRunnerCore.UntypedAstUtils.getCodeMetrics(ast)
-        Assert.That(loc.Count, Is.EqualTo(7))
+        Assert.That(loc.Count, Is.EqualTo(8))
         Assert.That(nmbclasses, Is.EqualTo(1))
         Assert.That(FsSonarRunnerCore.UntypedAstUtils.GetLines(ast), Is.EqualTo(9))
 

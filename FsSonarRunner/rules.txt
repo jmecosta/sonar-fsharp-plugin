@@ -1,15 +1,21 @@
-[|"/displayrules"|]
+[|"/displayRules"|]
 RulesRedundantNewKeyword  = Usage of `new` keyword here is redundant.
+RulesFavourConsistentThis  = Prefer using '{0}' consistently.
+RulesConventionsNoPartialFunctionsAdditionalError  = Consider not using partial function '{0}'.
 RulesTypographyOverridenIndentationError  = Invalid indentation.
 RulesFormattingTupleParenthesesError  = Use parentheses for tuple instantiation.
+RulesFavourStaticEmptyFieldsForString  = Consider using 'String.Empty' instead.
 RulesRaiseWithSingleArgument  = `raise` should have a single argument, further arguments will be ignored by the compiler.
 RulesConventionsRecursiveAsyncFunctionError  = Recursive async functions ending with a `do!` recursive call will leak memory; prefer `return!`.
 RulesTypographyIndentationError  = Indentation must use a multiple of {0} spaces.
+RulesEnsureTailCallDiagnosticsInRecursiveFunctions  = The '{0}' function has a "rec" keyword, but no [<TailCall>] attribute. Consider adding [<TailCall>] attribute to the function and <WarningsAsErrors>FS3569</WarningsAsErrors> property to project file (but only on .NET 8 and higher).
 RulesNumberOfItemsClassMembersError  = Class suggested to have a maximum of {0} members.
 RulesTypographyTrailingLineError  = Found trailing whitespace line at end of file.
 RulesNamingConventionsCamelCaseError  = Consider changing `{0}` to camelCase.
+RulesConventionsNoPartialFunctionsPatternMatchError  = Consider using pattern matching instead of partial function/method '{0}'.
 RulesNumberOfItemsBooleanConditionsError  = Conditions suggested to contain at most {0} boolean operators.
 RulesNestedStatementsError  = Code suggested not to be nested more deeply than a depth of {0}.
+RulesFavourReRaise  = Rather use reraise() instead of using raise with the same captured exception.
 RulesTypographyTabCharacterError  = Consider replacing tab (`\t`) with spaces.
 RulesHintRefactor  = `{0}` might be able to be refactored into `{1}`.
 RulesFormattingF#PostfixGenericError  = Use postfix syntax for F# type {0}.
@@ -23,36 +29,50 @@ RulesNamingConventionsPrefixError  = Consider changing `{0}` to be prefixed with
 RulesFormattingPatternMatchClauseIndentationError  = Match clauses should be in line with 'match' keyword.
 RulesFailwithWithSingleArgument  = `failwith` should have a single argument, further arguments will be ignored by the compiler.
 RulesNamingConventionsUnderscoreError  = Consider changing `{0}` to remove any underscores.
+RulesUnneededRecKeyword  = The '{0}' function has a "rec" keyword, but it is not really recursive, consider removing it.
 RulesFormattingClassMemberSpacingError  = Class members should be separated by 1 blank line.
 RulesNullArgWithSingleArgument  = `nullArg` should have a single argument, further arguments will be ignored by the compiler.
 LintSourceError  = Error on line {0} starting at column {1}
+RulesSuggestUseAutoProperty  = Consider using auto-properties via the 'val' keyword.
 RulesInvalidOpWithSingleArgument  = `invalidOp` should have a single argument, further arguments will be ignored by the compiler.
+RulesCyclomaticComplexityError  = The cyclomatic complexity of this section is {0}, which exceeds the maximum suggested complexity of {1}.
 RulesFormattingModuleDeclSpacingError  = Separate module declarations with 2 blank lines.
 RulesFormattingLambdaPatternMatchClauseIndentationError  = Match clauses should be indented one level from 'function' keyword.
 RulesFormattingTupleIndentationError  = Sub-expressions of tuple on different lines should have consistent indentation.
+RulesConventionsNoPartialFunctionsReplacementError  = Consider using '{0}' instead of partial function/method '{1}'.
+RulesAvoidSinglePipeOperator  = Can use normal function call (instead of pipe operator) because there is no invocation chain (single invocation only).
+RulesFailwithBadUsage  = Bad usage of failwith: {0}.
 RulesTypographyFileLengthError  = File suggested to be less than {0} lines long.
+RulesFavourTypedIgnore  = Use a generic type parameter when calling the 'ignore' function.
 RulesUselessBindingError  = Binding appears to have no purpose.
 RulesTypographyRecordFieldIndentationError  = Record fields should be aligned.
 RulesFavourIgnoreOverLetWildError  = The `ignore` function is usually favoured over `let _ = ...` when ignoring the result of an expression.
 RulesFormattingTupleCommaSpacingError  = Comma in tuple instantiation should be followed by single space.
+RulesFavourAsKeyword  = Prefer using the 'as' pattern to match a constant and bind it to a variable.
 RulesInvalidArgWithTwoArguments  = `invalidArg` should have two arguments, further arguments will be ignored by the compiler.
 RulesTypographyLineLengthError  = Line suggested to be less than {0} characters long.
 RulesNumberOfItemsFunctionError  = Functions suggested to have a maximum of {0} parameters.
 RulesFormattingPatternMatchClausesOnNewLineError  = Each match clause should be placed on its own line.
 RulesNamingConventionsPascalCaseError  = Consider changing `{0}` to PascalCase.
-RulesFormattingMatchExpressionIndentationError  = If RHS of pattern match case is on newline, it should be indentend by one level.
+RulesFormattingMatchExpressionIndentationError  = If RHS of pattern match case is on newline, it should be indented by one level.
 RulesTupleOfWildcardsError  = A tuple of wildcards in a pattern can be replaced with a single wildcard. `{0}` can be replaced with `{1}`.
 RulesFormattingPatternMatchClauseSameIndentationError  = Match clauses should be at the same indentation level.
+RulesFavourStaticEmptyFieldsForArray  = Consider using 'Array.empty' instead.
+RulesAsyncExceptionWithoutReturn  = You should use the 'return' keyword when raising an exception in an async computation expression.
+RulesFavourStaticEmptyFieldsForList  = Consider using 'List.Empty' instead.
 RulesWildcardNamedWithAsPattern  = Unnecessary wildcard named using the as pattern, the wildcard can be removed e.g. `_ as x` replaced with `x`.
+RulesAvoidTooShortNamesError  = Consider using a longer name, as it is currently too short.
 RulesConventionsTopLevelNamespaceError  = Prefer namespaces at top level.
 RulesFormattingUnionDefinitionSameIndentationError  = Union definition cases should be at the same indentation level.
 RulesNamingConventionsSuffixError  = Consider changing `{0}` to be suffixed with `{1}`.
 RulesTypographyTrailingWhitespaceError  = Found trailing whitespace at end of line.
-LintError  = Error in file {0} on line {1} starting at column {2}
 RulesFormattingGenericPrefixError  = Use prefix syntax for generic type.
+RulesFavourNonMutablePropertyInitializationError  = Consider using non-mutable property initialization.
 RulesSourceLengthError  = {0} was {2} lines long, suggested to be less than {1} lines long.
 RulesHintSuggestion  = `{0}`; suggestion: {1}.
 RulesFailwithfWithArgumentsMatchingFormatString  = `failwithf` has more arguments than were found in its format string, these further arguments will be ignored by the compiler.
+RulesFormattingF#ArrayPrefixError  = Use prefix syntax for generic type (array<'Foo>).
+RulesUsedUnderscorePrefixedElements  = Avoid using underscore-prefixed elements for the elements that are being used in the code.
 RulesFormattingUnionDefinitionIndentationError  = Union definition cases should be indented one level on a new line.
 
- Total Rules: 55
+ Total Rules: 75

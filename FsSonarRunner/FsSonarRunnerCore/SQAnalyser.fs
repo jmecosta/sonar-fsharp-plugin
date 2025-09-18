@@ -1,8 +1,8 @@
-﻿namespace FsSonarRunnerCore
+namespace FsSonarRunnerCore
 
 open System.Text
 open System.Xml
-open FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.CodeAnalysis
 open FSharp.Compiler.Text
 
 type SonarResoureMetrics(path : string) =
@@ -40,7 +40,7 @@ type SQAnalyser() =
 
         // generate metrics
         let loc, classnmb, autoProperties, functions, complexity, fileComplexityDist, functionComplexityDist
-            = FsSonarRunnerCore.UntypedAstUtils.getCodeMetrics(parseTree)
+            = FsSonarRunnerCore.UntypedAstUtils.getCodeMetrics(Some parseTree)
 
         resourceMetric.LinesOfCode <- loc
         resourceMetric.Classes <- classnmb
@@ -49,7 +49,7 @@ type SQAnalyser() =
         resourceMetric.Complexity <- complexity
 
         // generate lines
-        resourceMetric.Lines <- FsSonarRunnerCore.UntypedAstUtils.GetLines(parseTree)
+        resourceMetric.Lines <- FsSonarRunnerCore.UntypedAstUtils.GetLines(Some parseTree)
 
         // generate  copy past tokes
         let array = [|"\r\n"; "\n"|]

@@ -10,4 +10,5 @@ let SonarConfiguration(config : ConfHelper.InputConfigution.AnalysisInput) : Rai
         invalidOpWithSingleArgument = ConfHelper.EnableRule(config, "RulesInvalidOpWithSingleArgument") // FL0019
         invalidArgWithTwoArguments = ConfHelper.EnableRule(config, "RulesInvalidArgWithTwoArguments") // FL0020
         failwithfWithArgumentsMatchingFormatString = ConfHelper.EnableRule(config, "RulesFailwithfWithArgumentsMatchingFormatString") // FL0021
+        failwithBadUsage = ConfHelper.EnableRule(config, "RulesFailwithBadUsage") // FL0072
     }

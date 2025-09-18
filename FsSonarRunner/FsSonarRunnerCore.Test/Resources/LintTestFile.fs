@@ -1,9 +1,12 @@
 ﻿// DO NOT FIX ISSUES - this file is for testing the analyser
+#nowarn FS3264 FS0052
+
 namespace FsSonarRunnerCore.Test.lintTestFile
 
-open FSharpLint.Framework.Ast
+open FSharp.Compiler.Text
 open FSharpLint.Application
 open FSharpLint.Framework
+open FSharpLint.Framework.Configuration
 open System
 open System.Resources
 open System.Reflection
@@ -74,15 +77,15 @@ type SonarIssue() =
     member val Component : string = "" with get, set
     member val Message : string = "" with get, set
 
-type FsLintRunner(filePath : string, rules : theSonarRules, configuration : Configuration.Configuration) =
+type FsLintRunner(filePath : string, rules : theSonarRules, configuration : Configuration) =
     let mutable notsupportedlines = List.Empty
     let mutable issues = List.empty
 
-    let getErrorMessage (range:FSharp.Compiler.Range.range) =
+    let getErrorMessage (range: range) =
         let error = Resources.GetString("LintSourceError")
         String.Format(error, range.StartLine, range.StartColumn)
 
-    let highlightErrorText (range:FSharp.Compiler.Range.range) (errorLine:string) =
+    let highlightErrorText (range: range) (errorLine:string) =
         let highlightColumnLine =
             if String.length errorLine = 0 then "^"
             else

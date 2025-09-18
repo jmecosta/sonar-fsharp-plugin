@@ -1,7 +1,7 @@
 ﻿module Helper
 
 open System.IO
-open FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.CodeAnalysis
 open FSharp.Compiler.Text
 open FSharp.Data
 
@@ -22,7 +22,7 @@ let getAstBySourceText(file : string, input : ISourceText) =
     parseFileResults.ParseTree
 
 let getAstByContent(file : string, input : string) =
-    getAstBySourceText(file, SourceText.ofString input)
+    getAstBySourceText(file, SourceText.ofString input) |> Some
 
 let getAstByFile(file : string) =
     let input = File.ReadAllText(file)
